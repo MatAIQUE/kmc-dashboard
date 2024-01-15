@@ -1,5 +1,5 @@
 {
-  "name": "kmc-dashboard",
+  "name": "kmc-dashboard-v1",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,22 +9,28 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.11.1",
-    "@types/react": "18.2.47",
-    "@types/react-dom": "18.2.18",
-    "autoprefixer": "10.4.16",
+    "@radix-ui/react-navigation-menu": "^1.1.4",
+    "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "eslint": "8.56.0",
-    "eslint-config-next": "14.0.4",
     "lucide-react": "^0.309.0",
     "next": "14.0.4",
-    "postcss": "8.4.33",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "node": "^21.2.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^5.0.1",
     "tailwind-merge": "^2.2.0",
-    "tailwindcss": "3.4.1",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.3.3"
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
