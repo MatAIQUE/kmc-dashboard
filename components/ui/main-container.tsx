@@ -10,7 +10,7 @@ const MainContainer = () => {
         //     <AdvertisementsSection/>
         // </div>
         
-        <div className="md:container container-none mt-20 md:mt-5 grid grid-cols-3 gap-2 my-5 px-2">
+        <div className="md:container md:translate-x-32 container-none mt-20 md:mt-5 grid grid-cols-3 gap-2 my-5 px-2">
             <div className="md:col-span-2 col-span-3">
                 <DailyUsage/>
             </div>
