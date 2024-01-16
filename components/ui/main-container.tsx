@@ -21,17 +21,20 @@ const MainContainer = () => {
         
         grid
         grid-cols-3
+
+        md:grid-cols-8
+
         gap-2
         my-5
         px-2"
         >
-            <div className="md:col-span-2 col-span-3">
+            <div className="md:col-start-2 col-span-4">
                 <DailyUsage/>
             </div>
-            <div className="md:col-span-1 col-span-3">
+            <div className="md:col-span-3 col-span-3">
                 <OccupancySection/>
             </div>
-            <div className="col-span-3">
+            <div className="md:col-start-2 col-span-7">
                 <AdvertisementsSection/>
             </div>
         </div>

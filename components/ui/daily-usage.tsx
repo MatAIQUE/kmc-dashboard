@@ -6,9 +6,9 @@ const DailyUsage = () => {
         <div className="w-full bg-white drop-shadow-md py-4 px-6 rounded-xl h-full">
             {/* title */}
             <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold capitalize">Daily Usage</h1>
-                <button className="p-4 hidden md:block hover:bg-secondary rounded-lg">
-                    <FaDownload/>
+                <h1 className="md:text-xl font-bold capitalize text-sm">Daily Usage</h1>
+                <button className="md:p-4 hidden md:block hover:bg-secondary rounded-lg p-2">
+                    <FaDownload className="text-xs md:text-lg"/>
                 </button>
                 <button className="p-4 md:hidden block">
                     <FaChevronRight/>

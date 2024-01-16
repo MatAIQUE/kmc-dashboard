@@ -19,6 +19,13 @@ const Logo = () => {
         width={118}
         src={KMCLogo}
         />
+        <Image
+        className="md:hidden block"
+        alt="KMC Logo"
+        height={25}
+        width={118}
+        src={KMCLogo}
+        />
         </>
     )
 }

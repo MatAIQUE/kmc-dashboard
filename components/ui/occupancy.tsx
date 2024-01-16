@@ -6,9 +6,9 @@ const OccupancySection = () => {
         <div className="w-full bg-white drop-shadow-md py-4 px-6 rounded-xl h-full">
             {/* title */}
             <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold capitalize">Occupancy</h1>
-                <button className="p-4 hidden md:block hover:bg-secondary rounded-lg">
-                    <FaDownload/>
+                <h1 className="md:text-xl font-bold capitalize text-sm">Occupancy</h1>
+                <button className="md:p-4 hidden md:block hover:bg-secondary rounded-lg p-2">
+                    <FaDownload className=" md:text-lg"/>
                 </button>
                 <button className="p-4 md:hidden block">
                     <FaChevronRight/>
@@ -21,15 +21,18 @@ const OccupancySection = () => {
             </div>
             {/* legends */}
             <div className="flex w-full justify-between">
-                <ul className="flex justify-evenly w-full px-5 sm:flex-col">
+                <ul className="flex justify-evenly w-full px-5 sm:flex-col md:flex-row">
                     <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
-                        <div className="w-3 h-3 bg-primary rounded-full me-2"></div>Occupied
+                        <div className="w-3 h-3 bg-primary rounded-full me-2 sm:w-2 sm:h-2"></div>
+                        <p className="sm:text-xs">Occupied</p>
                     </li>
-                    <li className="flex items-center sm:w-full sm:justify-center">
-                        <div className="w-3 h-3 bg-accent rounded-full me-2"></div>Link 2
+                    <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
+                        <div className="w-3 h-3 bg-info rounded-full me-2 sm:w-2 sm:h-2"></div>
+                        <p className="sm:text-xs">Reserved</p>
                     </li>
-                    <li className="flex items-center sm:w-full sm:justify-center">
-                        <div className="w-3 h-3 bg-black rounded-full me-2"></div>Link 3
+                    <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
+                        <div className="w-3 h-3 bg-success rounded-full me-2 sm:w-2 sm:h-2"></div>
+                        <p className="sm:text-xs">Available</p>
                     </li>
                 </ul>
             </div>
