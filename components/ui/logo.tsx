@@ -6,7 +6,7 @@ const Logo = () => {
     return (
         <>
         <Image
-        className="hidden md:block"
+        className="hidden md:block sm:w-24"
         alt="KMC Logo"
         height={25}
         width={168}

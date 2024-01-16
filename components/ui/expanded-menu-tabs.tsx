@@ -10,7 +10,7 @@ import AdvertisementTab from "./tabs/advertisement-tab";
 const ExpandedMenuTabs = () => {
     return (
         <>
-        <div className="w-full mt-20 h-auto">
+        <div className="w-full mt-20 sm:mt-10 h-auto">
             <DashboardTab/>
             <OccupancyTab/>
             <AdvertisementTab/>

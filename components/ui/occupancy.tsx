@@ -21,14 +21,14 @@ const OccupancySection = () => {
             </div>
             {/* legends */}
             <div className="flex w-full justify-between">
-                <ul className="flex justify-evenly w-full px-5">
-                    <li className="flex items-center">
+                <ul className="flex justify-evenly w-full px-5 sm:flex-col">
+                    <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
                         <div className="w-3 h-3 bg-primary rounded-full me-2"></div>Occupied
                     </li>
-                    <li className="flex items-center">
+                    <li className="flex items-center sm:w-full sm:justify-center">
                         <div className="w-3 h-3 bg-accent rounded-full me-2"></div>Link 2
                     </li>
-                    <li className="flex items-center">
+                    <li className="flex items-center sm:w-full sm:justify-center">
                         <div className="w-3 h-3 bg-black rounded-full me-2"></div>Link 3
                     </li>
                 </ul>
