@@ -5,7 +5,7 @@ import KMCLogo from "../../app/assets/img/Logo-2x.png"
 const Logo = () => {
     return (
         <>
-        <Image
+        {/* <Image
         className="hidden md:block sm:w-24"
         alt="KMC Logo"
         height={25}
@@ -18,9 +18,9 @@ const Logo = () => {
         height={25}
         width={118}
         src={KMCLogo}
-        />
+        /> */}
         <Image
-        className="md:hidden block"
+        className="md:w-48 md:mt-3 w-1"
         alt="KMC Logo"
         height={25}
         width={118}

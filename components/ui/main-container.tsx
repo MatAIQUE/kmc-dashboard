@@ -14,7 +14,8 @@ const MainContainer = () => {
         md:container
         container-none
 
-        sm:ml-32
+        ml-32
+        md:ml-64
 
         mt-20
         md:mt-5
