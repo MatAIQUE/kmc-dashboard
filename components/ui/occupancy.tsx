@@ -3,7 +3,7 @@ import { FaDownload, FaChevronRight } from "react-icons/fa";
 
 const OccupancySection = () => {
     return (
-        <div className="w-full bg-white drop-shadow-md py-4 px-6 rounded-xl h-full">
+        <div className="py-4 px-6">
             {/* title */}
             <div className="flex justify-between items-center">
                 <h1 className="md:text-xl font-bold capitalize text-sm">Occupancy</h1>

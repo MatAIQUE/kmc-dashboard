@@ -20,10 +20,10 @@ const Logo = () => {
         src={KMCLogo}
         /> */}
         <Image
-        className="md:w-48 md:mt-3 w-1"
+        className="h-full"
         alt="KMC Logo"
         height={25}
-        width={118}
+        width={168}
         src={KMCLogo}
         />
         </>
