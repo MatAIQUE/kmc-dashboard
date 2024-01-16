@@ -20,7 +20,8 @@ const OccupancySection = () => {
                 Pie Chart
             </div>
             {/* legends */}
-            <div className="flex w-full justify-between">
+            
+            {/* <div className="flex w-full justify-between">
                 <ul className="flex justify-evenly w-full px-5 sm:flex-col md:flex-row">
                     <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
                         <div className="w-3 h-3 bg-primary rounded-full me-2 sm:w-2 sm:h-2"></div>
@@ -35,6 +36,21 @@ const OccupancySection = () => {
                         <p className="sm:text-xs">Available</p>
                     </li>
                 </ul>
+            </div> */}
+
+            <div className="grid grid-cols-3 my-2">
+                <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
+                    <div className="w-2 h-2 md:w-3 md:h-3 bg-primary rounded-full me-2"></div>
+                    <p className="text-sm md:text">Occupied</p>
+                </div>
+                <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
+                    <div className="w-2 h-2 md:w-3 md:h-3 bg-primary rounded-full me-2"></div>
+                    <p className="text-sm md:text">Reserved</p>
+                </div>
+                <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
+                    <div className="w-2 h-2 md:w-3 md:h-3 bg-primary rounded-full me-2"></div>
+                    <p className="text-sm md:text">Available</p>
+                </div>
             </div>
         </div>
     )
