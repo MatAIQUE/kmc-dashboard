@@ -19,7 +19,7 @@ const AdvertisementsSection = () => {
             <div className="flex w-full justify-center pt-6 items-center grid grid-cols-3 gap-2">
                 {/* Advertisement */}
                 <div className="col-span-3 md:col-span-1 mb-6">
-                    <div className="w-full relative flex flex-col justify-between h-52">
+                    <div className="w-full relative flex flex-col justify-between h-52 sm:h-auto">
                         <button className="absolute rounded top-0 right-0 m-4 p-2 bg-white hover:bg-secondary">
                             <FaEllipsisV/>
                         </button>
@@ -30,12 +30,12 @@ const AdvertisementsSection = () => {
                         height={512}
                         src={SampleImage}
                         />
-                        <h1 className="font-bold">Advertisement Title</h1>
+                        <h1 className="font-bold sm:mt-3">Advertisement Title</h1>
                     </div>
                 </div>
                 {/* Advertisement */}
                 <div className="col-span-3 md:col-span-1 mb-6">
-                    <div className="w-full relative flex flex-col justify-between h-52">
+                    <div className="w-full relative flex flex-col justify-between h-52 sm:h-auto">
                         <button className="absolute rounded top-0 right-0 m-4 p-2 bg-white hover:bg-secondary">
                             <FaEllipsisV/>
                         </button>
@@ -46,12 +46,12 @@ const AdvertisementsSection = () => {
                         height={512}
                         src={SampleImage}
                         />
-                        <h1 className="font-bold">Advertisement Title</h1>
+                        <h1 className="font-bold sm:mt-3">Advertisement Title</h1>
                     </div>
                 </div>
                 {/* Advertisement */}
                 <div className="col-span-3 md:col-span-1 mb-6">
-                    <div className="w-full relative flex flex-col justify-between h-52">
+                    <div className="w-full relative flex flex-col justify-between h-52 sm:h-auto">
                         <button className="absolute rounded top-0 right-0 m-4 p-2 bg-white hover:bg-secondary">
                             <FaEllipsisV/>
                         </button>
@@ -62,12 +62,12 @@ const AdvertisementsSection = () => {
                         height={512}
                         src={SampleImage}
                         />
-                        <h1 className="font-bold">Advertisement Title</h1>
+                        <h1 className="font-bold sm:mt-3">Advertisement Title</h1>
                     </div>
                 </div>
                 {/* Advertisement */}
                 <div className="col-span-3 md:col-span-1 mb-6">
-                    <div className="w-full relative flex flex-col justify-between h-52">
+                    <div className="w-full relative flex flex-col justify-between h-52 sm:h-auto">
                         <button className="absolute rounded top-0 right-0 m-4 p-2 bg-white hover:bg-secondary">
                             <FaEllipsisV/>
                         </button>
@@ -78,12 +78,12 @@ const AdvertisementsSection = () => {
                         height={512}
                         src={SampleImage}
                         />
-                        <h1 className="font-bold">Advertisement Title</h1>
+                        <h1 className="font-bold sm:mt-3">Advertisement Title</h1>
                     </div>
                 </div>
                 {/* Advertisement */}
                 <div className="col-span-3 md:col-span-1 mb-6">
-                    <div className="w-full relative flex flex-col justify-between h-52">
+                    <div className="w-full relative flex flex-col justify-between h-52 sm:h-auto">
                         <button className="absolute rounded top-0 right-0 m-4 p-2 bg-white hover:bg-secondary">
                             <FaEllipsisV/>
                         </button>
@@ -94,7 +94,7 @@ const AdvertisementsSection = () => {
                         height={512}
                         src={SampleImage}
                         />
-                        <h1 className="font-bold">Advertisement Title</h1>
+                        <h1 className="font-bold sm:mt-3">Advertisement Title</h1>
                     </div>
                 </div>
             </div>
