@@ -23,24 +23,6 @@ const OccupancySection = () => {
             <div className="flex w-full justify-center py-40  items-center">
                 Pie Chart
             </div>
-            {/* legends */}
-            
-            {/* <div className="flex w-full justify-between">
-                <ul className="flex justify-evenly w-full px-5 sm:flex-col md:flex-row">
-                    <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
-                        <div className="w-3 h-3 bg-primary rounded-full me-2 sm:w-2 sm:h-2"></div>
-                        <p className="sm:text-xs">Occupied</p>
-                    </li>
-                    <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
-                        <div className="w-3 h-3 bg-info rounded-full me-2 sm:w-2 sm:h-2"></div>
-                        <p className="sm:text-xs">Reserved</p>
-                    </li>
-                    <li className="flex items-center sm:w-full sm:justify-center sm:justify-center">
-                        <div className="w-3 h-3 bg-success rounded-full me-2 sm:w-2 sm:h-2"></div>
-                        <p className="sm:text-xs">Available</p>
-                    </li>
-                </ul>
-            </div> */}
 
             <div className="grid grid-cols-3 my-2">
                 <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
