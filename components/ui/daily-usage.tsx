@@ -14,8 +14,8 @@ const DailyUsage = () => {
                 <button className="md:p-4 hidden md:block hover:bg-secondary rounded-lg p-2">
                     <FaDownload className="text-xs md:text-lg"/>
                 </button>
-                <button className="p-4 md:hidden block">
-                    <FaChevronRight onClick={() => router.push('/')}/>
+                <button className="p-4 md:hidden block" onClick={() => router.push('/usage-history')}>
+                    <FaChevronRight/>
                 </button>
             </div>
             <hr/>
