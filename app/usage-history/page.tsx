@@ -14,10 +14,10 @@ const UsageHistory = () => {
 
                             <div className="grid grid-cols-2 py-4 flex items-center py-4">
                                 <div>
-                                    <h1 className="font-bold">Usage History</h1>
+                                    <h1 className="md:text-xl font-bold capitalize text-sm">Usage History</h1>
                                 </div>
                                 <div className="md:me-4 flex justify-end">
-                                    <button className="hover:bg-secondary bg-primary text-white p-2 rounded-lg flex items-center">
+                                    <button className="hover:opacity-80 bg-primary text-white p-2 rounded-lg flex items-center">
                                         <FaDownload className="w-4 h-4 md:me-2"/>
                                         <span className="hidden md:block">Download</span>
                                     </button>

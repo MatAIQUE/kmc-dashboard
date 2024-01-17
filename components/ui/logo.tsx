@@ -1,8 +1,13 @@
+"use client"
 import Image from "next/image"
 import KMCLogo from "../../app/assets/img/Logo-2x.png"
+import { useRouter } from "next/navigation";
+
 
 
 const Logo = () => {
+    const router = useRouter();
+
     return (
         <>
         {/* <Image
@@ -20,11 +25,12 @@ const Logo = () => {
         src={KMCLogo}
         /> */}
         <Image
-        className="h-full"
+        className="h-full hover:cursor-pointer"
         alt="KMC Logo"
         height={25}
         width={168}
         src={KMCLogo}
+        onClick={() => router.push('/')}
         />
         </>
     )
