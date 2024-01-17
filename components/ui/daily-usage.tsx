@@ -1,7 +1,11 @@
+"use client"
 import { FaDownload, FaChevronRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 
 const DailyUsage = () => {
+    const router = useRouter();
+
     return (
         <div className="py-4 px-6">
             {/* title */}
@@ -11,7 +15,7 @@ const DailyUsage = () => {
                     <FaDownload className="text-xs md:text-lg"/>
                 </button>
                 <button className="p-4 md:hidden block">
-                    <FaChevronRight/>
+                    <FaChevronRight onClick={() => router.push('/')}/>
                 </button>
             </div>
             <hr/>

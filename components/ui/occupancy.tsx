@@ -1,7 +1,11 @@
+"use client"
 import { FaDownload, FaChevronRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 
 const OccupancySection = () => {
+    const router = useRouter();
+
     return (
         <div className="py-4 px-6">
             {/* title */}
@@ -11,7 +15,7 @@ const OccupancySection = () => {
                     <FaDownload className=" md:text-lg"/>
                 </button>
                 <button className="p-4 md:hidden block">
-                    <FaChevronRight/>
+                    <FaChevronRight onClick={() => router.push('/occupancy')}/>
                 </button>
             </div>
             <hr/>
