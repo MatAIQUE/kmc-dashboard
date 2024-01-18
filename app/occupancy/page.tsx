@@ -1,7 +1,16 @@
-import { FaChevronRight, FaDownload, FaSearch } from "react-icons/fa";
+"use client";
+import {
+  FaChevronRight,
+  FaDownload,
+  FaPlusCircle,
+  FaSearch,
+} from "react-icons/fa";
 import Nav from "../../components/ui/nav";
+import { useRouter } from "next/navigation";
 
 const OccupancyPage = () => {
+  const router = useRouter();
+
   return (
     <>
       <Nav />
@@ -10,28 +19,52 @@ const OccupancyPage = () => {
           <div className="grid grid-cols-3 gap-4 mb-4 mx-2">
             <div className="col-span-3 h-auto rounded-xl bg-white dark:bg-gray-800 drop-shadow drop-shadow">
               <div className="py-4 px-6">
-
-                <div className="grid grid-cols-4 py-4 flex items-center py-4">
+                {/* <div className="grid grid-cols-4 py-4 flex items-center py-4">
                   <div>
-                    <h1 className="md:text-xl font-bold capitalize text-sm">Occupancy</h1>
+                    <h1 className="md:text-xl font-bold capitalize text-sm">
+                      Occupancy
+                    </h1>
                   </div>
-                  <div className="md:col-start-3 md:me-4 col-start-4 flex justify-end">
-                    <button className="p-2 hover:bg-secondary rounded-lg">
-                      <FaDownload className="w-4 h-4" />
+                  <div className="col-start-3 flex justify-end">
+                    <button className="md:p-4 hidden md:block hover:bg-secondary rounded-lg p-2">
+                      <FaDownload className=" md:text-lg" />
                     </button>
                   </div>
-                  <div className="flex justify-center col-span-4 md:col-span-1 my-2">
-                    <div className="relative flex items-center w-full">
+                  <div className="md:col-start-4 md:me-4 col-start-4 flex justify-end">
+                    <div className="relative flex items-center">
                       <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                        <FaSearch className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                        <FaSearch />
                       </div>
                       <input
                         type="text"
                         id="input-group-1"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Name, ID, Locker"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="name@flowbite.com"
                       />
                     </div>
+                  </div>
+                </div> */}
+                <div className="grid md:grid-cols-4 md:gap-2 grid-cols-2 p-2">
+                  <div className="flex items-center">
+                    <h1 className="md:text-xl font-bold capitalize text-sm">
+                      Occupancy
+                    </h1>
+                  </div>
+                  <div className="md:col-span-2 justify-end flex">
+                    <button className="md:p-4 md:block hover:bg-secondary rounded-lg p-2">
+                      <FaDownload className=" md:text-lg" />
+                    </button>
+                  </div>
+                  <div className="relative flex items-center mt-4 md:mt-0 col-span-2 md:col-span-1">
+                    <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                      <FaSearch />
+                    </div>
+                    <input
+                      type="text"
+                      id="input-group-1"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
+                      placeholder="Name, Locker, ID"
+                      />
                   </div>
                 </div>
 

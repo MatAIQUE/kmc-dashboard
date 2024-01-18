@@ -25,15 +25,15 @@ const OccupancySection = () => {
             </div>
 
             <div className="grid grid-cols-3 my-2">
-                <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
+                <div className="flex col-span-3 sm:col-span-1 items-center justify-center">
                     <div className="w-2 h-2 md:w-2 md:h-2 bg-primary rounded-full me-2"></div>
                     <p className="text-sm md:text">Occupied</p>
                 </div>
-                <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
+                <div className="flex col-span-3 sm:col-span-1 items-center justify-center">
                     <div className="w-2 h-2 md:w-2 md:h-2 bg-primary rounded-full me-2"></div>
                     <p className="text-sm md:text">Reserved</p>
                 </div>
-                <div className="flex col-start-2 col-span-1 md:col-span-1 items-center justify-center">
+                <div className="flex col-span-3 sm:col-span-1 items-center justify-center">
                     <div className="w-2 h-2 md:w-2 md:h-2 bg-primary rounded-full me-2"></div>
                     <p className="text-sm md:text">Available</p>
                 </div>

@@ -2,6 +2,18 @@ import { FaPlusCircle, FaEllipsisV, FaInfoCircle } from "react-icons/fa"
 import Nav from "../../components/ui/nav"
 import Image from "next/image";
 import SampleImage from "../../app/assets/img/kmc-ad-2.png"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 
 const AdvertisementPage = () => {
     return (
@@ -18,10 +30,26 @@ const AdvertisementPage = () => {
                     <h1 className="md:text-xl font-bold capitalize text-sm">Advertisements</h1>
                   </div>
                   <div className="md:col-start-4 md:me-4 md:col-start-4 flex justify-end">
-                    <button className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md">
-                        <FaPlusCircle className="text-sm"/>
-                        <p className="md:ml-3 text-xs ml-1">New Ad</p>
-                    </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md">
+                    <FaPlusCircle className="text-sm"/>
+                      <p className="md:ml-3 text-xs ml-1">New Ad</p></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently delete your
+                          account and remove your data from our servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>  
                   </div>
                 </div>
 
