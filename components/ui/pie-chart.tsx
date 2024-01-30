@@ -28,11 +28,13 @@ const PieChart = () => {
     <div>
       <Pie
         data={{
-          labels: ["Orange", "Blue", "Gray"],
+          labels: ["#000000", "Blue", "Gray"],
           datasets: [
             {
               data: [40, 10, 7],
-              backgroundColor: ["orange", "blue", "Gray"],
+              backgroundColor: ["#FFFFFF", "#FFFFFF", "#FFFFFF"],
+              borderColor: ["orange", "blue", "gray"],
+              borderWidth: 25,
             },
           ],
         }}

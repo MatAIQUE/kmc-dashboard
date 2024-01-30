@@ -20,8 +20,9 @@ ChartJS.register(
 );
 
 const Charts = () => {
+  const options = {}
   return (
-    <div>
+    <div className="w-full h-full">
       <Line
         data={{
           labels: [

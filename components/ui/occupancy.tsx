@@ -2,6 +2,7 @@
 import { FaDownload, FaChevronRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import PieChart from "./pie-chart";
+import DoughnutChart from "./doughnut-chart";
 
 const OccupancySection = () => {
   const router = useRouter();
@@ -21,7 +22,8 @@ const OccupancySection = () => {
       <hr />
       {/* content */}
       <div className="flex w-full justify-center mt-5 items-center">
-        <PieChart completed={40} remaining={10} total={50} />
+        {/* <PieChart completed={40} remaining={10} total={50} /> */}
+        <DoughnutChart/>
       </div>
 
       <div className="grid grid-cols-3 my-2">
