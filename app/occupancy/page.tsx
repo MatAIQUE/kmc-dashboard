@@ -1,8 +1,22 @@
 "use client";
-import { FaDownload, FaSearch } from "react-icons/fa";
+import {
+  FaDownload,
+  FaEllipsisH,
+  FaEllipsisV,
+  FaSearch,
+  FaUserCircle,
+} from "react-icons/fa";
 import Nav from "../../components/ui/nav";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../components/ui/tabs";
+import { IoDownloadOutline } from "react-icons/io5";
+import { RiArchiveDrawerLine } from "react-icons/ri";
 
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.
@@ -60,8 +74,9 @@ const OccupancyPage = async () => {
                     </h1>
                   </div>
                   <div className="md:col-span-2 justify-end flex">
-                    <button className="md:p-4 md:block hover:bg-secondary rounded-lg p-2">
-                      <FaDownload className=" md:text-lg" />
+                    <button className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md">
+                      <IoDownloadOutline />
+                      <p className="md:ml-3 text-xs ml-1">Download Report</p>
                     </button>
                   </div>
                   <div className="relative flex items-center mt-4 md:mt-0 col-span-2 md:col-span-1">
@@ -77,33 +92,94 @@ const OccupancyPage = async () => {
                   </div>
                 </div>
 
-                {/* Content Table */}
-                <div className="flex w-full justify-start items-start">
-                  <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 w-full md:w-auto">
-                    <ul className="grid grid-cols-2">
-                      <li className="md:me-2">
-                        <a
-                          href="#"
-                          className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        >
-                          Occupied
-                        </a>
-                      </li>
-                      <li className="md:me-2">
-                        <a
-                          href="#"
-                          className="inline-block p-4 text-primary border-b-2 border-primary rounded-t-lg dark:text-primary dark:border-blue-500"
-                          aria-current="page"
-                        >
-                          Vacant
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="w-full mt-2">
-                  <DataTable columns={columns} data={data} />
-                </div>
+                <Tabs defaultValue="occupied">
+                  <TabsList>
+                    <TabsTrigger value="occupied">Occupied</TabsTrigger>
+                    <TabsTrigger value="vacant">Vacant</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="occupied">
+                    {/* Adjust the width of the DataTable container */}
+                    <div className="w-full">
+                      <DataTable columns={columns} data={data} />
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="vacant">
+                    <div className="w-full mt-2 grid grid-cols-3 gap-2 gap-y-2">
+                      <div className="col-span-3 md:col-span-1 mb-6">
+                        <div className="w-full flex flex-col justify-between sm:h-auto">
+                          <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                            <div className="flex items-start mt-3 justify-center">
+                              {/* <FaUserCircle className="h-10 w-10" /> */}
+                              <RiArchiveDrawerLine />
+                            </div>
+                            <div className="grid ms-2 col-span-2">
+                              <div>
+                                <p className="font-bold w-full">Locker - 05</p>
+                                <p className="opacity-80 w-full hidden md:block">
+                                  Vacant
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-span-3 md:col-span-1 mb-6">
+                        <div className="w-full flex flex-col justify-between sm:h-auto">
+                          <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                            <div className="flex items-start mt-3 justify-center">
+                              {/* <FaUserCircle className="h-10 w-10" /> */}
+                              <RiArchiveDrawerLine />
+                            </div>
+                            <div className="grid ms-2 col-span-2">
+                              <div>
+                                <p className="font-bold w-full">Locker - 05</p>
+                                <p className="opacity-80 w-full hidden md:block">
+                                  Vacant
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-span-3 md:col-span-1 mb-6">
+                        <div className="w-full flex flex-col justify-between sm:h-auto">
+                          <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                            <div className="flex items-start mt-3 justify-center">
+                              {/* <FaUserCircle className="h-10 w-10" /> */}
+                              <RiArchiveDrawerLine />
+                            </div>
+                            <div className="grid ms-2 col-span-2">
+                              <div>
+                                <p className="font-bold w-full">Locker - 05</p>
+                                <p className="opacity-80 w-full hidden md:block">
+                                  Vacant
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-span-3 md:col-span-1 mb-6">
+                        <div className="w-full flex flex-col justify-between sm:h-auto">
+                          <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                            <div className="flex items-start mt-3 justify-center">
+                              {/* <FaUserCircle className="h-10 w-10" /> */}
+                              <RiArchiveDrawerLine />
+                            </div>
+                            <div className="grid ms-2 col-span-2">
+                              <div>
+                                <p className="font-bold w-full">Locker - 05</p>
+                                <p className="opacity-80 w-full hidden md:block">
+                                  Vacant
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
               </div>
             </div>
           </div>
