@@ -34,22 +34,22 @@ async function getData(): Promise<Payment[]> {
     {
       id: "adsfasdf",
       status: "Occupied",
-      locker: "LO1",
+      locker: "LO2",
       service: "Coworking Space",
-      bookingId: "KMC-0001",
-      name: "Charles Gomez",
-      from: "Jan 01, 2023",
-      to: "Dec 30 , 2024",
+      bookingId: "KMC-0002",
+      name: "Mark Pogi",
+      from: "Feb 01, 2024",
+      to: "Feb 29 , 2024",
     },
     {
       id: "728easdfad52f",
-      status: "Occupied",
-      locker: "LO1",
+      status: "Reserved",
+      locker: "LO3",
       service: "Coworking Space",
-      bookingId: "KMC-0001",
-      name: "Charles Gomez",
-      from: "Jan 01, 2023",
-      to: "Dec 30 , 2024",
+      bookingId: "KMC-0003",
+      name: "Matt Pogi",
+      from: "March 01, 2024",
+      to: "March 30 , 2024",
     },
 
     // ...
@@ -72,23 +72,6 @@ const OccupancyPage = async () => {
                     <h1 className="md:text-xl font-bold capitalize text-sm">
                       Occupancy
                     </h1>
-                  </div>
-                  <div className="md:col-span-2 justify-end flex">
-                    <button className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md">
-                      <IoDownloadOutline />
-                      <p className="md:ml-3 text-xs ml-1">Download Report</p>
-                    </button>
-                  </div>
-                  <div className="relative flex items-center mt-4 md:mt-0 col-span-2 md:col-span-1">
-                    <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                      <FaSearch />
-                    </div>
-                    <input
-                      type="text"
-                      id="input-group-1"
-                      className="bg-gray-50 border text-gray-900 md:text-sm appearance-none rounded-lg focus:outline-none focus:outline-ring-primary focus:border-primary w-full ps-10 p-2.5"
-                      placeholder="Name, Locker, ID"
-                    />
                   </div>
                 </div>
 
