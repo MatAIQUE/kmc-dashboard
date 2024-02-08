@@ -56,12 +56,6 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex justify-end items-end py-4">
-        <div className="md:col-span-2 justify-end flex">
-          <button className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md">
-            <IoDownloadOutline />
-            <p className="md:ml-3 text-xs ml-1">Download Report</p>
-          </button>
-        </div>
         <Input
           placeholder="Name, Locker, Id"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -70,6 +64,12 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+        <div className="md:col-span-2 justify-end flex">
+          <button className="btn rounded text-lg items-center md:p-2.5 text-white bg-primary flex hover:bg-primary/90  md:text-md">
+            <IoDownloadOutline />
+            <p className="md:ml-3 text-xs ml-1">Download Report</p>
+          </button>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
