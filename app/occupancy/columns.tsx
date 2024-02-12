@@ -26,6 +26,24 @@ export const columns: ColumnDef<Locker>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      // Conditionally apply a class based on the value of the status
+      const statusClassName = row.original.status === 3 ? "bg-orange-500" : "";
+
+      // Conditionally render a badge with an orange background if status === 3
+      const badge =
+        row.original.status === 8 ? (
+          <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-orange-500">
+            Occupied
+          </span>
+        ) : row.original.status === 3 ? (
+          <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-orange-500">
+            Occupied
+          </span>
+        ) : null;
+
+      return <div className="flex items-center justify-end">{badge}</div>;
+    },
   },
   {
     accessorKey: "doorNumber",
