@@ -17,15 +17,28 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Skeleton } from "../../components/ui/skeleton";
 
 async function getData(status: string) {
-  const response = await fetch(
-    `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
+  try {
+    const response = await fetch(
+      `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const responseData = await response.json();
+    return responseData.data.locker.availableDoors;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Handle the error gracefully, e.g., display an error message to the user
   }
-  const responseData = await response.json();
-  return responseData.data.locker.availableDoors;
+}
+
+async function getFilteredData(status: string, doorNumberToFilter: string) {
+  const data = await getData(status);
+  const filteredData = data.filter(
+    (locker: any) => locker.doorNumber === doorNumberToFilter
+  );
+  console.log(filteredData); // Log the filtered data
+  return filteredData;
 }
 
 const OccupancyPage = () => {
@@ -35,6 +48,17 @@ const OccupancyPage = () => {
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
 
   const status = searchParams.get("status") || "occupied";
+  const doorNumberToFilter = searchParams.get("doorNumber"); // Get bookingId from URL query params
+
+  // Fetch data based on whether doorNumber is provided or not
+  const fetchData = doorNumberToFilter
+    ? () => getFilteredData(status, doorNumberToFilter)
+    : () => getData(status);
+
+  useEffect(() => {
+    // Fetch data when component mounts or when doorNumberToFilter changes
+    fetchData();
+  }, [doorNumberToFilter]);
 
   const { isLoading, isError, isFetching } = useQuery(
     [status],

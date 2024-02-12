@@ -1,5 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "../../components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -9,11 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../components/ui/sheet";
-import { Badge } from "lucide-react";
-import { Button } from "../../components/ui/button";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Locker = {
   id: string;
   status: number;
@@ -25,15 +22,31 @@ export type Locker = {
   to: string;
 };
 
+const getStatusBadge = (status: number): JSX.Element | null => {
+  if (status === 8) {
+    return (
+      <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-blue-500">
+        Reserved
+      </span>
+    );
+  } else if (status === 3) {
+    return (
+      <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-orange-500">
+        Occupied
+      </span>
+    );
+  } else {
+    return null;
+  }
+};
+
 export const columns: ColumnDef<Locker>[] = [
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      // Conditionally apply a class based on the value of the status
       const statusClassName = row.original.status === 3 ? "bg-orange-500" : "";
 
-      // Conditionally render a badge with an orange background if status === 3
       const badge =
         row.original.status === 8 ? (
           <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-blue-500">
@@ -68,11 +81,14 @@ export const columns: ColumnDef<Locker>[] = [
     accessorKey: "from",
     header: "From",
     cell: ({ row }) => {
-      // Convert date to "January 01, 2024" format
+      // Parse the date string into a Date object
       const date = new Date(row.original.from);
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      const formattedDate = date.toLocaleDateString("en-US", options);
-
+      // Format the date as desired
+      const formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
       return <div className="">{formattedDate}</div>;
     },
   },
@@ -80,11 +96,14 @@ export const columns: ColumnDef<Locker>[] = [
     accessorKey: "to",
     header: "To",
     cell: ({ row }) => {
-      // Convert date to "January 01, 2024" format
-      const date = new Date(row.original.from);
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      const formattedDate = date.toLocaleDateString("en-US", options);
-
+      // Parse the date string into a Date object
+      const date = new Date(row.original.to);
+      // Format the date as desired
+      const formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
       return <div className="">{formattedDate}</div>;
     },
   },
@@ -93,64 +112,69 @@ export const columns: ColumnDef<Locker>[] = [
     cell: ({ row }) => {
       const locker = row.original;
 
+      const handleViewClick = () => {
+        // Parse the 'from' date string into a Date object
+        const fromDate = new Date(locker.from);
+        // Format the 'from' date as desired using toLocaleDateString()
+        const formattedFromDate = fromDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        // Parse the 'to' date string into a Date object
+        const toDate = new Date(locker.to);
+        // Format the 'to' date as desired using toLocaleDateString()
+        const formattedToDate = toDate.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      };
+
       return (
         <Sheet>
-          <SheetTrigger className="text-primary">View</SheetTrigger>
+          <SheetTrigger className="text-primary" onClick={handleViewClick}>
+            View
+          </SheetTrigger>
           <SheetContent>
             <SheetHeader>
               <div>
                 <SheetTitle>
                   <div className="text-left">
-                    <p>Locker 01</p>
+                    <p>{`Locker ${locker.doorNumber}`}</p>{" "}
                   </div>
                 </SheetTitle>
                 <hr />
                 <SheetDescription className="">
                   <div className="flex flex-col justify-between h-full p-5">
-                    <div className="grid grid-cols-2 gap-y-2">
-                      <div className="text-left">
-                        <p>Status</p>
+                    {columns.map((column: any) => (
+                      <div
+                        key={column.accessorKey}
+                        className="grid grid-cols-2 gap-y-2"
+                      >
+                        <div className="text-left">
+                          <p>{column.header}</p>
+                        </div>
+                        <div className="text-left text-black">
+                          {/* Render data dynamically based on accessorKey */}
+                          <p>
+                            {column.accessorKey === "status"
+                              ? getStatusBadge(locker[column.accessorKey])
+                              : column.accessorKey === "from" ||
+                                column.accessorKey === "to"
+                              ? new Date(
+                                  locker[column.accessorKey]
+                                ).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                })
+                              : locker[column.accessorKey]}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex items-start">
-                        <Badge>Occupied</Badge>
-                      </div>
-                      <div className="text-left">
-                        <p>Locker</p>
-                      </div>
-                      <div className="text-left text-black">
-                        <p>Locker 01</p>
-                      </div>
-                      <div className="text-left">
-                        <p>Service</p>
-                      </div>
-                      <div className="text-left text-black">
-                        <p>Coworking Space</p>
-                      </div>
-                      <div className="text-left">
-                        <p>Booking ID</p>
-                      </div>
-                      <div className="text-left text-black">
-                        <p>KMC-0001</p>
-                      </div>
-                      <div className="text-left">
-                        <p>Name</p>
-                      </div>
-                      <div className="text-left text-black">
-                        <p>Charles Gomez</p>
-                      </div>
-                      <div className="text-left">
-                        <p>Contact #</p>
-                      </div>
-                      <div className="text-left text-black">
-                        <p>+63 123 456 7890</p>
-                      </div>
-                      <div className="text-left">
-                        <p>Contract</p>
-                      </div>
-                      <div className="text-left text-black">
-                        <p>Jan 01, 2024 - Dec 30, 2025</p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </SheetDescription>
               </div>
