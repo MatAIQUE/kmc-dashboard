@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <div className="md:col-span-2 justify-end flex">
-          <button className="btn rounded text-lg items-center md:p-2.5 text-white bg-primary flex hover:bg-primary/90  md:text-md">
+          <button className="btn rounded text-lg items-center md:p-2.5 text-white bg-green-500 flex hover:bg-green-500/90  md:text-md">
             <IoDownloadOutline />
             <p className="md:ml-3 text-xs ml-1">Download Report</p>
           </button>
