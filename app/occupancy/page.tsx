@@ -15,7 +15,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Skeleton } from "../../components/ui/skeleton";
 
 async function getData(status: string) {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const response = await fetch(
     `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
@@ -62,7 +62,7 @@ const OccupancyPage = () => {
       <div className="p-2 pt-10 md:pt-10 sm:ml-64">
         <div className="rounded-lg dark:border-gray-700">
           <div className="grid grid-cols-3 gap-4 mb-4 mx-2">
-            <div className="col-span-3 h-auto rounded-xl bg-white dark:bg-gray-800 drop-shadow drop-shadow">
+            <div className="col-span-3 h-auto rounded-xl bg-white dark:bg-gray-800  drop-shadow">
               <div className="py-4 px-6">
                 <div className="grid md:grid-cols-4 md:gap-2 grid-cols-2 p-2">
                   <div className="flex items-center">
@@ -107,7 +107,7 @@ const OccupancyPage = () => {
                             className="col-span-3 md:col-span-1 mb-6"
                           >
                             <div className="w-full flex flex-col justify-between sm:h-auto">
-                              <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                              <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative  justify-center">
                                 <div className="flex items-start mt-3 justify-center">
                                   {/* <FaUserCircle className="h-10 w-10" /> */}
                                   <RiArchiveDrawerLine />
