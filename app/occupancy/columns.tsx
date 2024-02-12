@@ -45,7 +45,7 @@ export const columns: ColumnDef<Locker>[] = [
           </span>
         ) : null;
 
-      return <div className="flex items-center justify-end">{badge}</div>;
+      return <div className="flex items-center">{badge}</div>;
     },
   },
   {
@@ -67,10 +67,26 @@ export const columns: ColumnDef<Locker>[] = [
   {
     accessorKey: "from",
     header: "From",
+    cell: ({ row }) => {
+      // Convert date to "January 01, 2024" format
+      const date = new Date(row.original.from);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const formattedDate = date.toLocaleDateString("en-US", options);
+
+      return <div className="">{formattedDate}</div>;
+    },
   },
   {
     accessorKey: "to",
     header: "To",
+    cell: ({ row }) => {
+      // Convert date to "January 01, 2024" format
+      const date = new Date(row.original.from);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      const formattedDate = date.toLocaleDateString("en-US", options);
+
+      return <div className="">{formattedDate}</div>;
+    },
   },
   {
     id: "actions",
