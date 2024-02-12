@@ -11,12 +11,12 @@ import {
 } from "../../components/ui/tabs";
 import { Locker, columns } from "./columns";
 import { DataTable } from "./data-table";
+import { IoDownload } from "react-icons/io5";
+import { Input } from "../../components/ui/input";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Skeleton } from "../../components/ui/skeleton";
 
 async function getData(status: string) {
-  // await new Promise((resolve) => setTimeout(resolve, 3000));
-
   const response = await fetch(
     `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
   );
@@ -62,38 +62,37 @@ const OccupancyPage = () => {
       <div className="p-2 pt-10 md:pt-10 sm:ml-64">
         <div className="rounded-lg dark:border-gray-700">
           <div className="grid grid-cols-3 gap-4 mb-4 mx-2">
-            <div className="col-span-3 h-auto rounded-xl bg-white dark:bg-gray-800  drop-shadow">
+            <div className="col-span-3 h-auto rounded-xl bg-white dark:bg-gray-800 drop-shadow drop-shadow">
               <div className="py-4 px-6">
                 <div className="grid md:grid-cols-4 md:gap-2 grid-cols-2 p-2">
-                  <div className="flex items-center">
+                  <div className="flex items-center md:justify-start justify-between">
                     <h1 className="md:text-xl font-bold capitalize text-sm">
                       Occupancy
                     </h1>
                   </div>
+                  <div className="flex justify-end md:hidden">
+                    <button className="p-2">
+                      <IoDownload/>
+                    </button>
+                  </div>
                 </div>
-
+                <div className="block md:hidden w-full">
+                <Input placeholder="Name, Locker, Id" className="min-w-full py-3 mb-2"
+            />
+                </div>
                 <Tabs defaultValue={status}>
-                  <TabsList>
-                    <TabsTrigger
-                      value="occupied"
-                      onClick={() => changeStatus("occupied")}
-                    >
-                      Occupied
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="vacant"
-                      onClick={() => changeStatus("vacant")}
-                    >
-                      Vacant
-                    </TabsTrigger>
+                  <TabsList className="w-full md:w-auto">
+                    <TabsTrigger value="occupied"
+                      onClick={() => changeStatus("occupied")} className="w-full md:w-auto">Occupied</TabsTrigger>
+                    <TabsTrigger value="vacant"
+                      onClick={() => changeStatus("vacant")} className="w-full md:w-auto">Vacant</TabsTrigger>
                   </TabsList>
                   <TabsContent value="occupied">
+                    {/* Adjust the width of the DataTable container */}
                     <div className="w-full">
-                      <DataTable
-                        columns={columns}
+                      <DataTable columns={columns}
                         data={dataOccupied}
-                        isFetching={isFetching}
-                      />
+                        isFetching={isFetching} />
                     </div>
                   </TabsContent>
                   <TabsContent value="vacant">
