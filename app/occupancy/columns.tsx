@@ -33,8 +33,8 @@ export const columns: ColumnDef<Locker>[] = [
       // Conditionally render a badge with an orange background if status === 3
       const badge =
         row.original.status === 8 ? (
-          <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-orange-500">
-            Occupied
+          <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-blue-500">
+            Reserved
           </span>
         ) : row.original.status === 3 ? (
           <span className="inline-block px-2 py-1 text-white text-xs font-semibold rounded bg-orange-500">
