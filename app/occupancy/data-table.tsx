@@ -55,19 +55,20 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex justify-end items-end py-4">
-        <Input
-          placeholder="Name, Locker, Id"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <div className="md:col-span-2 justify-end flex">
-          <button className="btn rounded text-lg items-center md:p-2.5 text-white bg-primary flex hover:bg-primary/90  md:text-md">
+      <div className="flex w-full justify-end gap-2 my-2">
+        <div className="w-full md:w-auto">
+          <Input placeholder="Name, Locker, Id"
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="min-w-full py-3"
+          />
+        </div>
+        <div className="md:col-span-2 justify-center items-center flex">
+          <button className="btn rounded text-lg items-center p-3 text-white bg-primary flex hover:bg-primary/90  md:text-md">
             <IoDownloadOutline />
-            <p className="md:ml-3 text-xs ml-1">Download Report</p>
+            <p className="md:ml-3 text-xs ml-1 hidden md:block">Download Report</p>
           </button>
         </div>
       </div>
