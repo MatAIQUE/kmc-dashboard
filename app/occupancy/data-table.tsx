@@ -154,9 +154,74 @@ export function DataTable<TData, TValue>({
 
       {/* SMALL SCREEN */}
       <div className="block md:hidden w-full">
-        <div className="grid border-b-2 py-4">
+        {/* Map Here */}
+        <div className="grid border-b-2 py-4 gap-y-2">
           <div>
-            <p className="text-xs uppercase opacity-30">Title</p>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-primary rounded-full h-2 w-2 me-2" />
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
+          </div>
+        </div>
+        {/* Map Here */}
+        <div className="grid border-b-2 py-4 gap-y-2">
+          <div>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-primary rounded-full h-2 w-2 me-2" />
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
+          </div>
+        </div>
+        <div className="grid border-b-2 py-4 gap-y-2">
+          <div>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-primary rounded-full h-2 w-2 me-2"/>
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
+          </div>
+        </div>
+        <div className="grid border-b-2 py-4 gap-y-2">
+          <div>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-blue-500 rounded-full h-2 w-2 me-2"/>
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
           </div>
         </div>
       </div>
