@@ -72,27 +72,41 @@ const OccupancyPage = () => {
                   </div>
                   <div className="flex justify-end md:hidden">
                     <button className="p-2">
-                      <IoDownload/>
+                      <IoDownload />
                     </button>
                   </div>
                 </div>
                 <div className="block md:hidden w-full">
-                <Input placeholder="Name, Locker, Id" className="min-w-full py-3 mb-2"
-            />
+                  <Input
+                    placeholder="Name, Locker, Id"
+                    className="min-w-full py-3 mb-2"
+                  />
                 </div>
                 <Tabs defaultValue={status}>
                   <TabsList className="w-full md:w-auto">
-                    <TabsTrigger value="occupied"
-                      onClick={() => changeStatus("occupied")} className="w-full md:w-auto">Occupied</TabsTrigger>
-                    <TabsTrigger value="vacant"
-                      onClick={() => changeStatus("vacant")} className="w-full md:w-auto">Vacant</TabsTrigger>
+                    <TabsTrigger
+                      value="occupied"
+                      onClick={() => changeStatus("occupied")}
+                      className="w-full md:w-auto"
+                    >
+                      Occupied
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="vacant"
+                      onClick={() => changeStatus("vacant")}
+                      className="w-full md:w-auto"
+                    >
+                      Vacant
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="occupied">
                     {/* Adjust the width of the DataTable container */}
                     <div className="w-full">
-                      <DataTable columns={columns}
+                      <DataTable
+                        columns={columns}
                         data={dataOccupied}
-                        isFetching={isFetching} />
+                        isFetching={isFetching}
+                      />
                     </div>
                   </TabsContent>
                   <TabsContent value="vacant">
