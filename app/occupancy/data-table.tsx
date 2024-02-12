@@ -61,8 +61,11 @@ export function DataTable<TData, TValue>({
       <div className="hidden md:block">
         <div className="flex w-full justify-end gap-2 my-2">
           <div className="w-full md:w-auto">
-            <Input placeholder="Name, Locker, Id"
-              value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            <Input
+              placeholder="Name, Locker, Id"
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
               onChange={(event) =>
                 table.getColumn("name")?.setFilterValue(event.target.value)
               }
@@ -72,7 +75,9 @@ export function DataTable<TData, TValue>({
           <div className="md:col-span-2 justify-center items-center flex">
             <button className="btn rounded text-lg items-center p-3 text-white bg-green-500 flex hover:bg-green/50  md:text-md">
               <IoDownloadOutline />
-              <p className="md:ml-3 text-xs ml-1 hidden md:block">Download Report</p>
+              <p className="md:ml-3 text-xs ml-1 hidden md:block">
+                Download Report
+              </p>
             </button>
           </div>
         </div>
@@ -149,9 +154,74 @@ export function DataTable<TData, TValue>({
 
       {/* SMALL SCREEN */}
       <div className="block md:hidden w-full">
-        <div className="grid border-b-2 py-4">
+        {/* Map Here */}
+        <div className="grid border-b-2 py-4 gap-y-2">
           <div>
-            <p className="text-xs uppercase opacity-30">Title</p>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-primary rounded-full h-2 w-2 me-2" />
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
+          </div>
+        </div>
+        {/* Map Here */}
+        <div className="grid border-b-2 py-4 gap-y-2">
+          <div>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-primary rounded-full h-2 w-2 me-2" />
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
+          </div>
+        </div>
+        <div className="grid border-b-2 py-4 gap-y-2">
+          <div>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-primary rounded-full h-2 w-2 me-2"/>
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
+          </div>
+        </div>
+        <div className="grid border-b-2 py-4 gap-y-2">
+          <div>
+            <p className="text-[12px] uppercase opacity-30">L01</p>
+          </div>
+          <div className="flex items-center py-2">
+            <span className="bg-blue-500 rounded-full h-2 w-2 me-2"/>
+            <h1 className="font-bold">Charles Gomez</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <div className="capitalize">
+              <p className="text-[12px] opacity-60">Coworking Space</p>
+            </div>
+            <div className="uppercase text-right">
+              <p className="text-[12px] opacity-60">KMC-0001</p>
+            </div>
           </div>
         </div>
       </div>
