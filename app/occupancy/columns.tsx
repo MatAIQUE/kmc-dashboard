@@ -13,8 +13,8 @@ import {
 // You can use a Zod schema here if you want.
 export type Locker = {
   id: string;
-  status: "Occupied" | "Reserved";
-  locker: string;
+  status: number;
+  doorNumber: string;
   service: "Coworking Space" | "Virtual Office" | "Serviced Office";
   bookingId: string;
   name: string;

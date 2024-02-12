@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiArchiveDrawerLine } from "react-icons/ri";
 import Nav from "../../components/ui/nav";
 import {
@@ -11,8 +11,12 @@ import {
 } from "../../components/ui/tabs";
 import { Locker, columns } from "./columns";
 import { DataTable } from "./data-table";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Skeleton } from "../../components/ui/skeleton";
 
 async function getData(status: string) {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const response = await fetch(
     `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
   );
@@ -24,28 +28,34 @@ async function getData(status: string) {
 }
 
 const OccupancyPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [dataOccupied, setDataOccupied] = useState<Locker[]>([]);
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
 
-  const { isLoading: isLoadingOccupied, isError: isErrorOccupied } = useQuery(
-    ["occupied"],
-    () => getData("occupied"),
+  const status = searchParams.get("status") || "occupied";
+
+  const { isLoading, isError, isFetching } = useQuery(
+    [status],
+    () => getData(status),
     {
       onSuccess: (data) => {
-        setDataOccupied(data);
+        if (status === "occupied") {
+          setDataOccupied(data);
+        } else {
+          setDataVacant(data);
+        }
       },
     }
   );
 
-  const { isLoading: isLoadingVacant, isError: isErrorVacant } = useQuery(
-    ["vacant"],
-    () => getData("vacant"),
-    {
-      onSuccess: (data) => {
-        setDataVacant(data);
-      },
-    }
-  );
+  console.log(isFetching);
+
+  const changeStatus = (status: string) => {
+    const url = `/occupancy?status=${status}`;
+    router.push(url);
+  };
+
   return (
     <>
       <Nav />
@@ -62,43 +72,60 @@ const OccupancyPage = () => {
                   </div>
                 </div>
 
-                <Tabs defaultValue="occupied">
+                <Tabs defaultValue={status}>
                   <TabsList>
-                    <TabsTrigger value="occupied">Occupied</TabsTrigger>
-                    <TabsTrigger value="vacant">Vacant</TabsTrigger>
+                    <TabsTrigger
+                      value="occupied"
+                      onClick={() => changeStatus("occupied")}
+                    >
+                      Occupied
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="vacant"
+                      onClick={() => changeStatus("vacant")}
+                    >
+                      Vacant
+                    </TabsTrigger>
                   </TabsList>
                   <TabsContent value="occupied">
-                    {/* Adjust the width of the DataTable container */}
                     <div className="w-full">
-                      <DataTable columns={columns} data={dataOccupied} />
+                      <DataTable
+                        columns={columns}
+                        data={dataOccupied}
+                        isFetching={isFetching}
+                      />
                     </div>
                   </TabsContent>
                   <TabsContent value="vacant">
-                    <div className="w-full mt-2 grid grid-cols-3 gap-2 gap-y-2">
-                      {dataVacant.map((item) => (
-                        <div
-                          key={item.doorId}
-                          className="col-span-3 md:col-span-1 mb-6"
-                        >
-                          <div className="w-full flex flex-col justify-between sm:h-auto">
-                            <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
-                              <div className="flex items-start mt-3 justify-center">
-                                {/* <FaUserCircle className="h-10 w-10" /> */}
-                                <RiArchiveDrawerLine />
-                              </div>
-                              <div className="grid ms-2 col-span-2">
-                                <div>
-                                  <p className="font-bold w-full">{`Locker - ${item.doorNumber}`}</p>
-                                  <p className="opacity-80 w-full hidden md:block">
-                                    Vacant
-                                  </p>
+                    {isLoading ? (
+                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                    ) : (
+                      <div className="w-full mt-2 grid grid-cols-3 gap-2 gap-y-2">
+                        {dataVacant.map((item) => (
+                          <div
+                            key={item.doorNumber}
+                            className="col-span-3 md:col-span-1 mb-6"
+                          >
+                            <div className="w-full flex flex-col justify-between sm:h-auto">
+                              <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                                <div className="flex items-start mt-3 justify-center">
+                                  {/* <FaUserCircle className="h-10 w-10" /> */}
+                                  <RiArchiveDrawerLine />
+                                </div>
+                                <div className="grid ms-2 col-span-2">
+                                  <div>
+                                    <p className="font-bold w-full">{`Locker - ${item.doorNumber}`}</p>
+                                    <p className="opacity-80 w-full hidden md:block">
+                                      Vacant
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    )}
                   </TabsContent>
                 </Tabs>
               </div>
