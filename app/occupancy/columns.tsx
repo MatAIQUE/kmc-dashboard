@@ -11,7 +11,7 @@ import {
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type Locker = {
   id: string;
   status: "Occupied" | "Reserved";
   locker: string;
@@ -22,13 +22,13 @@ export type Payment = {
   to: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Locker>[] = [
   {
     accessorKey: "status",
     header: "Status",
   },
   {
-    accessorKey: "locker",
+    accessorKey: "doorNumber",
     header: "Locker",
   },
   {
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const locker = row.original;
 
       return (
         <Sheet>
