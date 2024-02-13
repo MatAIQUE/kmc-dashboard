@@ -21,14 +21,15 @@ async function getData(status: string) {
     const response = await fetch(
       `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
     );
+
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }
+
     const responseData = await response.json();
-    return responseData.data.locker.availableDoors;
+    return responseData.data.doors;
   } catch (error) {
     console.error("Error fetching data:", error);
-    // Handle the error gracefully, e.g., display an error message to the user
   }
 }
 
