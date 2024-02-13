@@ -141,18 +141,22 @@ const OccupancyPage = () => {
                         {dataVacant.map((item) => (
                           <div
                             key={item.doorNumber}
-                            className="col-span-3 md:col-span-1 mb-6"
+                            className="col-span-3 md:col-span-1 mb-6 border-b-2 outline-gray-500
+                            md:border-b-0
+                            "
                           >
                             <div className="w-full flex flex-col justify-between sm:h-auto">
-                              <div className="grid grid-cols-3 bg-white md:drop-shadow-md rounded-xl p-4 relative  justify-center">
-                                <div className="flex items-start mt-3 justify-center">
+                              <div className=" flex items-center bg-white md:drop-shadow-md rounded-xl px-4 py-8 md:py-6 relative">
+                                <div className="flex items-center justify-start me-2">
                                   {/* <FaUserCircle className="h-10 w-10" /> */}
-                                  <RiArchiveDrawerLine />
+                                  <div className="bg-[#001738] text-white p-1 rounded-full p-4">
+                                    <RiArchiveDrawerLine />
+                                  </div>
                                 </div>
-                                <div className="grid ms-2 col-span-2">
+                                <div className="grid ms-2">
                                   <div>
                                     <p className="font-bold w-full">{`Locker - ${item.doorNumber}`}</p>
-                                    <p className="opacity-80 w-full hidden md:block">
+                                    <p className="opacity-80 w-full block">
                                       Vacant
                                     </p>
                                   </div>
