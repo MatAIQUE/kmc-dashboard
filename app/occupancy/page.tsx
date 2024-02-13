@@ -1,8 +1,25 @@
 "use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaPlusCircle } from "react-icons/fa";
+import { IoDownload } from "react-icons/io5";
 import { RiArchiveDrawerLine } from "react-icons/ri";
+import { Button } from "../../components/ui/button";
+import { CardContent, CardHeader } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
 import Nav from "../../components/ui/nav";
+import { Skeleton } from "../../components/ui/skeleton";
 import {
   Tabs,
   TabsContent,
@@ -11,15 +28,12 @@ import {
 } from "../../components/ui/tabs";
 import { Locker, columns } from "./columns";
 import { DataTable } from "./data-table";
-import { IoDownload } from "react-icons/io5";
-import { Input } from "../../components/ui/input";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Skeleton } from "../../components/ui/skeleton";
+import VacantLockers from "./data-vacant";
 
 async function getData(status: string) {
   try {
     const response = await fetch(
-      `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&status=${status}`
+      `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
     );
 
     if (!response.ok) {
@@ -49,15 +63,13 @@ const OccupancyPage = () => {
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
 
   const status = searchParams.get("status") || "occupied";
-  const doorNumberToFilter = searchParams.get("doorNumber"); // Get bookingId from URL query params
+  const doorNumberToFilter = searchParams.get("doorNumber");
 
-  // Fetch data based on whether doorNumber is provided or not
   const fetchData = doorNumberToFilter
     ? () => getFilteredData(status, doorNumberToFilter)
     : () => getData(status);
 
   useEffect(() => {
-    // Fetch data when component mounts or when doorNumberToFilter changes
     fetchData();
   }, [doorNumberToFilter]);
 
@@ -124,7 +136,6 @@ const OccupancyPage = () => {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="occupied">
-                    {/* Adjust the width of the DataTable container */}
                     <div className="w-full">
                       <DataTable
                         columns={columns}
@@ -134,38 +145,19 @@ const OccupancyPage = () => {
                     </div>
                   </TabsContent>
                   <TabsContent value="vacant">
+                    <div className="md:me-4 md:col-start-4 flex justify-end">
+                      <Button
+                        onClick={() => router.push("/occupancy/create")}
+                        className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md"
+                      >
+                        <FaPlusCircle className="text-sm" />
+                        <p className="md:ml-3 text-xs ml-1">Book Locker</p>
+                      </Button>
+                    </div>
                     {isLoading ? (
                       <Skeleton className="w-[100px] h-[20px] rounded-full" />
                     ) : (
-                      <div className="w-full mt-2 grid grid-cols-3 gap-2 gap-y-2">
-                        {dataVacant.map((item) => (
-                          <div
-                            key={item.doorNumber}
-                            className="col-span-3 md:col-span-1 mb-6 border-b-2 outline-gray-500
-                            md:border-b-0
-                            "
-                          >
-                            <div className="w-full flex flex-col justify-between sm:h-auto">
-                              <div className=" flex items-center bg-white md:drop-shadow-md rounded-xl px-4 py-8 md:py-6 relative">
-                                <div className="flex items-center justify-start me-2">
-                                  {/* <FaUserCircle className="h-10 w-10" /> */}
-                                  <div className="bg-[#001738] text-white p-1 rounded-full p-4">
-                                    <RiArchiveDrawerLine />
-                                  </div>
-                                </div>
-                                <div className="grid ms-2">
-                                  <div>
-                                    <p className="font-bold w-full">{`Locker - ${item.doorNumber}`}</p>
-                                    <p className="opacity-80 w-full block">
-                                      Vacant
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      <VacantLockers dataVacant={dataVacant} />
                     )}
                   </TabsContent>
                 </Tabs>

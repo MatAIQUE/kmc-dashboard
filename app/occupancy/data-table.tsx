@@ -195,7 +195,7 @@ export function DataTable<TData, TValue>({
             <p className="text-[12px] uppercase opacity-30">L01</p>
           </div>
           <div className="flex items-center py-2">
-            <span className="bg-primary rounded-full h-2 w-2 me-2"/>
+            <span className="bg-primary rounded-full h-2 w-2 me-2" />
             <h1 className="font-bold">Charles Gomez</h1>
           </div>
           <div className="grid grid-cols-2">
@@ -212,7 +212,7 @@ export function DataTable<TData, TValue>({
             <p className="text-[12px] uppercase opacity-30">L01</p>
           </div>
           <div className="flex items-center py-2">
-            <span className="bg-blue-500 rounded-full h-2 w-2 me-2"/>
+            <span className="bg-blue-500 rounded-full h-2 w-2 me-2" />
             <h1 className="font-bold">Charles Gomez</h1>
           </div>
           <div className="grid grid-cols-2">
