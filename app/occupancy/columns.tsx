@@ -81,9 +81,8 @@ export const columns: ColumnDef<Locker>[] = [
     accessorKey: "from",
     header: "From",
     cell: ({ row }) => {
-      // Parse the date string into a Date object
       const date = new Date(row.original.from);
-      // Format the date as desired
+
       const formattedDate = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -96,9 +95,8 @@ export const columns: ColumnDef<Locker>[] = [
     accessorKey: "to",
     header: "To",
     cell: ({ row }) => {
-      // Parse the date string into a Date object
       const date = new Date(row.original.to);
-      // Format the date as desired
+
       const formattedDate = date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
@@ -113,18 +111,16 @@ export const columns: ColumnDef<Locker>[] = [
       const locker = row.original;
 
       const handleViewClick = () => {
-        // Parse the 'from' date string into a Date object
         const fromDate = new Date(locker.from);
-        // Format the 'from' date as desired using toLocaleDateString()
+
         const formattedFromDate = fromDate.toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         });
 
-        // Parse the 'to' date string into a Date object
         const toDate = new Date(locker.to);
-        // Format the 'to' date as desired using toLocaleDateString()
+
         const formattedToDate = toDate.toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
@@ -160,17 +156,25 @@ export const columns: ColumnDef<Locker>[] = [
                           {/* Render data dynamically based on accessorKey */}
                           <p>
                             {column.accessorKey === "status"
-                              ? getStatusBadge(locker[column.accessorKey])
+                              ? getStatusBadge(
+                                  locker[
+                                    column.accessorKey as keyof Locker
+                                  ] as number
+                                )
                               : column.accessorKey === "from" ||
                                 column.accessorKey === "to"
                               ? new Date(
-                                  locker[column.accessorKey]
+                                  locker[
+                                    column.accessorKey as keyof Locker
+                                  ] as string
                                 ).toLocaleDateString("en-US", {
                                   year: "numeric",
                                   month: "long",
                                   day: "numeric",
                                 })
-                              : locker[column.accessorKey]}
+                              : (locker[
+                                  column.accessorKey as keyof Locker
+                                ] as string)}
                           </p>
                         </div>
                       </div>
