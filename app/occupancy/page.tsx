@@ -114,7 +114,7 @@ const OccupancyPage = () => {
                 </div>
                 <div className="block md:hidden w-full">
                   <Input
-                    placeholder="Name, Locker, Id"
+                    placeholder="Name, ID, Locker"
                     className="min-w-full py-3 mb-2"
                   />
                 </div>

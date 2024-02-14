@@ -8,6 +8,10 @@ import { PiSignOut } from "react-icons/pi";
 import { RiArchiveDrawerLine } from "react-icons/ri";
 import Toggle from "../toggle";
 import Logo from "./logo";
+import AdsIcon from "../../app/assets/ads-icon";
+import OccupancyIcon from "../../app/assets/occupancy-icon";
+import DashboardIcon from "../../app/assets/dashboard-icon";
+import ConfigurationIcon from "../../app/assets/configuration-icon";
 
 const menuItems = [
   {
@@ -16,22 +20,22 @@ const menuItems = [
       {
         title: "Dashboard",
         path: "/dashboard",
-        icon: <MdOutlineDashboard />,
+        icon: <DashboardIcon />,
       },
       {
         title: "Occupancy",
         path: "/occupancy",
-        icon: <RiArchiveDrawerLine />,
+        icon: <OccupancyIcon />,
       },
       {
         title: "Advertisements",
         path: "/advertisement",
-        icon: <CiImageOn />,
+        icon: <AdsIcon />,
       },
       {
         title: "Configuration",
         path: "/configuration",
-        icon: <FaCog />,
+        icon: <ConfigurationIcon />,
       },
     ],
   },

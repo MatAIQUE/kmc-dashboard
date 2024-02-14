@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
         <div className="flex w-full justify-end gap-2 my-2">
           <div className="w-full md:w-auto">
             <Input
-              placeholder="Name, Locker, Id"
+              placeholder="Name, ID, Locker"
               value={
                 (table.getColumn("name")?.getFilterValue() as string) ?? ""
               }
