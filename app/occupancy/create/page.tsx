@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Nav from "../../../components/ui/nav";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -55,6 +56,7 @@ const CreateLockerPage: React.FC = () => {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
+  const router = useRouter();
 
   return (
     <>
@@ -160,7 +162,9 @@ const CreateLockerPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <button className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize">Cancel</button>
+                    <button className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize"
+                    onClick={() => router.push("/occupancy?status=vacant")}
+                    >Cancel</button>
                     <button className="text-xs bg-primary text-white p-2 rounded capitalize">Continue</button>
                   </div>
                 </div>

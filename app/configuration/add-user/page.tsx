@@ -1,3 +1,4 @@
+"use client"
 import Nav from "../../../components/ui/nav";
 import {
     Card,
@@ -7,8 +8,11 @@ import {
     CardHeader,
     CardTitle,
   } from "../../../components/ui/card";
+import { useRouter } from "next/navigation";
 
 const AddUserPage = () => {
+    const router = useRouter();
+
   return (
     <>
       <Nav />
@@ -81,7 +85,9 @@ const AddUserPage = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <button className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize">
+                    <button className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize"
+                    onClick={() => router.push("/configuration")}
+                    >
                       Cancel
                     </button>
                     <button className="text-xs bg-primary text-white p-2 rounded capitalize">
