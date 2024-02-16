@@ -7,7 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "../../components/ui/alert-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ import VacantLockers from "./data-vacant";
 async function getData(status: string) {
   try {
     const response = await fetch(
-      `https://8920-110-54-134-139.ngrok-free.app/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
+      `https://pandora-v3.onrender.com/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
     );
 
     if (!response.ok) {
