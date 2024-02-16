@@ -44,7 +44,9 @@ const ConfigurationPage = () => {
                   <div className="md:col-start-4 md:me-4 md:col-start-4 flex justify-end">
                     <button className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md">
                       <FaPlusCircle className="text-sm" />
-                      <p className="md:ml-3 text-xs ml-1">Add User</p>
+                      <p className="md:ml-3 text-xs ml-1"
+                      onClick={() => router.push("/configuration/add-user")}
+                      >Add User</p>
                     </button>
                   </div>
                 </div>
