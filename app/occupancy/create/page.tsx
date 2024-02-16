@@ -55,6 +55,7 @@ const CreateLockerPage: React.FC = () => {
   const [selectedService, setSelectedService] = useState("serviced-office");
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrDialog, setShowErrDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -68,6 +69,7 @@ const CreateLockerPage: React.FC = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       const data = {
         ...values,
         lockerId: "4001",
@@ -89,11 +91,12 @@ const CreateLockerPage: React.FC = () => {
       if (response.status === 201) {
         setShowSuccessDialog(true);
       }
-
-      console.log("Post request successful:", response.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(true);
       setShowErrDialog(true);
       console.error("Error while making POST request:", error);
+      setIsLoading(false);
     }
   }
 
@@ -284,7 +287,7 @@ const CreateLockerPage: React.FC = () => {
                           type="submit"
                           className="text-xs bg-primary text-white p-2 rounded capitalize"
                         >
-                          Continue
+                          {isLoading ? "Loading..." : "Continue"}
                         </button>
                       </div>
                     </div>
