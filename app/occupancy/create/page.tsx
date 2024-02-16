@@ -6,7 +6,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Nav from "../../../components/ui/nav";
 
-import { FaBuilding, FaChair, FaPlusCircle } from "react-icons/fa";
+import {
+  FaBuilding,
+  FaChair,
+  FaMinus,
+  FaPlus,
+  FaPlusCircle,
+} from "react-icons/fa";
 import {
   Card,
   CardContent,
@@ -36,6 +42,7 @@ import {
   AlertDialogTrigger,
 } from "../../../components/ui/alert-dialog";
 import { Button } from "../../../components/ui/button";
+import { Badge } from "../../../components/ui/badge";
 
 const formSchema = z.object({
   bookingNumber: z.string().min(7, {
@@ -56,6 +63,12 @@ const CreateLockerPage: React.FC = () => {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrDialog, setShowErrDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [availableDoors, setAvailableDoors] = useState<number>(10);
+  const [isLoadingDoor, setIsLoadingDoor] = useState(false);
+  const [errorDoor, setErrorDoor] = useState("");
+  const [doorCount, setDoorCount] = useState(1);
+  const [lockerQty, setLockerQty] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
 
   const router = useRouter();
 
@@ -89,6 +102,39 @@ const CreateLockerPage: React.FC = () => {
       );
 
       if (response.status === 201) {
+        setLockerQty(true);
+        setShowBtn(true);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(true);
+      setShowErrDialog(true);
+      console.error("Error while making POST request:", error);
+      setIsLoading(false);
+    }
+  }
+
+  async function createLocker(values: z.infer<typeof formSchema>) {
+    try {
+      setIsLoading(true);
+      const data = {
+        ...values,
+        lockerId: "4001",
+        bookingOrigin: "8",
+        doorCount: doorCount,
+      };
+      const newLocker = await axios.post(
+        "https://pandora-v3.onrender.com/transactions/door/reserve/0003/kmc?",
+        data,
+        {
+          headers: {
+            "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
+            "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (newLocker.status === 201) {
         setShowSuccessDialog(true);
       }
       setIsLoading(false);
@@ -110,6 +156,44 @@ const CreateLockerPage: React.FC = () => {
     }
   }
 
+  const availableDoorsCount = async () => {
+    try {
+      const response = await axios.get(
+        process.env.NEXT_PUBLIC_GET_AVAILABLE_DOORS as string,
+        {
+          headers: {
+            "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
+            "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setAvailableDoors(response.data.data.locker.available);
+      }
+      setIsLoadingDoor(false);
+    } catch (error) {
+      setIsLoadingDoor(true);
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 416) {
+          setErrorDoor("No available doors");
+        }
+      }
+      setIsLoadingDoor(false);
+    }
+  };
+
+  const addCart = () => {
+    if (doorCount < availableDoors) setDoorCount((prev) => prev + 1);
+  };
+
+  const subtractCart = () => {
+    if (doorCount > 1) {
+      setDoorCount((prev) => prev - 1);
+    }
+  };
+
   return (
     <>
       <Nav />
@@ -124,7 +208,11 @@ const CreateLockerPage: React.FC = () => {
               <CardContent>
                 <Form reset={reset} {...form}>
                   <form
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={
+                      showBtn
+                        ? form.handleSubmit(createLocker)
+                        : form.handleSubmit(onSubmit)
+                    }
                     className="space-y-8"
                   >
                     <div className="grid gap-2 gap-y-6">
@@ -272,8 +360,39 @@ const CreateLockerPage: React.FC = () => {
                               </FormItem>
                             )}
                           />
+
+                          {lockerQty && (
+                            <div className="flex items-start justify-between w-[160px]">
+                              <Badge
+                                onClick={subtractCart}
+                                className={
+                                  doorCount > 1
+                                    ? `btn btn-circle btn-primary btn-sm`
+                                    : `btn btn-circle btn-outline btn-sm`
+                                }
+                              >
+                                <FaMinus />
+                              </Badge>
+                              <div className="font-medium text-3xl mx-2">
+                                {doorCount}
+                              </div>
+                              <Badge
+                                onClick={addCart}
+                                className={
+                                  doorCount >= availableDoors
+                                    ? `btn btn-circle btn-outline btn-sm`
+                                    : `btn btn-circle btn-primary btn-sm`
+                                }
+
+                                // disabled={quantity >= availableDoorsCount}
+                              >
+                                <FaPlus />
+                              </Badge>
+                            </div>
+                          )}
                         </>
                       )}
+
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize"
@@ -283,6 +402,7 @@ const CreateLockerPage: React.FC = () => {
                         >
                           Cancel
                         </button>
+
                         <button
                           type="submit"
                           className="text-xs bg-primary text-white p-2 rounded capitalize"
