@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../../components/ui/sheet";
-import { Badge, badgeVariants } from "@/components/ui/badge";
+import { Badge, badgeVariants } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 
 // This type is used to define the shape of our data.
