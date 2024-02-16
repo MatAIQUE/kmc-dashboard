@@ -165,9 +165,7 @@ const ConfigurationPage = () => {
                     </h1>
                   </div>
                   <div className="flex justify-end md:hidden">
-                    <button className="p-2">
-                      {/* <FaPlusCircle /> */}
-                    </button>
+                    <button className="p-2">{/* <FaPlusCircle /> */}</button>
                   </div>
                 </div>
                 <Tabs defaultValue={tab}>
@@ -197,7 +195,82 @@ const ConfigurationPage = () => {
                         <p className="md:ml-3 text-xs ml-1">Add User</p>
                       </Button>
                     </div>
-                    <div className="w-full">Users</div>
+                    <div className="w-full">
+                      <div className="w-full mt-2 grid grid-cols-3 gap-2 gap-y-2">
+                        <div className="col-span-3 md:col-span-1 mb-6">
+                          <div className="w-full flex flex-col justify-between sm:h-auto">
+                            <div className="grid grid-cols-4 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                              <div className="flex items-start mt-3 justify-center">
+                                <FaUserCircle className="h-10 w-10" />
+                              </div>
+                              <div className="grid ms-2 col-span-2">
+                                <div>
+                                  <p className="font-bold w-full">Jane Hoe</p>
+                                  <p className="opacity-80 w-full hidden md:block">
+                                    janehoe@biatch.com
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="w-full mt-2">Admin</p>
+                                </div>
+                              </div>
+                              <div className="absolute top-0 right-0 p-4">
+                                <FaEllipsisV className="hidden md:block" />
+                                <FaEllipsisH className="md:hidden" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-span-3 md:col-span-1 mb-6">
+                          <div className="w-full flex flex-col justify-between sm:h-auto">
+                            <div className="grid grid-cols-4 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                              <div className="flex items-start mt-3 justify-center">
+                                <FaUserCircle className="h-10 w-10" />
+                              </div>
+                              <div className="grid ms-2 col-span-2">
+                                <div>
+                                  <p className="font-bold w-full">Jane Hoe</p>
+                                  <p className="opacity-80 w-full hidden md:block">
+                                    janehoe@biatch.com
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="w-full mt-2">Admin</p>
+                                </div>
+                              </div>
+                              <div className="absolute top-0 right-0 p-4">
+                                <FaEllipsisV className="hidden md:block" />
+                                <FaEllipsisH className="md:hidden" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-span-3 md:col-span-1 mb-6">
+                          <div className="w-full flex flex-col justify-between sm:h-auto">
+                            <div className="grid grid-cols-4 bg-white md:drop-shadow-md rounded-xl p-4 relative flex justify-center">
+                              <div className="flex items-start mt-3 justify-center">
+                                <FaUserCircle className="h-10 w-10" />
+                              </div>
+                              <div className="grid ms-2 col-span-2">
+                                <div>
+                                  <p className="font-bold w-full">Jane Hoe</p>
+                                  <p className="opacity-80 w-full hidden md:block">
+                                    janehoe@biatch.com
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="w-full mt-2">Admin</p>
+                                </div>
+                              </div>
+                              <div className="absolute top-0 right-0 p-4">
+                                <FaEllipsisV className="hidden md:block" />
+                                <FaEllipsisH className="md:hidden" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </TabsContent>
                   <TabsContent value="pricing">
                     <div>Pricing</div>
