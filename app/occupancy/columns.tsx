@@ -11,7 +11,8 @@ import {
   SheetTrigger,
 } from "../../components/ui/sheet";
 
-import WarningIcon from "../../app/assets/icons/warning-icon.svg"
+import WarningIcon from "../../app/assets/icons/warning-icon.svg";
+import SuccessIcon from "../../app/assets/icons/success-icon.svg";
 
 import Image from "next/image";
 
@@ -208,19 +209,65 @@ export const columns: ColumnDef<Locker>[] = [
                       <AlertDialogHeader>
                         <AlertDialogTitle className="grid gap-y-2">
                           <div className="flex items-center justify-center">
-                            <Image src={WarningIcon} width={32} height={28} alt="warning icon" />
+                            <Image
+                              src={WarningIcon}
+                              width={32}
+                              height={28}
+                              alt="warning icon"
+                            />
                           </div>
                           <div className="flex items-center justify-center">
                             Reset PIN?
                           </div>
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                          <p className="text-center">Are you sure you want to reset the PIN Code of {`Locker ${locker.doorNumber}`}?</p>
+                          <p className="text-center">
+                            Are you sure you want to reset the PIN Code of{" "}
+                            {`Locker ${locker.doorNumber}`}?
+                          </p>
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter className="w-full grid grid-cols-2">
-                        <AlertDialogCancel className="w-full hover:bg-gray-200">No</AlertDialogCancel>
-                        <AlertDialogAction className=" w-full bg-destructive hover:bg-destructive hover:opacity-80">Yes, Remove</AlertDialogAction>
+                        <AlertDialogCancel className="w-full hover:bg-gray-200">
+                          No
+                        </AlertDialogCancel>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger>
+                            <AlertDialogAction className=" w-full bg-destructive hover:bg-destructive hover:opacity-80">
+                              Yes, Reset PIN
+                            </AlertDialogAction>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="w-3/4">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle className="grid gap-y-2">
+                                <div className="flex items-center justify-center">
+                                  <Image
+                                    src={SuccessIcon}
+                                    width={32}
+                                    height={28}
+                                    alt="warning icon"
+                                  />
+                                </div>
+                                <div className="flex items-center justify-center">
+                                  Reset Successful
+                                </div>
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                <p className="text-center">
+                                  {`Locker ${locker.doorNumber}`}&apos;s Pin has
+                                  been reset we&apos;ve send the user a new PIN
+                                  Code
+                                </p>
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter className="w-full">
+                              <AlertDialogAction className=" w-full bg-primary hover:opacity-80">
+                                Continue
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
@@ -228,11 +275,46 @@ export const columns: ColumnDef<Locker>[] = [
               </div>
 
               <SheetFooter className="justify-center">
-                <div className="w-full">
-                  <div className="mb-2">
-                    <Button variant="outlineDestructive" className="w-full">
-                      Terminate
-                    </Button>
+                <div className="w-full grid grid-cols-2 gap-2">
+                  <div className="mb-2 w-full">
+                    <AlertDialog>
+                      <AlertDialogTrigger className="w-full">
+                        <Button variant="outlineDestructive" className="w-full">
+                          Terminate
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="w-3/4">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="grid gap-y-2">
+                            <div className="flex items-center justify-center">
+                              <Image
+                                src={WarningIcon}
+                                width={32}
+                                height={28}
+                                alt="warning icon"
+                              />
+                            </div>
+                            <div className="flex items-center justify-center">
+                              Hold up!
+                            </div>
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            <p className="text-center">
+                              Are you sure you want to remove our client on our
+                              Smart Locker?
+                            </p>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className="w-full grid grid-cols-2">
+                          <AlertDialogCancel className="w-full hover:bg-gray-200">
+                            No
+                          </AlertDialogCancel>
+                          <AlertDialogAction className=" w-full bg-destructive hover:bg-destructive hover:opacity-80">
+                            Yes, Remove
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                   <div>
                     <Button className="w-full">Renew</Button>
