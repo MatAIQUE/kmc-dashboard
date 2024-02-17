@@ -12,6 +12,20 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../components/ui/alert-dialog";
+
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../../components/ui/button";
 
@@ -63,7 +77,7 @@ const ConfigurationPage = () => {
                       <div className="md:me-4 md:col-start-4 flex justify-end">
                         <Button
                           onClick={() => router.push("/configuration/add-user")}
-                          className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md hidden md:block"
+                          className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md hidden md:flex"
                         >
                           <FaPlusCircle className="text-sm" />
                           <p className="md:ml-3 text-xs ml-1">Add User</p>
@@ -88,9 +102,31 @@ const ConfigurationPage = () => {
                                     <p className="w-full mt-2">Admin</p>
                                   </div>
                                 </div>
-                                <div className="absolute top-0 right-0 p-4">
-                                  <FaEllipsisV className="hidden md:block" />
-                                  <FaEllipsisH className="md:hidden" />
+                                <div className="absolute top-0 right-0 p-4">  
+                                  <AlertDialog>
+                                    <AlertDialogTrigger>
+                                      <FaEllipsisV className="hidden md:block" />
+                                      <FaEllipsisH className="md:hidden" />
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent className="w-3/4">
+                                        <AlertDialogHeader>
+                                          <AlertDialogTitle>
+                                            Are you absolutely sure?
+                                          </AlertDialogTitle>
+                                          <AlertDialogDescription>
+                                            This action cannot be undone. This will permanently
+                                            delete your account and remove your data from our
+                                            servers.
+                                          </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                          <AlertDialogAction>Continue</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                      </AlertDialogContent>
+                                  </AlertDialog>
+
+                                  
                                 </div>
                               </div>
                             </div>

@@ -11,6 +11,22 @@ import {
   SheetTrigger,
 } from "../../components/ui/sheet";
 
+import WarningIcon from "../../app/assets/icons/warning-icon.svg"
+
+import Image from "next/image";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../components/ui/alert-dialog";
+
 export type Locker = {
   id: string;
   status: number;
@@ -181,6 +197,34 @@ export const columns: ColumnDef<Locker>[] = [
                     ))}
                   </div>
                 </SheetDescription>
+                <div className="w-full">
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <button className="p-2 text-destructive text-sm font-bold">
+                        Reset PIN Code
+                      </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="w-3/4">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="grid gap-y-2">
+                          <div className="flex items-center justify-center">
+                            <Image src={WarningIcon} width={32} height={28} alt="warning icon" />
+                          </div>
+                          <div className="flex items-center justify-center">
+                            Reset PIN?
+                          </div>
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          <p className="text-center">Are you sure you want to reset the PIN Code of {`Locker ${locker.doorNumber}`}?</p>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="w-full grid grid-cols-2">
+                        <AlertDialogCancel className="w-full hover:bg-gray-200">No</AlertDialogCancel>
+                        <AlertDialogAction className=" w-full bg-destructive hover:bg-destructive hover:opacity-80">Yes, Remove</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </div>
 
               <SheetFooter className="justify-center">
