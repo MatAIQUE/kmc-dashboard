@@ -47,10 +47,8 @@ const LoginPage = () => {
                         <span className="text-primary">*</span>
                       </div>
                       <div className="relative">
-                        <input id="hs-toggle-password" type="password" className="outline outline-gray-300 outline-1 rounded block w-full text-xs p-2" placeholder="Enter password" value=""/>
-                        <button type="button" data-hs-toggle-password='{
-                            "target": "#hs-toggle-password"
-                          }' className="absolute top-0 end-0 p-2 rounded">
+                        <input type="password" className="outline outline-gray-300 outline-1 rounded block w-full text-xs p-2" placeholder="Enter password"/>
+                        <button type="button" className="absolute top-0 end-0 p-2 rounded">
                           <svg className="flex-shrink-0 size-3.5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path className="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
                             <path className="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
