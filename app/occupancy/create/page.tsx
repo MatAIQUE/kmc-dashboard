@@ -90,7 +90,7 @@ const CreateLockerPage: React.FC = () => {
       };
 
       const response = await axios.post(
-        "https://pandora-v3.onrender.com/dashboard/validate-booking/kmc",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/validate-booking/kmc`,
         data,
         {
           headers: {
@@ -124,7 +124,7 @@ const CreateLockerPage: React.FC = () => {
         doorCount: doorCount,
       };
       const newLocker = await axios.post(
-        "https://pandora-v3.onrender.com/transactions/door/reserve/0003/kmc?",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/door/reserve/0003/kmc?`,
         data,
         {
           headers: {

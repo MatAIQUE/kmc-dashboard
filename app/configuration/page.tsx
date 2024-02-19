@@ -25,7 +25,6 @@ import {
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog";
 
-
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../../components/ui/button";
 
@@ -33,7 +32,7 @@ const ConfigurationPage = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const tab = searchParams.get("pricing") || "users";
+  const tab = searchParams?.get("pricing") || "users";
 
   const changeTab = (status: string) => {
     const url = `/configuration?tab=${tab}`;
@@ -102,31 +101,33 @@ const ConfigurationPage = () => {
                                     <p className="w-full mt-2">Admin</p>
                                   </div>
                                 </div>
-                                <div className="absolute top-0 right-0 p-4">  
+                                <div className="absolute top-0 right-0 p-4">
                                   <AlertDialog>
                                     <AlertDialogTrigger>
                                       <FaEllipsisV className="hidden md:block" />
                                       <FaEllipsisH className="md:hidden" />
                                     </AlertDialogTrigger>
                                     <AlertDialogContent className="w-3/4">
-                                        <AlertDialogHeader>
-                                          <AlertDialogTitle>
-                                            Are you absolutely sure?
-                                          </AlertDialogTitle>
-                                          <AlertDialogDescription>
-                                            This action cannot be undone. This will permanently
-                                            delete your account and remove your data from our
-                                            servers.
-                                          </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                          <AlertDialogAction>Continue</AlertDialogAction>
-                                        </AlertDialogFooter>
-                                      </AlertDialogContent>
+                                      <AlertDialogHeader>
+                                        <AlertDialogTitle>
+                                          Are you absolutely sure?
+                                        </AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                          This action cannot be undone. This
+                                          will permanently delete your account
+                                          and remove your data from our servers.
+                                        </AlertDialogDescription>
+                                      </AlertDialogHeader>
+                                      <AlertDialogFooter>
+                                        <AlertDialogCancel>
+                                          Cancel
+                                        </AlertDialogCancel>
+                                        <AlertDialogAction>
+                                          Continue
+                                        </AlertDialogAction>
+                                      </AlertDialogFooter>
+                                    </AlertDialogContent>
                                   </AlertDialog>
-
-                                  
                                 </div>
                               </div>
                             </div>

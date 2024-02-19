@@ -29,11 +29,12 @@ import {
 import { Locker, columns } from "./columns";
 import { DataTable } from "./data-table";
 import VacantLockers from "./data-vacant";
+import { ActionCell } from "./action-cell";
 
 async function getData(status: string) {
   try {
     const response = await fetch(
-      `https://pandora-v3.onrender.com/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
     );
 
     if (!response.ok) {
@@ -62,8 +63,8 @@ const OccupancyPage = () => {
   const [dataOccupied, setDataOccupied] = useState<Locker[]>([]);
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
 
-  const status = searchParams.get("status") || "occupied";
-  const doorNumberToFilter = searchParams.get("doorNumber");
+  const status = searchParams?.get("status") || "occupied";
+  const doorNumberToFilter = searchParams?.get("doorNumber");
 
   const fetchData = doorNumberToFilter
     ? () => getFilteredData(status, doorNumberToFilter)
@@ -73,7 +74,7 @@ const OccupancyPage = () => {
     fetchData();
   }, [doorNumberToFilter]);
 
-  const { isLoading, isError, isFetching } = useQuery(
+  const { isLoading, isError, isFetching, refetch } = useQuery(
     [status],
     () => getData(status),
     {
@@ -138,7 +139,18 @@ const OccupancyPage = () => {
                   <TabsContent value="occupied">
                     <div className="w-full">
                       <DataTable
-                        columns={columns}
+                        columns={[
+                          ...columns,
+                          {
+                            id: "actions",
+                            cell: ({ row }) => (
+                              <ActionCell
+                                locker={row.original}
+                                onTerminate={refetch}
+                              />
+                            ),
+                          },
+                        ]}
                         data={dataOccupied}
                         isFetching={isFetching}
                       />
