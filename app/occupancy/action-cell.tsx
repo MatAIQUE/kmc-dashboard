@@ -306,8 +306,7 @@ const LockerRenewDoorAction = ({ locker }: any) => {
         <AlertDialogTrigger className="w-full">
           <Button
             onClick={() => setShowDialog(true)}
-            variant="outlineDestructive"
-            className="w-full"
+            className="w-full bg-primary"
           >
             Renew
           </Button>
