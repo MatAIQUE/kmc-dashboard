@@ -14,7 +14,6 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/navigation";
 
-// import { useRouter } from "next/router";
 interface AcceptInviteProps {
   tokenExpired: boolean;
   email: string;
@@ -179,7 +178,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   return {
-    props: { tokenExpired: false, email, isLinkAlreadyUsed: false }, // Include email in the props object
+    props: { tokenExpired: false, email, isLinkAlreadyUsed: false },
   };
 };
 
