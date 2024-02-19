@@ -35,9 +35,9 @@ import { Select } from "../../../components/ui/select";
 import { Button } from "../../../components/ui/button";
 
 const formSchema = z.object({
-  firstName: z.string().max(30).min(1, { message: "First Name is required" }),
-  lastName: z.string().max(30).min(1, { message: "Last Name is required" }),
-  email: z.string().email().min(1, { message: "Email is required" }),
+  firstName: z.string().max(30).min(1),
+  lastName: z.string().max(30).min(1),
+  email: z.string().email().min(1),
   role: z.enum(["admin", "ads_manager", "member"]).refine(
     (value) => {
       return value !== null && value !== undefined;
@@ -83,11 +83,11 @@ const AddUserPage = () => {
         },
       } = response;
       console.log(email);
+      console.log(response.status);
       if (response.status === 201) {
         setEmail(email);
         setShowSuccessDialog(true);
       }
-      setIsLoading(false);
     } catch (error) {
       setIsLoading(true);
       if (axios.isAxiosError(error) && error.response) {

@@ -40,7 +40,7 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
     } else {
       setEmail(email);
     }
-  }, [tokenExpired]);
+  }, [tokenExpired, email, isLinkAlreadyUsed]);
 
   const handleAcceptInvite = async () => {
     setIsLoading(true);
