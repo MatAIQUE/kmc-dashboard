@@ -1,9 +1,9 @@
 "use client";
-import { FaDownload, FaChevronRight } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import PieChart from "./pie-chart";
 import DoughnutChart from "./doughnut-chart";
-
+import DownloadIcon from "../../app/assets/icons/download.svg"
+import Image from "next/image";
 const OccupancySection = () => {
   const router = useRouter();
 
@@ -13,7 +13,7 @@ const OccupancySection = () => {
       <div className="flex justify-between items-center">
         <h1 className="md:text-xl font-bold capitalize text-sm">Occupancy</h1>
         <button className="md:p-4 hidden md:block hover:bg-secondary rounded-lg p-2">
-          <FaDownload className=" md:text-lg" />
+          <Image src={DownloadIcon} width={24} height={24} alt="" className="md:text-lg"/>
         </button>
         <button className="p-4 md:hidden block">
           <FaChevronRight onClick={() => router.push("/occupancy")} />

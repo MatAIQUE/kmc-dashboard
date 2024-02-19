@@ -1,23 +1,10 @@
 "use client";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTrigger,
-} from "../../components/ui/alert-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import { IoDownload } from "react-icons/io5";
-import { RiArchiveDrawerLine } from "react-icons/ri";
 import { Button } from "../../components/ui/button";
-import { CardContent, CardHeader } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
 import Nav from "../../components/ui/nav";
 import { Skeleton } from "../../components/ui/skeleton";
 import {
@@ -30,6 +17,9 @@ import { Locker, columns } from "./columns";
 import { DataTable } from "./data-table";
 import VacantLockers from "./data-vacant";
 import { ActionCell } from "./action-cell";
+
+import DownloadIcon from "../../app/assets/icons/download.svg";
+import Image from "next/image";
 
 async function getData(status: string) {
   try {
@@ -109,7 +99,7 @@ const OccupancyPage = () => {
                   </div>
                   <div className="flex justify-end md:hidden">
                     <button className="p-2">
-                      <IoDownload />
+                      <Image src={DownloadIcon} alt="" width={24} height={24} />
                     </button>
                   </div>
                 </div>
