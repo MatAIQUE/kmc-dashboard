@@ -61,55 +61,29 @@ const CreateLockerPage: React.FC = () => {
 
   const router = useRouter();
 
-  const formSchema =
-    selectedService === "serviced-office"
-      ? z.object({
-          clientName: z.string().min(2, {
-            message: "Client name must be at least 2 characters.",
-          }),
-          pocMobileNumber: z
-            .string()
-            .length(11, {
-              message: "POC Contact No# must be exactly 11 numbers.",
-            })
-            .regex(/^\d+$/, {
-              message: " POC Contact No# must contain only numbers.",
-            }),
-        })
-      : z.object({
-          bookingNumber: z.string().min(7, {
-            message: "bookingId must be at least 7 characters.",
-          }),
-          mobileNumber: z
-            .string()
-            .length(11, {
-              message: "Contact No# must be exactly 11 numbers.",
-            })
-            .regex(/^\d+$/, {
-              message: "Contact No# must contain only numbers.",
-            }),
-        });
+  const formSchema = z.object({
+    bookingNumber: z.string().min(7, {
+      message: "bookingId must be at least 7 characters.",
+    }),
+    mobileNumber: z
+      .string()
+      .length(11, {
+        message: "Contact No# must be exactly 11 numbers.",
+      })
+      .regex(/^\d+$/, {
+        message: "Contact No# must contain only numbers.",
+      }),
+  });
 
-  const { reset, ...form } =
-    selectedService === "serviced-office"
-      ? useForm({
-          resolver: zodResolver(formSchema),
-          defaultValues: {
-            mobileNumber: "",
-            bookingNumber: "",
-            clientName: "",
-            pocMobileNumber: "",
-          },
-        })
-      : useForm({
-          resolver: zodResolver(formSchema),
-          defaultValues: {
-            mobileNumber: "",
-            bookingNumber: "",
-            clientName: "",
-            pocMobileNumber: "",
-          },
-        });
+  const { reset, ...form } = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      mobileNumber: "",
+      bookingNumber: "",
+      clientName: "",
+      pocMobileNumber: "",
+    },
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
