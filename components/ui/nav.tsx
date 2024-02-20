@@ -56,7 +56,7 @@ const Nav = () => {
 
   return (
     <>
-      <div className="md:hidden flex w-full justify-between pt-2 md:pt-0 items-center bg-white drop-shadow">
+      <div className="md:hidden fixed z-40 flex w-full justify-between pt-2 md:pt-0 items-center bg-white drop-shadow">
         <Logo />
         <button
           type="button"
@@ -69,7 +69,7 @@ const Nav = () => {
       </div>
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 ${
+        className={`fixed top-0 left-0 z-50 w-64 h-screen transition-transform sm:translate-x-0 ${
           !sidebarShown ? "-translate-x-full " : ""
         }`}
         aria-label="Sidebar"
@@ -110,6 +110,7 @@ const Nav = () => {
           </ul>
         </div>
       </aside>
+      <div className="pb-[50px]"></div>
     </>
   );
 };

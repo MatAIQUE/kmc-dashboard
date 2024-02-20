@@ -43,7 +43,6 @@ async function getFilteredData(status: string, doorNumberToFilter: string) {
   const filteredData = data.filter(
     (locker: any) => locker.doorNumber === doorNumberToFilter
   );
-  console.log(filteredData); // Log the filtered data
   return filteredData;
 }
 
@@ -80,6 +79,7 @@ const OccupancyPage = () => {
 
   const changeStatus = (status: string) => {
     const url = `/occupancy?status=${status}`;
+    console.log(status)
     router.push(url);
   };
 
@@ -103,7 +103,7 @@ const OccupancyPage = () => {
                     </button>
                   </div>
                 </div>
-                <div className="block md:hidden w-full">
+                <div className={`block md:hidden w-full ${status === "vacant" ? "hidden":""}`}>
                   <Input
                     placeholder="Name, ID, Locker"
                     className="min-w-full py-3 mb-2 md:text-xs text-md"
@@ -167,7 +167,10 @@ const OccupancyPage = () => {
                 {status === "occupied" && (
                   <div className="block md:hidden w-full">
                     {dataOccupied.map((data) => (
-                      <div className="grid border-b-2 py-4 gap-y-2">
+                      <div
+                        key={data.id}
+                        className="grid border-b-2 py-4 gap-y-2"
+                      >
                         <div>
                           <p className="text-[12px] uppercase opacity-30">
                             L{data.doorNumber}
@@ -202,7 +205,7 @@ const OccupancyPage = () => {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
+        <div className={`fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4 transition-transform ${status === "occupied" ? "translate-y-full":""}`}>
           <Button
             onClick={() => router.push("/occupancy/create")}
             className="btn rounded items-center w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden justify-center"
