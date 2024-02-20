@@ -19,7 +19,6 @@ export const columns: ColumnDef<Locker>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      console.log(row.original.id);
       const statusClassName = row.original.status === 3 ? "bg-orange-500" : "";
 
       const badge =
