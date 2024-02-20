@@ -245,7 +245,7 @@ const AddUserPage = () => {
                     <AlertDialogHeader className="flex items-center justify-center">
                       <AlertDialogTitle>Invitation Sent!</AlertDialogTitle>
                       <AlertDialogDescription>
-                        We’ve sent an invitation to {email}
+                        We&apos;ve sent an invitation to {email}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

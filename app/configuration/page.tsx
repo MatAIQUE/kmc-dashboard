@@ -24,12 +24,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../../components/ui/button";
+import { useState } from "react";
 
 const ConfigurationPage = () => {
   const router = useRouter();
+
+  const [dropdownShown, setDropdownShown] = useState(false);
 
   const searchParams = useSearchParams();
   const tab = searchParams?.get("pricing") || "users";
@@ -37,6 +48,11 @@ const ConfigurationPage = () => {
   const changeTab = (status: string) => {
     const url = `/configuration?tab=${tab}`;
     router.push(url);
+  };
+
+  const ShowDropdown = () => {
+    setDropdownShown(true);
+    console.log(dropdownShown);
   };
 
   return (
@@ -102,32 +118,75 @@ const ConfigurationPage = () => {
                                   </div>
                                 </div>
                                 <div className="absolute top-0 right-0 p-4">
-                                  <AlertDialog>
-                                    <AlertDialogTrigger>
-                                      <FaEllipsisV className="hidden md:block" />
-                                      <FaEllipsisH className="md:hidden" />
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent className="w-3/4">
-                                      <AlertDialogHeader>
-                                        <AlertDialogTitle>
-                                          Are you absolutely sure?
-                                        </AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                          This action cannot be undone. This
-                                          will permanently delete your account
-                                          and remove your data from our servers.
-                                        </AlertDialogDescription>
-                                      </AlertDialogHeader>
-                                      <AlertDialogFooter>
-                                        <AlertDialogCancel>
-                                          Cancel
-                                        </AlertDialogCancel>
-                                        <AlertDialogAction>
-                                          Continue
-                                        </AlertDialogAction>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
+                                  {/* DROPDOWN TRIGGER */}
+                                  <div
+                                    className="relative h-full w-full p-4 rounded hover:cursor-pointer hover:bg-gray-100"
+                                    onClick={ShowDropdown}
+                                  >
+                                    <div className="absolute w-full h-full top-0 left-0">
+                                      <div className="flex items-center justify-center w-full h-full">
+                                        <FaEllipsisH className="md:hidden" />
+                                        <FaEllipsisV className="md:block hidden" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  {/*END OF DROPDOWN TRIGGER */}
+                                  {/* DROPDOWN CONTENT */}
+                                  <div
+                                    className={`relative w-full mt-1 z-50 ${
+                                      !dropdownShown ? "hidden" : "block"
+                                    }`}
+                                  >
+                                    <div className="w-auto rounded drop-shadow-xl right-0 absolute bg-white">
+                                      <div className="mw-auto">
+                                        <AlertDialog>
+                                          <AlertDialogTrigger asChild>
+                                            <div className="whitespace-nowrap hover:bg-gray-100 hover:cursor-pointer px-4 py-3 text-sm">
+                                              Change Role
+                                            </div>
+                                          </AlertDialogTrigger>
+                                          <AlertDialogContent className=" rounded">
+                                            <AlertDialogHeader>
+                                              <AlertDialogTitle className="text-left">
+                                                Change role?
+                                              </AlertDialogTitle>
+                                              <AlertDialogDescription className="text-left gap-y-4 grid">
+                                                Select a new role for asdasd
+                                                <hr/>
+                                                <p className="text-black text-left">Role <span className="text-destructive">*</span></p>
+                                                <Select>
+  <SelectTrigger className="w-full">
+    <SelectValue placeholder="Select a Role" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="light">Light</SelectItem>
+    <SelectItem value="dark">Dark</SelectItem>
+    <SelectItem value="system">System</SelectItem>
+  </SelectContent>
+</Select>
+
+                                              </AlertDialogDescription>
+                                              
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter className="w-full mt-4 grid grid-cols-2">
+                                              <AlertDialogCancel className="w-full">
+                                                Cancel
+                                              </AlertDialogCancel>
+                                              <AlertDialogAction
+                                              className="w-full">
+                                                Save Changes
+                                              </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                          </AlertDialogContent>
+                                        </AlertDialog>
+
+                                        <div className="whitespace-nowrap hover:bg-gray-100 hover:cursor-pointer px-4 py-3 text-sm text-destructive font-semibold">
+                                          Remove User
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  {/* END OF DROPDOWN CONTENT */}
                                 </div>
                               </div>
                             </div>
