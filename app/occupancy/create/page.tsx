@@ -65,7 +65,7 @@ const CreateLockerPage: React.FC = () => {
     clientName: z.string().min(2, {
       message: "Client name must be at least 2 characters.",
     }),
-    pocMobileNumber: z
+    mobileNumber: z
       .string()
       .length(11, {
         message: "POC Contact No# must be exactly 11 numbers.",
@@ -98,21 +98,29 @@ const CreateLockerPage: React.FC = () => {
       mobileNumber: "",
       bookingNumber: "",
       clientName: "",
-      pocMobileNumber: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof selectedServiceFormat>) {
     try {
       setIsLoading(true);
-      const data = {
-        ...values,
-        lockerId: "4001",
-        bookingOrigin: 8,
-      };
+      const data =
+        selectedService === "serviced-office"
+          ? {
+              ...values,
+              // lockerId: "4001",
+              bookingOrigin: 8,
+              serviceType: "so_clients",
+            }
+          : {
+              ...values,
+              // lockerId: "4001",
+              bookingOrigin: 8,
+              serviceType: "hub_clients",
+            };
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/validate-booking/kmc`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/otp/kmc`,
         data,
         {
           headers: {
@@ -158,6 +166,29 @@ const CreateLockerPage: React.FC = () => {
         }
       );
       if (newLocker.status === 201) {
+        const datas = {
+          ...values,
+          lockerId: "4001",
+          doorCount: doorCount,
+          paymentMethod: "add_to_invoice",
+        };
+
+        try {
+          await axios.post(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/payments/kmc`,
+            datas,
+            {
+              headers: {
+                "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
+                "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        } catch (error) {
+          console.error("Error payment:", error);
+        }
+
         setShowSuccessDialog(true);
       }
       setIsLoading(false);
@@ -176,7 +207,6 @@ const CreateLockerPage: React.FC = () => {
         bookingNumber: "",
         mobileNumber: "",
         clientName: "",
-        pocMobileNumber: "",
       });
     }
   }
@@ -328,7 +358,7 @@ const CreateLockerPage: React.FC = () => {
                               />
                               <FormField
                                 control={form.control}
-                                name="pocMobileNumber"
+                                name="mobileNumber"
                                 render={({ field }) => (
                                   <FormItem>
                                     <FormLabel>
