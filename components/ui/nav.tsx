@@ -53,7 +53,7 @@ const showSidebar = () => {
 
   return (
     <>
-      <div className="md:hidden flex w-full justify-between pt-2 md:pt-0 items-center bg-white drop-shadow">
+      <div className="md:hidden fixed z-40 flex w-full justify-between pt-2 md:pt-0 items-center bg-white drop-shadow">
         <Logo/>
         <button type="button" className="inline-flex items-center p-4 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 " onClick={showSidebar}>
             <span className="sr-only">Open sidebar</span>
@@ -62,7 +62,7 @@ const showSidebar = () => {
         </div>
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 ${!sidebarShown ? "-translate-x-full ":""}`}
+        className={`fixed top-0 left-0 z-50 w-64 h-screen transition-transform sm:translate-x-0 ${!sidebarShown ? "-translate-x-full ":""}`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 flex flex-col justify-between bg-white drop-shadow dark:bg-gray-800">
@@ -101,6 +101,7 @@ const showSidebar = () => {
           </ul>
         </div>
       </aside>
+      <div className="pb-[50px]"></div>
     </>
   );
 };
