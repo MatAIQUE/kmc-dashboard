@@ -8,7 +8,7 @@ import Nav from "../../../components/ui/nav";
 
 import axios from "axios";
 import Image from "next/image";
-import { FaBuilding, FaChair, FaMinus, FaPlus } from "react-icons/fa";
+import { FaBuilding, FaChair, FaMinus, FaPlus, FaSpinner } from "react-icons/fa";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -451,7 +451,8 @@ const CreateLockerPage: React.FC = () => {
                               </div>
                             )}
                           </div>
-                          <div className="flex items-start justify-between w-[160px]">
+
+                          <div className="flex items-start justify-between w-[160px] hidden">
                             <Badge
                               onClick={subtractCart}
                               className={
@@ -478,6 +479,50 @@ const CreateLockerPage: React.FC = () => {
                               <FaPlus />
                             </Badge>
                           </div>
+
+                          <div className="grid grid-cols-2 flex items-start justify-between w-full">
+                            <div className="text-sm font-bold">Locker</div>
+
+
+
+                            <div className="flex justify-end">
+                              <div className="flex items-center justify-evenly">
+                              
+                              
+                              <div
+                                onClick={subtractCart}
+                                className={
+                                  doorCount > 1
+                                    ? `bg-primary p-1 text-xs text-white rounded-full text-center`
+                                    : `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
+                                }
+                              >
+                                <FaMinus />
+                              </div>
+                                <div className="font-bold text-sm mx-2 w-[30px] text-center truncate pe-none">
+                                  {doorCount}
+                                </div>
+                                <div
+                                onClick={addCart}
+                                className={
+                                  doorCount >= availableDoors
+                                    ? `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
+                                    : `bg-primary p-1 text-xs text-white rounded-full text-center`
+                                }
+
+                                // disabled={quantity >= availableDoorsCount}
+                              >
+                                <FaPlus />
+                              </div>
+
+
+                              </div>
+                            </div>
+
+
+
+
+                          </div>
                         </>
                       )}
 
@@ -490,9 +535,13 @@ const CreateLockerPage: React.FC = () => {
 
                         <button
                           type="submit"
-                          className="text-xs bg-primary text-white p-2 rounded capitalize"
+                          className="text-xs bg-primary text-white p-2 rounded capitalize flex justify-center items-center"
                         >
-                          {isLoading ? "Loading..." : "Continue"}
+                          {isLoading ? (
+                            <FaSpinner className="animate-spin text-center" />
+                          ) : (
+                            "Continue"
+                          )}
                         </button>
                       </div>
                     </div>

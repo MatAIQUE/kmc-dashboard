@@ -150,7 +150,7 @@ const OccupancyPage = () => {
                     <div className="md:me-4 md:col-start-4 flex justify-end">
                       <Button
                         onClick={() => router.push("/occupancy/create")}
-                        className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md"
+                        className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md hidden md:flex"
                       >
                         <FaPlusCircle className="text-sm" />
                         <p className="md:ml-3 text-xs ml-1">Book Locker</p>
@@ -166,6 +166,15 @@ const OccupancyPage = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
+          <Button
+            onClick={() => router.push("/occupancy/create")}
+            className="btn rounded items-center w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden block flex items-center justify-center"
+          >
+            <FaPlusCircle className="text-sm" />
+            <p className="md:ml-3 text-xs ml-1">Book Locker</p>
+          </Button>
         </div>
       </div>
     </>

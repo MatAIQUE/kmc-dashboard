@@ -30,8 +30,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-
+} from "@/components/ui/select";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../../components/ui/button";
@@ -152,28 +151,36 @@ const ConfigurationPage = () => {
                                               </AlertDialogTitle>
                                               <AlertDialogDescription className="text-left gap-y-4 grid">
                                                 Select a new role for asdasd
-                                                <hr/>
-                                                <p className="text-black text-left">Role <span className="text-destructive">*</span></p>
+                                                <hr />
+                                                <p className="text-black text-left">
+                                                  Role{" "}
+                                                  <span className="text-destructive">
+                                                    *
+                                                  </span>
+                                                </p>
                                                 <Select>
-  <SelectTrigger className="w-full">
-    <SelectValue placeholder="Select a Role" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="light">Light</SelectItem>
-    <SelectItem value="dark">Dark</SelectItem>
-    <SelectItem value="system">System</SelectItem>
-  </SelectContent>
-</Select>
-
+                                                  <SelectTrigger className="w-full">
+                                                    <SelectValue placeholder="Select a Role" />
+                                                  </SelectTrigger>
+                                                  <SelectContent>
+                                                    <SelectItem value="light">
+                                                      Light
+                                                    </SelectItem>
+                                                    <SelectItem value="dark">
+                                                      Dark
+                                                    </SelectItem>
+                                                    <SelectItem value="system">
+                                                      System
+                                                    </SelectItem>
+                                                  </SelectContent>
+                                                </Select>
                                               </AlertDialogDescription>
-                                              
                                             </AlertDialogHeader>
                                             <AlertDialogFooter className="w-full mt-4 grid grid-cols-2">
                                               <AlertDialogCancel className="w-full">
                                                 Cancel
                                               </AlertDialogCancel>
-                                              <AlertDialogAction
-                                              className="w-full">
+                                              <AlertDialogAction className="w-full">
                                                 Save Changes
                                               </AlertDialogAction>
                                             </AlertDialogFooter>
@@ -251,7 +258,7 @@ const ConfigurationPage = () => {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
+        <div className="fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
           <Button
             onClick={() => router.push("/configuration/add-user")}
             className="btn rounded items-center w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden block flex items-center justify-center"
