@@ -72,14 +72,6 @@ export function DataTable<TData, TValue>({
               className="min-w-full py-3"
             />
           </div>
-          <div className="md:col-span-2 justify-center items-center flex">
-            <button className="btn rounded text-lg items-center p-3 text-white bg-green-500 flex hover:bg-green/50  md:text-md">
-              <IoDownloadOutline />
-              <p className="md:ml-3 text-xs ml-1 hidden md:block">
-                Download Report
-              </p>
-            </button>
-          </div>
         </div>
         <div className="rounded-md border">
           <Table>

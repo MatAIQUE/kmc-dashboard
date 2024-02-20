@@ -1,5 +1,7 @@
-import { FaDownload, FaSearch } from "react-icons/fa"
+import { FaSearch } from "react-icons/fa"
 import Nav from "../../components/ui/nav"
+import DownloadIcon from "../assets/icons/download.svg"
+import Image from "next/image"
 
 const UsageHistory = () => {
     return (
@@ -18,7 +20,7 @@ const UsageHistory = () => {
                                 </div>
                                 <div className="md:me-4 flex justify-end">
                                     <button className="hover:opacity-80 bg-primary text-white p-2 rounded-lg flex items-center">
-                                        <FaDownload className="w-4 h-4 md:me-2"/>
+                                        <Image src={DownloadIcon} width={24} height={24} className="md:me-2" alt=""/>
                                         <span className="hidden md:block">Download</span>
                                     </button>
                                 </div>

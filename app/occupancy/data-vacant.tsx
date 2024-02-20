@@ -1,6 +1,6 @@
 import React from "react";
-import { RiArchiveDrawerLine } from "react-icons/ri";
-
+import LockerIcon from "../../app/assets/icons/locker.svg";
+import Image from "next/image";
 interface Locker {
   doorNumber: string;
 }
@@ -11,7 +11,7 @@ interface Props {
 
 const VacantLockers: React.FC<Props> = ({ dataVacant }) => {
   return (
-    <div className="w-full mt-2 grid grid-cols-3 gap-2 gap-y-2">
+    <div className="w-full mt-2 grid grid-cols-3 md:grid-cols-4 gap-2 gap-y-2">
       {dataVacant.map((item) => (
         <div
           key={item.doorNumber}
@@ -23,7 +23,7 @@ const VacantLockers: React.FC<Props> = ({ dataVacant }) => {
             <div className=" flex items-center bg-white md:drop-shadow-md rounded-xl px-4 py-8 md:py-6 relative">
               <div className="flex items-center justify-start me-2">
                 <div className="bg-[#001738] text-white rounded-full p-4">
-                  <RiArchiveDrawerLine />
+                  <Image src={LockerIcon} width={24} height={24} alt="" />
                 </div>
               </div>
               <div className="grid ms-2">

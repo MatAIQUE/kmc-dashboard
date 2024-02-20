@@ -6,13 +6,19 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Nav from "../../../components/ui/nav";
 
+import axios from "axios";
+import Image from "next/image";
+import { FaBuilding, FaChair, FaMinus, FaPlus } from "react-icons/fa";
 import {
-  FaBuilding,
-  FaChair,
-  FaMinus,
-  FaPlus,
-  FaPlusCircle,
-} from "react-icons/fa";
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../../../components/ui/alert-dialog";
+import { Badge } from "../../../components/ui/badge";
+import { Button } from "../../../components/ui/button";
 import {
   Card,
   CardContent,
@@ -29,22 +35,12 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import { Input } from "../../../components/ui/input";
-import axios from "axios";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../../../components/ui/alert-dialog";
-import { Button } from "../../../components/ui/button";
-import { Badge } from "../../../components/ui/badge";
 
-const formSchema = z.object({
+import SuccessIcon from "../../../app/assets/icons/success-icon.svg";
+import WarningIcon from "../../../app/assets/icons/warning-icon.svg";
+import Link from "next/link";
+
+const formSchemaCO = z.object({
   bookingNumber: z.string().min(7, {
     message: "bookingId must be at least 7 characters.",
   }),
@@ -55,6 +51,20 @@ const formSchema = z.object({
     })
     .regex(/^\d+$/, {
       message: "Contact No# must contain only numbers.",
+    }),
+});
+
+const formSchemaVO = z.object({
+  clientName: z.string().min(2, {
+    message: "Client name must be at least 2 characters.",
+  }),
+  pocMobileNumber: z
+    .string()
+    .length(11, {
+      message: "POC Contact No# must be exactly 11 numbers.",
+    })
+    .regex(/^\d+$/, {
+      message: " POC Contact No# must contain only numbers.",
     }),
 });
 
@@ -69,18 +79,36 @@ const CreateLockerPage: React.FC = () => {
   const [doorCount, setDoorCount] = useState(1);
   const [lockerQty, setLockerQty] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
+  const [hide, setHide] = useState(false);
 
   const router = useRouter();
 
-  const { reset, ...form } = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      mobileNumber: "",
-      bookingNumber: "",
-    },
-  });
+  // Define the selected form schema based on the selected service
+  const selectedFormSchema =
+    selectedService === "serviced-office" ? formSchemaCO : formSchemaVO;
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  const { reset, ...form } =
+    selectedService === "serviced-office"
+      ? useForm({
+          resolver: zodResolver(formSchemaVO),
+          defaultValues: {
+            mobileNumber: "",
+            bookingNumber: "",
+            clientName: "",
+            pocMobileNumber: "",
+          },
+        })
+      : useForm({
+          resolver: zodResolver(formSchemaCO),
+          defaultValues: {
+            mobileNumber: "",
+            bookingNumber: "",
+            clientName: "",
+            pocMobileNumber: "",
+          },
+        });
+
+  async function onSubmit(values: z.infer<typeof selectedFormSchema>) {
     try {
       setIsLoading(true);
       const data = {
@@ -102,6 +130,7 @@ const CreateLockerPage: React.FC = () => {
       );
 
       if (response.status === 201) {
+        setHide(true);
         setLockerQty(true);
         setShowBtn(true);
       }
@@ -114,7 +143,7 @@ const CreateLockerPage: React.FC = () => {
     }
   }
 
-  async function createLocker(values: z.infer<typeof formSchema>) {
+  async function createLocker(values: z.infer<typeof selectedFormSchema>) {
     try {
       setIsLoading(true);
       const data = {
@@ -152,6 +181,8 @@ const CreateLockerPage: React.FC = () => {
       reset({
         bookingNumber: "",
         mobileNumber: "",
+        clientName: "",
+        pocMobileNumber: "",
       });
     }
   }
@@ -200,7 +231,7 @@ const CreateLockerPage: React.FC = () => {
       <div className="p-2 pt-10 md:pt-10 sm:ml-64">
         <div className="rounded-lg dark:border-gray-700">
           <div className="flex justify-center gap-4 mb-4 mx-2">
-            <Card className="w-[350px]">
+            <Card className="w-[500px]">
               <CardHeader>
                 <CardTitle>Book a Locker</CardTitle>
                 <CardDescription></CardDescription>
@@ -221,187 +252,241 @@ const CreateLockerPage: React.FC = () => {
                           <h6 className="me-1">Service</h6>
                           <span className="text-primary">*</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          <div
-                            className={`outline outline-gray-300 outline-1 rounded p-4 grid gap-y-2 ${
-                              selectedService === "serviced-office"
-                                ? "outline outline-primary outline-1 rounded p-4 grid gap-y-2"
-                                : ""
-                            }`}
-                            onClick={() =>
-                              handleServiceChange("serviced-office")
-                            }
-                          >
-                            <FaBuilding
-                              className={`${
-                                selectedService === "serviced-office"
-                                  ? "text-primary"
-                                  : ""
-                              } `}
-                            />
-                            <p className="font-semibold capitalize text-xs">
-                              Serviced Office
-                            </p>
-                          </div>
-                          <div
-                            className={`outline outline-gray-300 outline-1 rounded p-4 grid gap-y-2 ${
-                              selectedService === "coworking-virtual"
-                                ? "outline outline-primary outline-1 rounded p-4 grid gap-y-2"
-                                : ""
-                            }`}
-                            onClick={() =>
-                              handleServiceChange("coworking-virtual")
-                            }
-                          >
-                            <FaChair
-                              className={`${
-                                selectedService === "coworking-virtual"
-                                  ? "text-primary"
-                                  : ""
-                              } `}
-                            />
-                            <p className="font-semibold capitalize text-xs">
-                              Coworking/Virtual
-                            </p>
-                          </div>
-                        </div>
                       </div>
-                      {selectedService === "serviced-office" ? (
-                        // <>
-                        //   <FormField
-                        //     control={form.control}
-                        //     name="clientName"
-                        //     render={({ field }) => (
-                        //       <FormItem>
-                        //         <FormLabel>
-                        //           <div className="flex font-bold text-xs">
-                        //             <h6 className="me-1">Client Name</h6>
-                        //             <span className="text-primary">*</span>
-                        //           </div>
-                        //         </FormLabel>
-                        //         <FormControl>
-                        //           <Input
-                        //             className="text-xs outline outline-gray-300 outline-1 rounded p-2"
-                        //             placeholder="Client Name"
-                        //             {...field}
-                        //           />
-                        //         </FormControl>
-                        //         <FormMessage />
-                        //       </FormItem>
-                        //     )}
-                        //   />
-                        //   <FormField
-                        //     control={form.control}
-                        //     name="pocContactNo"
-                        //     render={({ field }) => (
-                        //       <FormItem>
-                        //         <FormLabel>
-                        //           <div className="flex font-bold text-xs">
-                        //             <h6 className="me-1">POC Contact No#</h6>
-                        //             <span className="text-primary">*</span>
-                        //           </div>
-                        //         </FormLabel>
-                        //         <FormControl>
-                        //           <Input
-                        //             className="text-xs outline outline-gray-300 outline-1 rounded p-2"
-                        //             placeholder="POC Contact No#"
-                        //             {...field}
-                        //           />
-                        //         </FormControl>
-                        //         <FormMessage />
-                        //       </FormItem>
-                        //     )}
-                        //   />
-                        // </>
-                        <p>Coming soon!.</p>
+
+                      {!lockerQty ? (
+                        <>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div
+                              className={`outline outline-gray-300 outline-1 rounded p-4 grid gap-y-2 ${
+                                selectedService === "serviced-office"
+                                  ? "outline outline-primary outline-1 rounded p-4 grid gap-y-2"
+                                  : ""
+                              }`}
+                              onClick={() => {
+                                handleServiceChange("serviced-office");
+                                setHide(false);
+                                setLockerQty(false);
+                                setShowBtn(false);
+                                setDoorCount(1);
+                              }}
+                            >
+                              <FaBuilding
+                                className={`${
+                                  selectedService === "serviced-office"
+                                    ? "text-primary"
+                                    : ""
+                                } `}
+                              />
+                              <p className="font-semibold capitalize text-xs">
+                                Serviced Office
+                              </p>
+                            </div>
+                            <div
+                              className={`outline outline-gray-300 outline-1 rounded p-4 grid gap-y-2 ${
+                                selectedService === "coworking-virtual"
+                                  ? "outline outline-primary outline-1 rounded p-4 grid gap-y-2"
+                                  : ""
+                              }`}
+                              onClick={() => {
+                                handleServiceChange("coworking-virtual");
+                                setHide(false);
+                                setLockerQty(false);
+                                setShowBtn(false);
+                                setDoorCount(1);
+                              }}
+                            >
+                              <FaChair
+                                className={`${
+                                  selectedService === "coworking-virtual"
+                                    ? "text-primary"
+                                    : ""
+                                } `}
+                              />
+                              <p className="font-semibold capitalize text-xs">
+                                Coworking/Virtual
+                              </p>
+                            </div>
+                          </div>
+                          {selectedService === "serviced-office" && (
+                            <>
+                              <FormField
+                                control={form.control}
+                                name="clientName"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>
+                                      <div className="flex font-bold text-xs">
+                                        <h6 className="me-1">Client Name</h6>
+                                        <span className="text-primary">*</span>
+                                      </div>
+                                    </FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        placeholder="Client Name"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name="pocMobileNumber"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>
+                                      <div className="flex font-bold text-xs">
+                                        <h6 className="me-1">
+                                          POC Contact No#
+                                        </h6>
+                                        <span className="text-primary">*</span>
+                                      </div>
+                                    </FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        placeholder="POC Contact No#"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </>
+                          )}
+
+                          {selectedService === "coworking-virtual" && (
+                            <>
+                              <FormField
+                                control={form.control}
+                                name="bookingNumber"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>
+                                      <div className="flex font-bold text-xs">
+                                        <h6 className="me-1">Booking ID</h6>
+                                        <span className="text-primary">*</span>
+                                      </div>
+                                    </FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        placeholder="Booking ID"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name="mobileNumber"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>
+                                      <div className="flex font-bold text-xs">
+                                        <h6 className="me-1">Contact No#</h6>
+                                        <span className="text-primary">*</span>
+                                      </div>
+                                    </FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        placeholder="Contact No#"
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </>
+                          )}
+                        </>
                       ) : (
                         <>
-                          <FormField
-                            control={form.control}
-                            name="bookingNumber"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>
-                                  <div className="flex font-bold text-xs">
-                                    <h6 className="me-1">Booking ID</h6>
-                                    <span className="text-primary">*</span>
-                                  </div>
-                                </FormLabel>
-                                <FormControl>
-                                  <Input
-                                    className="text-xs outline outline-gray-300 outline-1 rounded p-2"
-                                    placeholder="Booking ID"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="mobileNumber"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>
-                                  <div className="flex font-bold text-xs">
-                                    <h6 className="me-1">Contact No#</h6>
-                                    <span className="text-primary">*</span>
-                                  </div>
-                                </FormLabel>
-                                <FormControl>
-                                  <Input
-                                    className="text-xs outline outline-gray-300 outline-1 rounded p-2"
-                                    placeholder="Contact No#"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          {lockerQty && (
-                            <div className="flex items-start justify-between w-[160px]">
-                              <Badge
-                                onClick={subtractCart}
-                                className={
-                                  doorCount > 1
-                                    ? `btn btn-circle btn-primary btn-sm`
-                                    : `btn btn-circle btn-outline btn-sm`
-                                }
+                          <div className="grid grid-cols-1 gap-2">
+                            {selectedService === "serviced-office" ? (
+                              <div
+                                className={`outline outline-gray-300 outline-1 rounded p-4 grid gap-y-2 ${
+                                  selectedService === "serviced-office"
+                                    ? "outline outline-primary outline-1 rounded p-4 grid gap-y-2"
+                                    : ""
+                                }`}
                               >
-                                <FaMinus />
-                              </Badge>
-                              <div className="font-medium text-3xl mx-2">
-                                {doorCount}
+                                <FaBuilding
+                                  className={`${
+                                    selectedService === "serviced-office"
+                                      ? "text-primary"
+                                      : ""
+                                  } `}
+                                />
+                                <p className="font-semibold capitalize text-xs">
+                                  Serviced Office
+                                </p>
                               </div>
-                              <Badge
-                                onClick={addCart}
-                                className={
-                                  doorCount >= availableDoors
-                                    ? `btn btn-circle btn-outline btn-sm`
-                                    : `btn btn-circle btn-primary btn-sm`
-                                }
-
-                                // disabled={quantity >= availableDoorsCount}
+                            ) : (
+                              <div
+                                className={`outline outline-gray-300 outline-1 rounded p-4 grid gap-y-2 ${
+                                  selectedService === "coworking-virtual"
+                                    ? "outline outline-primary outline-1 rounded p-4 grid gap-y-2"
+                                    : ""
+                                }`}
                               >
-                                <FaPlus />
-                              </Badge>
+                                <FaChair
+                                  className={`${
+                                    selectedService === "coworking-virtual"
+                                      ? "text-primary"
+                                      : ""
+                                  } `}
+                                />
+                                <p className="font-semibold capitalize text-xs">
+                                  Coworking/Virtual
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-start justify-between w-[160px]">
+                            <Badge
+                              onClick={subtractCart}
+                              className={
+                                doorCount > 1
+                                  ? `btn btn-circle btn-primary btn-sm`
+                                  : `btn btn-circle btn-outline btn-sm`
+                              }
+                            >
+                              <FaMinus />
+                            </Badge>
+                            <div className="font-medium text-3xl mx-2">
+                              {doorCount}
                             </div>
-                          )}
+                            <Badge
+                              onClick={addCart}
+                              className={
+                                doorCount >= availableDoors
+                                  ? `btn btn-circle btn-outline btn-sm`
+                                  : `btn btn-circle btn-primary btn-sm`
+                              }
+
+                              // disabled={quantity >= availableDoorsCount}
+                            >
+                              <FaPlus />
+                            </Badge>
+                          </div>
                         </>
                       )}
 
                       <div className="grid grid-cols-2 gap-2">
-                        <button
-                          className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize"
-                          onClick={() =>
-                            router.push("/occupancy?status=vacant")
-                          }
-                        >
-                          Cancel
-                        </button>
+                        <Link href="/occupancy?status=vacant">
+                          <button className="w-full text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize">
+                            Cancel
+                          </button>
+                        </Link>
 
                         <button
                           type="submit"
@@ -418,15 +503,25 @@ const CreateLockerPage: React.FC = () => {
               {showSuccessDialog && (
                 <AlertDialog defaultOpen>
                   <AlertDialogContent>
-                    <AlertDialogHeader className="flex items-center justify-center">
-                      <AlertDialogTitle>Locker Book</AlertDialogTitle>
-                      <AlertDialogDescription>
+                    <AlertDialogHeader className="mb-10">
+                      <AlertDialogTitle className="grid gap-y-2">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={SuccessIcon}
+                            width={32}
+                            height={28}
+                            alt="warning icon"
+                          />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          Locker Book
+                        </div>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="flex items-center justify-center">
                         Locker 4 has been successfully booked to (Client Name)
                       </AlertDialogDescription>
-                      <AlertDialogDescription>
-                        (Client Name)
-                      </AlertDialogDescription>
                     </AlertDialogHeader>
+
                     <AlertDialogFooter>
                       <div className="w-full">
                         <div>
@@ -449,15 +544,28 @@ const CreateLockerPage: React.FC = () => {
               {showErrDialog && (
                 <AlertDialog defaultOpen>
                   <AlertDialogContent>
-                    <AlertDialogHeader className="flex items-center justify-center">
-                      <AlertDialogTitle>No Match</AlertDialogTitle>
-                      <AlertDialogDescription>
+                    <AlertDialogHeader className="mb-10">
+                      <AlertDialogTitle className="grid gap-y-2">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={WarningIcon}
+                            width={32}
+                            height={28}
+                            alt="warning icon"
+                          />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          No Match
+                        </div>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="flex items-center justify-center">
                         Im sorry we didnt find any match of the
                       </AlertDialogDescription>
-                      <AlertDialogDescription>
+                      <AlertDialogDescription className="flex items-center justify-center">
                         Booking ID/Client Name
                       </AlertDialogDescription>
                     </AlertDialogHeader>
+
                     <AlertDialogFooter>
                       <div className="w-full">
                         <div>
