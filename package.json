@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "set NODE_ENV=development & next dev -p 5000",
     "build": "next build",
-    "start": "NODE_ENV=production next start -p 4000",
+    "start": "set NODE_ENV=production & next start -p 4000",
     "lint": "next lint"
   },
   "dependencies": {

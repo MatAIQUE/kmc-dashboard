@@ -317,7 +317,7 @@ const CreateLockerPage: React.FC = () => {
                                     </FormLabel>
                                     <FormControl>
                                       <Input
-                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                         placeholder="Client Name"
                                         {...field}
                                       />
@@ -341,7 +341,7 @@ const CreateLockerPage: React.FC = () => {
                                     </FormLabel>
                                     <FormControl>
                                       <Input
-                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                         placeholder="POC Contact No#"
                                         {...field}
                                       />
@@ -368,7 +368,7 @@ const CreateLockerPage: React.FC = () => {
                                     </FormLabel>
                                     <FormControl>
                                       <Input
-                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                         placeholder="Booking ID"
                                         {...field}
                                       />
@@ -390,7 +390,7 @@ const CreateLockerPage: React.FC = () => {
                                     </FormLabel>
                                     <FormControl>
                                       <Input
-                                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                         placeholder="Contact No#"
                                         {...field}
                                       />

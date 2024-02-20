@@ -104,7 +104,7 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                       />
                     </div>
                     <div className="gap-y-2 grid">
@@ -117,7 +117,7 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                       />
                     </div>
                   </div>

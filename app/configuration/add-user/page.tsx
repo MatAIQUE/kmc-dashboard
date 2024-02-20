@@ -133,7 +133,7 @@ const AddUserPage = () => {
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                  className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                   {...field}
                                 />
                               </FormControl>
@@ -154,7 +154,7 @@ const AddUserPage = () => {
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                  className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                   {...field}
                                 />
                               </FormControl>
@@ -175,7 +175,7 @@ const AddUserPage = () => {
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                  className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                   {...field}
                                 />
                               </FormControl>

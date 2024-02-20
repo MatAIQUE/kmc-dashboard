@@ -45,7 +45,7 @@ const LoginPage = () => {
                       </div>
                       <input
                         placeholder="Client Name"
-                        className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                       />
                     </div>
                     <div className="gap-y-2 grid">
@@ -54,7 +54,7 @@ const LoginPage = () => {
                         <span className="text-primary">*</span>
                       </div>
                       <div className="relative">
-                        <input type={`${isText ? "text":"password"}`} className="outline outline-gray-300 outline-1 rounded block w-full text-xs p-2" placeholder="Enter password"/>
+                        <input type={`${isText ? "text":"password"}`} className="outline outline-gray-300 outline-1 rounded block w-full md:text-xs text-md p-2" placeholder="Enter password"/>
                         <button type="button" className="absolute top-0 end-0 p-2 rounded" onClick={ToggleEye} value="12313123">
                           <svg className="flex-shrink-0 size-3.5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path className="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>

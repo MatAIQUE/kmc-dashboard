@@ -106,7 +106,7 @@ const OccupancyPage = () => {
                 <div className="block md:hidden w-full">
                   <Input
                     placeholder="Name, ID, Locker"
-                    className="min-w-full py-3 mb-2"
+                    className="min-w-full py-3 mb-2 md:text-xs text-md"
                   />
                 </div>
                 <Tabs defaultValue={status}>
