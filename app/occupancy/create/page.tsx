@@ -8,7 +8,13 @@ import Nav from "../../../components/ui/nav";
 
 import axios from "axios";
 import Image from "next/image";
-import { FaBuilding, FaChair, FaMinus, FaPlus } from "react-icons/fa";
+import {
+  FaBuilding,
+  FaChair,
+  FaMinus,
+  FaPlus,
+  FaSpinner,
+} from "react-icons/fa";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -40,34 +46,6 @@ import SuccessIcon from "../../../app/assets/icons/success-icon.svg";
 import WarningIcon from "../../../app/assets/icons/warning-icon.svg";
 import Link from "next/link";
 
-const formSchemaCO = z.object({
-  bookingNumber: z.string().min(7, {
-    message: "bookingId must be at least 7 characters.",
-  }),
-  mobileNumber: z
-    .string()
-    .length(11, {
-      message: "Contact No# must be exactly 11 numbers.",
-    })
-    .regex(/^\d+$/, {
-      message: "Contact No# must contain only numbers.",
-    }),
-});
-
-const formSchemaVO = z.object({
-  clientName: z.string().min(2, {
-    message: "Client name must be at least 2 characters.",
-  }),
-  pocMobileNumber: z
-    .string()
-    .length(11, {
-      message: "POC Contact No# must be exactly 11 numbers.",
-    })
-    .regex(/^\d+$/, {
-      message: " POC Contact No# must contain only numbers.",
-    }),
-});
-
 const CreateLockerPage: React.FC = () => {
   const [selectedService, setSelectedService] = useState("serviced-office");
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
@@ -83,14 +61,39 @@ const CreateLockerPage: React.FC = () => {
 
   const router = useRouter();
 
-  // Define the selected form schema based on the selected service
-  const selectedFormSchema =
-    selectedService === "serviced-office" ? formSchemaCO : formSchemaVO;
+  const formSchema =
+    selectedService === "serviced-office"
+      ? z.object({
+          clientName: z.string().min(2, {
+            message: "Client name must be at least 2 characters.",
+          }),
+          pocMobileNumber: z
+            .string()
+            .length(11, {
+              message: "POC Contact No# must be exactly 11 numbers.",
+            })
+            .regex(/^\d+$/, {
+              message: " POC Contact No# must contain only numbers.",
+            }),
+        })
+      : z.object({
+          bookingNumber: z.string().min(7, {
+            message: "bookingId must be at least 7 characters.",
+          }),
+          mobileNumber: z
+            .string()
+            .length(11, {
+              message: "Contact No# must be exactly 11 numbers.",
+            })
+            .regex(/^\d+$/, {
+              message: "Contact No# must contain only numbers.",
+            }),
+        });
 
   const { reset, ...form } =
     selectedService === "serviced-office"
       ? useForm({
-          resolver: zodResolver(formSchemaVO),
+          resolver: zodResolver(formSchema),
           defaultValues: {
             mobileNumber: "",
             bookingNumber: "",
@@ -99,7 +102,7 @@ const CreateLockerPage: React.FC = () => {
           },
         })
       : useForm({
-          resolver: zodResolver(formSchemaCO),
+          resolver: zodResolver(formSchema),
           defaultValues: {
             mobileNumber: "",
             bookingNumber: "",
@@ -108,7 +111,7 @@ const CreateLockerPage: React.FC = () => {
           },
         });
 
-  async function onSubmit(values: z.infer<typeof selectedFormSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
       const data = {
@@ -143,7 +146,7 @@ const CreateLockerPage: React.FC = () => {
     }
   }
 
-  async function createLocker(values: z.infer<typeof selectedFormSchema>) {
+  async function createLocker(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
       const data = {
@@ -451,32 +454,39 @@ const CreateLockerPage: React.FC = () => {
                               </div>
                             )}
                           </div>
-                          <div className="flex items-start justify-between w-[160px]">
-                            <Badge
-                              onClick={subtractCart}
-                              className={
-                                doorCount > 1
-                                  ? `btn btn-circle btn-primary btn-sm`
-                                  : `btn btn-circle btn-outline btn-sm`
-                              }
-                            >
-                              <FaMinus />
-                            </Badge>
-                            <div className="font-medium text-3xl mx-2">
-                              {doorCount}
-                            </div>
-                            <Badge
-                              onClick={addCart}
-                              className={
-                                doorCount >= availableDoors
-                                  ? `btn btn-circle btn-outline btn-sm`
-                                  : `btn btn-circle btn-primary btn-sm`
-                              }
 
-                              // disabled={quantity >= availableDoorsCount}
-                            >
-                              <FaPlus />
-                            </Badge>
+                          <div className="grid grid-cols-2 items-start justify-between w-full">
+                            <div className="text-sm font-bold">Locker</div>
+
+                            <div className="flex justify-end">
+                              <div className="flex items-center justify-evenly">
+                                <div
+                                  onClick={subtractCart}
+                                  className={
+                                    doorCount > 1
+                                      ? `bg-primary p-1 text-xs text-white rounded-full text-center`
+                                      : `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
+                                  }
+                                >
+                                  <FaMinus />
+                                </div>
+                                <div className="font-bold text-sm mx-2 w-[30px] text-center truncate pe-none">
+                                  {doorCount}
+                                </div>
+                                <div
+                                  onClick={addCart}
+                                  className={
+                                    doorCount >= availableDoors
+                                      ? `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
+                                      : `bg-primary p-1 text-xs text-white rounded-full text-center`
+                                  }
+
+                                  // disabled={quantity >= availableDoorsCount}
+                                >
+                                  <FaPlus />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </>
                       )}
@@ -490,9 +500,13 @@ const CreateLockerPage: React.FC = () => {
 
                         <button
                           type="submit"
-                          className="text-xs bg-primary text-white p-2 rounded capitalize"
+                          className="text-xs bg-primary text-white p-2 rounded capitalize flex justify-center items-center"
                         >
-                          {isLoading ? "Loading..." : "Continue"}
+                          {isLoading ? (
+                            <FaSpinner className="animate-spin text-center" />
+                          ) : (
+                            "Continue"
+                          )}
                         </button>
                       </div>
                     </div>
