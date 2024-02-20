@@ -2,12 +2,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CiImageOn } from "react-icons/ci";
-import { FaCog } from "react-icons/fa";
+import { FaBasketballBall, FaCog } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
 import { PiSignOut } from "react-icons/pi";
 import { RiArchiveDrawerLine } from "react-icons/ri";
 import Toggle from "../toggle";
 import Logo from "./logo";
+import { useState } from "react";
+import Image from "next/image";
+import MenuIcon from "../../app/assets/icons/menu.svg"
 
 const menuItems = [
   {
@@ -41,13 +44,25 @@ const Nav = () => {
   const router = useRouter();
 
   const pathname = usePathname();
+  const [sidebarShown, setSidebarShow] = useState(false)
+
+const showSidebar = () => {
+  !sidebarShown ? setSidebarShow(true) : setSidebarShow(false)
+}
+
 
   return (
     <>
-      <Toggle />
+      <div className="md:hidden flex w-full justify-between pt-2 md:pt-0 items-center bg-white drop-shadow">
+        <Logo/>
+        <button type="button" className="inline-flex items-center p-4 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 " onClick={showSidebar}>
+            <span className="sr-only">Open sidebar</span>
+            <Image src={MenuIcon} alt="menu icon" width={24} height={24} />
+        </button>
+        </div>
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform sm:translate-x-0 ${!sidebarShown ? "-translate-x-full ":""}`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 flex flex-col justify-between bg-white drop-shadow dark:bg-gray-800">
