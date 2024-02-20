@@ -43,7 +43,6 @@ async function getFilteredData(status: string, doorNumberToFilter: string) {
   const filteredData = data.filter(
     (locker: any) => locker.doorNumber === doorNumberToFilter
   );
-  console.log(filteredData); // Log the filtered data
   return filteredData;
 }
 
@@ -168,7 +167,10 @@ const OccupancyPage = () => {
                 {status === "occupied" && (
                   <div className="block md:hidden w-full">
                     {dataOccupied.map((data) => (
-                      <div className="grid border-b-2 py-4 gap-y-2">
+                      <div
+                        key={data.id}
+                        className="grid border-b-2 py-4 gap-y-2"
+                      >
                         <div>
                           <p className="text-[12px] uppercase opacity-30">
                             L{data.doorNumber}
