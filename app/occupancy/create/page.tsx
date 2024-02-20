@@ -61,7 +61,21 @@ const CreateLockerPage: React.FC = () => {
 
   const router = useRouter();
 
-  const formSchema = z.object({
+  const formSchemaVO = z.object({
+    clientName: z.string().min(2, {
+      message: "Client name must be at least 2 characters.",
+    }),
+    pocMobileNumber: z
+      .string()
+      .length(11, {
+        message: "POC Contact No# must be exactly 11 numbers.",
+      })
+      .regex(/^\d+$/, {
+        message: " POC Contact No# must contain only numbers.",
+      }),
+  });
+
+  const formSchemaCO = z.object({
     bookingNumber: z.string().min(7, {
       message: "bookingId must be at least 7 characters.",
     }),
@@ -75,8 +89,11 @@ const CreateLockerPage: React.FC = () => {
       }),
   });
 
+  const selectedServiceFormat =
+    selectedService === "serviced-office" ? formSchemaVO : formSchemaCO;
+
   const { reset, ...form } = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(selectedServiceFormat),
     defaultValues: {
       mobileNumber: "",
       bookingNumber: "",
@@ -85,7 +102,7 @@ const CreateLockerPage: React.FC = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof selectedServiceFormat>) {
     try {
       setIsLoading(true);
       const data = {
@@ -120,7 +137,7 @@ const CreateLockerPage: React.FC = () => {
     }
   }
 
-  async function createLocker(values: z.infer<typeof formSchema>) {
+  async function createLocker(values: z.infer<typeof selectedServiceFormat>) {
     try {
       setIsLoading(true);
       const data = {
