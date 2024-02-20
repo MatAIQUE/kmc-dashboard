@@ -150,7 +150,7 @@ const OccupancyPage = () => {
                     <div className="md:me-4 md:col-start-4 flex justify-end">
                       <Button
                         onClick={() => router.push("/occupancy/create")}
-                        className="btn rounded items-center p-2 md:p-4 text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md hidden md:flex"
+                        className="btn rounded items-center p-2 md:p-4 text-white bg-primary  hover:bg-primary/90 text-xs md:text-md hidden md:flex"
                       >
                         <FaPlusCircle className="text-sm" />
                         <p className="md:ml-3 text-xs ml-1">Book Locker</p>
@@ -163,14 +163,49 @@ const OccupancyPage = () => {
                     )}
                   </TabsContent>
                 </Tabs>
+
+                {status === "occupied" && (
+                  <div className="block md:hidden w-full">
+                    {dataOccupied.map((data) => (
+                      <div className="grid border-b-2 py-4 gap-y-2">
+                        <div>
+                          <p className="text-[12px] uppercase opacity-30">
+                            L{data.doorNumber}
+                          </p>
+                        </div>
+                        <div className="flex items-center py-2">
+                          <span
+                            className={`${
+                              data.status === 8 ? "bg-blue-500 " : "bg-primary"
+                            } rounded-full h-2 w-2 me-2`}
+                          />
+                          <h1 className="font-bold">{data.name}</h1>
+                        </div>
+                        <div className="grid grid-cols-2">
+                          <div className="capitalize">
+                            <p className="text-[12px] opacity-60">
+                              {data.service}
+                            </p>
+                          </div>
+                          <div className="uppercase text-right">
+                            <p className="text-[12px] opacity-60">
+                              {data.bookingId}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
+
         <div className="fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
           <Button
             onClick={() => router.push("/occupancy/create")}
-            className="btn rounded items-center w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden block flex items-center justify-center"
+            className="btn rounded items-center w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden justify-center"
           >
             <FaPlusCircle className="text-sm" />
             <p className="md:ml-3 text-xs ml-1">Book Locker</p>
