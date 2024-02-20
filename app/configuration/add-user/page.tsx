@@ -35,10 +35,10 @@ import { Select } from "../../../components/ui/select";
 import { Button } from "../../../components/ui/button";
 
 const formSchema = z.object({
-  firstName: z.string().max(30).min(1),
-  lastName: z.string().max(30).min(1),
+  firstName: z.string().max(30).min(1, { message: "First Name is required" }),
+  lastName: z.string().max(30).min(1, { message: "Last Name is required" }),
   email: z.string().email().min(1),
-  role: z.enum(["admin", "ads_manager", "member"]).refine(
+  role: z.enum(["", "admin", "ads_manager", "member"]).refine(
     (value) => {
       return value !== null && value !== undefined;
     },
@@ -59,7 +59,7 @@ const AddUserPage = () => {
       firstName: "",
       lastName: "",
       email: "",
-      role: undefined,
+      role: "",
     },
   });
 
@@ -135,7 +135,7 @@ const AddUserPage = () => {
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                  className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                   {...field}
                                 />
                               </FormControl>
@@ -156,7 +156,7 @@ const AddUserPage = () => {
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                  className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                   {...field}
                                 />
                               </FormControl>
@@ -177,7 +177,7 @@ const AddUserPage = () => {
                               </FormLabel>
                               <FormControl>
                                 <Input
-                                  className="text-xs outline outline-gray-300 outline-1 rounded p-2"
+                                  className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
                                   {...field}
                                 />
                               </FormControl>

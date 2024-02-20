@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
               onChange={(event) =>
                 table.getColumn("name")?.setFilterValue(event.target.value)
               }
-              className="min-w-full py-3"
+              className="min-w-full py-3 md:text-xs text-md"
             />
           </div>
         </div>
