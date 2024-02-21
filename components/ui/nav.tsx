@@ -24,22 +24,26 @@ const menuItems = [
       {
         title: "Dashboard",
         path: "/dashboard",
-        icon: <DashboardIcon />,
+        navStatus: "disabled",
+        icon: <MdOutlineDashboard />,
       },
       {
         title: "Occupancy",
         path: "/occupancy",
-        icon: <OccupancyIcon />,
+        navStatus: "active",
+        icon: <RiArchiveDrawerLine />,
       },
       {
         title: "Advertisements",
         path: "/advertisement",
-        icon: <AdsIcon />,
+        navStatus: "disabled",
+        icon: <CiImageOn />,
       },
       {
         title: "Configuration",
         path: "/configuration",
-        icon: <ConfigurationIcon />,
+        navStatus: "active",
+        icon: <FaCog />,
       },
     ],
   },
@@ -82,13 +86,17 @@ const Nav = () => {
             </div>
 
             {menuItems.map((cat, index) => (
-              <li key={index} className="h-full">
+              <li key={index} className={`h-full`}>
                 {cat.list.map((item, itemIndex) => (
                   <Link
                     key={itemIndex}
                     href={item.path}
                     className={`flex items-center p-2 mb-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group
-                    ${pathname === item.path && "bg-gray-100"}`}
+                    ${
+                      (pathname === item.path && "bg-gray-100") ||
+                      (item.navStatus === "disabled" &&
+                        "pointer-events-none opacity-30")
+                    }`}
                   >
                     <span
                       className={`${

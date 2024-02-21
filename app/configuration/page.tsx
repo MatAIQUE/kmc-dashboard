@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPlusCircle, FaTrash, FaUserCircle } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlusCircle, FaTrash, FaUserCircle } from "react-icons/fa";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { z } from "zod";
 
@@ -34,7 +34,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import EditIcon from "../../app/assets/icons/edit.svg"
 import {
   Select,
   SelectContent,
@@ -130,37 +130,31 @@ const ConfigurationPage = () => {
     setDropdownShown(null);
   }
 
-  // async function onDelete(values: z.infer<typeof formSchema>) {
-  //   try {
-  //     setIsLoading(true);
-  //     const data = {
-  //       ...values,
-  //     };
+  async function deleteUser(dropdownShown: string) {
+    try {
+      setIsLoading(true);
 
-  //     await axios.patch(
-  //       `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${dropdownShown}/role`,
-  //       data,
-  //       {
-  //         headers: {
-  //           "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
-  //           "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //   } catch (error) {
-  //     setIsLoading(true);
-  //     if (axios.isAxiosError(error) && error.response) {
-  //       if (error.response.status === 409) {
-  //         console.error("User already exists.");
-  //       }
-  //     }
-  //     setIsLoading(false);
-  //     console.error("Error while making POST request:", error);
-  //   }
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${dropdownShown}/remove`,
 
-  //   setDropdownShown(null);
-  // }
+        {
+          headers: {
+            "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
+            "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
+          },
+        }
+      );
+
+      console.log("User deleted successfully");
+    } catch (error) {
+      setIsLoading(false);
+
+      console.error("Error while making DELETE request:", error);
+    }
+
+    // Assuming you also need to reset dropdownShown after deleting
+    setDropdownShown(null);
+  }
 
   const changeTab = (status: string) => {
     const url = `/configuration?tab=${tab}`;
@@ -468,7 +462,12 @@ const ConfigurationPage = () => {
                                                     <AlertDialogCancel className="w-full my-0">
                                                       No
                                                     </AlertDialogCancel>
-                                                    <AlertDialogAction className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white">
+                                                    <AlertDialogAction
+                                                      onClick={() =>
+                                                        deleteUser(user._id)
+                                                      }
+                                                      className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white"
+                                                    >
                                                       Yes, Remove
                                                     </AlertDialogAction>
                                                   </AlertDialogFooter>
@@ -487,8 +486,38 @@ const ConfigurationPage = () => {
                         </div>
                       </div>
                     </TabsContent>
-                    <TabsContent value="pricing">
-                      <div>Pricing</div>
+                    <TabsContent value="pricing" className="flex justify-center w-full">
+                      <div className="w-full md:w-1/2">
+                        <div className="bg-[#000000] rounded p-4 w-full flex justify-between text-white">
+                          <div className="w-full grid">
+                            <span className="bg-[#16A679] border-[#16A679] border-2 w-[25px] h-[5px]"></span>
+                            <div className="font-semibold text-lg py-2">&#x20B1;700/Mo.</div>
+                            <div className="text-sm">Current Price</div>
+                          </div>
+                          <div className="w-full flex items-start justify-end">
+                            <div className="p-2">
+                              <Image src={EditIcon} alt="edit icon" width={24} height={24} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="grid gap-y-2 my-5">
+                          <div className="text-sm">Change Logs</div>
+                          {/* Map here */}
+                          <div className="grid gap-y-1">
+                            <div className="font-bold flex items-center">
+                              <div className="">&#x20B1; First amount</div>
+                              <div className="mx-4"><FaArrowRight/></div>
+                              <div className="me-2">&#x20B1; Second amount</div>
+                            </div>
+                            <div className="text-sm">Effective date</div>
+                            <div className="grid grid-cols-2">
+                              <div className="text-sm">Editor</div>
+                              <div className="text-sm text-end">Date edited</div>
+                            </div>
+                          </div>
+                          {/* Map here */}
+                        </div>
+                      </div>
                     </TabsContent>
                   </Tabs>
                 </div>
