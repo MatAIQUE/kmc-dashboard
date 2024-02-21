@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPlusCircle, FaTrash, FaUserCircle } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlusCircle, FaTrash, FaUserCircle } from "react-icons/fa";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { z } from "zod";
 
@@ -34,7 +34,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import EditIcon from "../../app/assets/icons/edit.svg"
 import {
   Select,
   SelectContent,
@@ -487,8 +487,38 @@ const ConfigurationPage = () => {
                         </div>
                       </div>
                     </TabsContent>
-                    <TabsContent value="pricing">
-                      <div>Pricing</div>
+                    <TabsContent value="pricing" className="flex justify-center w-full">
+                      <div className="w-full md:w-1/2">
+                        <div className="bg-[#000000] rounded p-4 w-full flex justify-between text-white">
+                          <div className="w-full grid">
+                            <span className="bg-[#16A679] border-[#16A679] border-2 w-[25px] h-[5px]"></span>
+                            <div className="font-semibold text-lg py-2">&#x20B1;700/Mo.</div>
+                            <div className="text-sm">Current Price</div>
+                          </div>
+                          <div className="w-full flex items-start justify-end">
+                            <div className="p-2">
+                              <Image src={EditIcon} alt="edit icon" width={24} height={24} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="grid gap-y-2 my-5">
+                          <div className="text-sm">Change Logs</div>
+                          {/* Map here */}
+                          <div className="grid gap-y-1">
+                            <div className="font-bold flex items-center">
+                              <div className="">&#x20B1; First amount</div>
+                              <div className="mx-4"><FaArrowRight/></div>
+                              <div className="me-2">&#x20B1; Second amount</div>
+                            </div>
+                            <div className="text-sm">Effective date</div>
+                            <div className="grid grid-cols-2">
+                              <div className="text-sm">Editor</div>
+                              <div className="text-sm text-end">Date edited</div>
+                            </div>
+                          </div>
+                          {/* Map here */}
+                        </div>
+                      </div>
                     </TabsContent>
                   </Tabs>
                 </div>
