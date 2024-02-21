@@ -107,7 +107,7 @@ const AddUserPage = () => {
       <Nav />
       <div className="p-2 pt-10 md:pt-10 sm:ml-64">
         <div className="rounded-lg dark:border-gray-700">
-          <div className="grid flex justify-center gap-4 mb-4 mx-2">
+          <div className="grid justify-center gap-4 mb-4 mx-2">
             <Card className="w-[350px]">
               <CardHeader>
                 <CardTitle>Add Users</CardTitle>
