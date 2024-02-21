@@ -1,6 +1,7 @@
 import MainContainer from "../../components/ui/main-container";
 import Nav from "../../components/ui/nav";
 import React, { PureComponent } from "react";
+import LoginPage from "../login/page";
 
 const Dashboard = () => {
   return (
@@ -9,9 +10,10 @@ const Dashboard = () => {
         <Nav/>
         <MainContainer/>
     </div> */}
-      <Nav />
+      {/* <Nav />
 
-      <MainContainer />
+      <MainContainer /> */}
+      <LoginPage />
     </>
   );
 };

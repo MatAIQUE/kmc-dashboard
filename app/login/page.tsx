@@ -1,29 +1,79 @@
 "use client";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "../../components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../components/ui/form";
+import { Input } from "../../components/ui/input";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
   CardDescription,
-  CardFooter,
 } from "../../components/ui/card";
-import { useRouter } from "next/navigation";
 import Header from "../../components/ui/header";
-import { useState } from "react";
+import axios from "axios";
+import PasswordInput from "../../components/ui/password-input";
+
+const loginFormSchema = z.object({
+  email: z.string().email({ message: "Invalid email format." }),
+  password: z.string().min(1, {
+    message: "Password is required.",
+  }),
+});
 
 const LoginPage = () => {
   const router = useRouter();
-  const [isText, setIsText] = useState(false)
+  const [error, setError] = useState("");
 
-  const ToggleEye = () => {
-    setIsText(true)
-    console.log(isText)
-  }
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const mouseUp = () => {
-    setIsText(false)
-  }
+  const { reset, ...form } = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`,
+        { ...values }
+      );
+
+      if (!response) {
+        throw new Error("Invalid credentials");
+      }
+      setIsLoading(false);
+      router.push("/occupancy");
+    } catch (error) {
+      setIsLoading(true);
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 409) {
+          setError("Invalid credentials");
+        }
+      }
+      setIsLoading(false);
+    }
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <>
@@ -40,46 +90,74 @@ const LoginPage = () => {
                 <hr className="my-4 border-t border-gray-300" />
               </CardHeader>
               <CardContent>
-                <div className="grid gap-2 gap-y-6">
-                  <div className="grid gap-2 gap-y-4">
-                    <div className="gap-y-2 grid">
-                      <div className="flex font-bold text-sm">
-                        <h6 className="me-1">Email</h6>
-                        <span className="text-primary">*</span>
-                      </div>
-                      <input
-                        placeholder="Client Name"
-                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                <Form reset={reset} {...form}>
+                  <form onSubmit={form.handleSubmit(handleSubmit)}>
+                    <div className="grid gap-2 gap-y-6">
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              <div className="flex font-bold text-xs">
+                                <h6 className="me-1">Email</h6>
+                                <span className="text-primary">*</span>
+                              </div>
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                type="email"
+                                className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
-                    </div>
-                    <div className="gap-y-2 grid">
-                      <div className="flex font-bold text-sm">
-                        <h6 className="me-1">Password</h6>
-                        <span className="text-primary">*</span>
+
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              <div className="flex font-bold text-xs">
+                                <h6 className="me-1">Password</h6>
+                                <span className="text-primary">*</span>
+                              </div>
+                            </FormLabel>
+                            <FormControl>
+                              <PasswordInput
+                                showVisibilityToggle
+                                className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <div className="grid gap-2">
+                        <Button
+                          type="submit"
+                          className="text-md bg-primary text-white p-2 rounded capitalize"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? "Logging In..." : "Log In"}
+                        </Button>
+                        {error && (
+                          <FormMessage>
+                            <p className="text-red-500 text-sm font-medium mt-1">
+                              {error}
+                            </p>
+                          </FormMessage>
+                        )}
                       </div>
-                      <div className="relative">
-                        <input type={`${isText ? "text":"password"}`} className="outline outline-gray-300 outline-1 rounded block w-full md:text-xs text-md p-2" placeholder="Enter password"/>
-                        <span className="absolute top-0 end-0 h-full flex items-center">
-                        <button type="button" className=" p-2 rounded" onMouseDown={ToggleEye} onMouseUp={mouseUp} value="12313123">
-                          <svg className="flex-shrink-0 size-3.5 text-gray-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path className="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
-                            <path className="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
-                            <path className="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
-                            <line className="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"/>
-                            <path className="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                            <circle className="hidden hs-password-active:block" cx="12" cy="12" r="3"/>
-                          </svg>
-                        </button>
-                        </span>
-                      </div>
                     </div>
-                  </div>
-                  <div className="grid gap-2">
-                    <button className="text-md bg-primary text-white p-2 rounded capitalize">
-                      Log In
-                    </button>
-                  </div>
-                </div>
+                  </form>
+                </Form>
               </CardContent>
             </Card>
           </div>
