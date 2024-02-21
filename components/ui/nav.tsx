@@ -20,21 +20,25 @@ const menuItems = [
       {
         title: "Dashboard",
         path: "/dashboard",
+        navStatus: "disabled",
         icon: <MdOutlineDashboard />,
       },
       {
         title: "Occupancy",
         path: "/occupancy",
+        navStatus: "active",
         icon: <RiArchiveDrawerLine />,
       },
       {
         title: "Advertisements",
         path: "/advertisement",
+        navStatus: "disabled",
         icon: <CiImageOn />,
       },
       {
         title: "Configuration",
         path: "/configuration",
+        navStatus: "active",
         icon: <FaCog />,
       },
     ],
@@ -73,13 +77,15 @@ const showSidebar = () => {
             </div>
 
             {menuItems.map((cat, index) => (
-              <li key={index} className="h-full">
+              <li key={index} className={`h-full`}>
                 {cat.list.map((item, itemIndex) => (
                   <Link
                     key={itemIndex}
                     href={item.path}
                     className={`flex items-center p-2 mb-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group
-                    ${pathname === item.path && "bg-gray-100"}`}
+                    ${pathname === item.path && "bg-gray-100" || 
+                      item.navStatus === "disabled" && "pointer-events-none opacity-30"
+                  }`}
                   >
                     <span className={`${pathname === item.path && "border-2 rounded me-2 py-2 border-primary w-[.5px]"}`}></span>
                     {item.icon}
