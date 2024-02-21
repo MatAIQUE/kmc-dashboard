@@ -13,23 +13,71 @@ import Header from "../components/ui/header";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../components/ui/form";
+import { Button } from "../components/ui/button";
+import PasswordInput from "../components/ui/password-input";
 
 interface AcceptInviteProps {
   tokenExpired: boolean;
   email: string;
   isLinkAlreadyUsed: boolean;
 }
+
+const formSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long." })
+      .refine(
+        (password) => {
+          console.log({ password });
+          return /[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(password);
+        },
+        { message: "Password must contain a number or symbol." }
+      ),
+    confirmPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long." })
+      .refine(
+        (data) => {
+          console.log({ data });
+          return /[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(data);
+        },
+        { message: "Confirm Password must contain a number or symbol." }
+      ),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
 const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
   tokenExpired,
   email,
   isLinkAlreadyUsed,
 }) => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [userEmail, setEmail] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const { reset, ...form } = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      confirmPassword: "",
+      password: "",
+    },
+  });
 
   useEffect(() => {
     if (tokenExpired) {
@@ -42,14 +90,10 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
     }
   }, [tokenExpired, email, isLinkAlreadyUsed]);
 
-  const handleAcceptInvite = async () => {
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    console.log("values", values.password);
     try {
-      if (password !== confirmPassword) {
-        setError("Passwords do not match");
-        return;
-      }
-
       if (tokenExpired) {
         setError("URL has already expired");
         return;
@@ -62,21 +106,18 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
 
       const response = await axios.patch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/password`,
-        { email: userEmail, password }
+        { email: userEmail, password: values.password }
       );
 
       if (response.status === 200) {
         router.push("/login");
       }
     } catch (err) {
-      console.error("Error resetting pin:", error);
+      console.error("Error setting password:", error);
     } finally {
+      reset();
       setIsLoading(false);
     }
-
-    setPassword("");
-    setConfirmPassword("");
-    setError("");
   };
 
   return (
@@ -92,46 +133,74 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
                 <CardDescription></CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-2 gap-y-6">
-                  <div className="grid gap-2 gap-y-4">
-                    <div className="gap-y-2 grid">
-                      <div className="flex font-bold text-xs">
-                        <h6 className="me-1">New Password</h6>
-                        <span className="text-primary">*</span>
-                      </div>
-                      <input
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                <Form reset={reset} {...form}>
+                  <form onSubmit={form.handleSubmit(handleSubmit)}>
+                    <div className="grid gap-2 gap-y-6">
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              <div className="flex font-bold text-xs">
+                                <h6 className="me-1">New Password</h6>
+                                <span className="text-primary">*</span>
+                              </div>
+                            </FormLabel>
+                            <FormControl>
+                              <PasswordInput
+                                showVisibilityToggle
+                                className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
-                    </div>
-                    <div className="gap-y-2 grid">
-                      <div className="flex font-bold text-xs">
-                        <h6 className="me-1">Confirm Password</h6>
-                        <span className="text-primary">*</span>
-                      </div>
-                      <input
-                        placeholder="Retype Password"
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                      <FormField
+                        control={form.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              <div className="flex font-bold text-xs">
+                                <h6 className="me-1">Confirm Password</h6>
+                                <span className="text-primary">*</span>
+                              </div>
+                            </FormLabel>
+                            <FormControl>
+                              <PasswordInput
+                                showVisibilityToggle
+                                className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
+                      <div className="grid gap-2">
+                        <Button
+                          type="submit"
+                          className="text-md bg-primary text-white p-2 rounded capitalize"
+                          disabled={
+                            tokenExpired || isLinkAlreadyUsed || isLoading
+                          }
+                        >
+                          {isLoading ? "Logging In..." : "Log In"}
+                        </Button>
+                        {error && (
+                          <FormMessage>
+                            <p className="text-red-500 text-sm font-medium mt-1">
+                              {error}
+                            </p>
+                          </FormMessage>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <div className="grid">
-                    {error && <p className="text-red-500">{error}</p>}
-                    <button
-                      disabled={tokenExpired || isLinkAlreadyUsed}
-                      className="text-xs bg-primary text-white p-2 rounded capitalize"
-                      onClick={handleAcceptInvite}
-                    >
-                      {isLoading ? "Loading..." : "Accept Invite"}
-                    </button>
-                  </div>
-                </div>
+                  </form>
+                </Form>
               </CardContent>
             </Card>
           </div>
@@ -149,6 +218,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (typeof token === "string") {
     try {
+      // TODO: Getting `tokenExpired` message can be simplified
       const decodedToken = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${token}/verify`
       );
@@ -158,6 +228,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const tokenExpirationTime = exp * 1000;
       const currentTime = Date.now();
       if (currentTime > tokenExpirationTime) {
+        console.log(tokenExpirationTime);
         return {
           props: { tokenExpired: true },
         };

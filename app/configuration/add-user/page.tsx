@@ -95,7 +95,6 @@ const AddUserPage = () => {
           setError("User already exists.");
         }
       }
-      reset();
       setIsLoading(false);
       console.error("Error while making POST request:", error);
     }
@@ -209,11 +208,13 @@ const AddUserPage = () => {
                                   {...field}
                                 />
                               </FormControl>
-                              <FormMessage />
+
                               {error && (
-                                <p className="text-red-500 text-sm font-medium mt-1">
-                                  {error}
-                                </p>
+                                <FormMessage>
+                                  <p className="text-red-500 text-sm font-medium mt-1">
+                                    {error}
+                                  </p>
+                                </FormMessage>
                               )}
                             </FormItem>
                           )}
@@ -222,6 +223,7 @@ const AddUserPage = () => {
 
                       <div className="grid grid-cols-2 gap-2">
                         <button
+                          type="button"
                           className="text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize"
                           onClick={() => router.push("/configuration")}
                         >
