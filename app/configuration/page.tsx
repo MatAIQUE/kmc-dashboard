@@ -130,37 +130,31 @@ const ConfigurationPage = () => {
     setDropdownShown(null);
   }
 
-  // async function onDelete(values: z.infer<typeof formSchema>) {
-  //   try {
-  //     setIsLoading(true);
-  //     const data = {
-  //       ...values,
-  //     };
+  async function deleteUser(dropdownShown: string) {
+    try {
+      setIsLoading(true);
 
-  //     await axios.patch(
-  //       `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${dropdownShown}/role`,
-  //       data,
-  //       {
-  //         headers: {
-  //           "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
-  //           "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //   } catch (error) {
-  //     setIsLoading(true);
-  //     if (axios.isAxiosError(error) && error.response) {
-  //       if (error.response.status === 409) {
-  //         console.error("User already exists.");
-  //       }
-  //     }
-  //     setIsLoading(false);
-  //     console.error("Error while making POST request:", error);
-  //   }
+      await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${dropdownShown}/remove`,
 
-  //   setDropdownShown(null);
-  // }
+        {
+          headers: {
+            "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
+            "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
+          },
+        }
+      );
+
+      console.log("User deleted successfully");
+    } catch (error) {
+      setIsLoading(false);
+
+      console.error("Error while making DELETE request:", error);
+    }
+
+    // Assuming you also need to reset dropdownShown after deleting
+    setDropdownShown(null);
+  }
 
   const changeTab = (status: string) => {
     const url = `/configuration?tab=${tab}`;
@@ -468,7 +462,12 @@ const ConfigurationPage = () => {
                                                     <AlertDialogCancel className="w-full my-0">
                                                       No
                                                     </AlertDialogCancel>
-                                                    <AlertDialogAction className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white">
+                                                    <AlertDialogAction
+                                                      onClick={() =>
+                                                        deleteUser(user._id)
+                                                      }
+                                                      className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white"
+                                                    >
                                                       Yes, Remove
                                                     </AlertDialogAction>
                                                   </AlertDialogFooter>
