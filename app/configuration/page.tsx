@@ -34,6 +34,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import Image from "next/image";
+import WarningIcon from "./../assets/icons/warning-icon.svg"
+
 interface User {
   _id: string;
   name: string;
@@ -207,7 +210,7 @@ const ConfigurationPage = () => {
                                           : "hidden"
                                       }`}
                                     >
-                                      <div className="w-auto rounded drop-shadow-xl right-0 absolute bg-white">
+                                      <div className={`w-auto rounded right-0 absolute bg-white ${dropdownShown ? "drop-shadow" : ""}`}>
                                         <div className="mw-auto">
                                           <AlertDialog>
                                             <AlertDialogTrigger asChild>
@@ -215,7 +218,7 @@ const ConfigurationPage = () => {
                                                 Change Role
                                               </div>
                                             </AlertDialogTrigger>
-                                            <AlertDialogContent className=" rounded">
+                                            <AlertDialogContent className="rounded w-[90%]">
                                               <AlertDialogHeader>
                                                 <AlertDialogTitle className="text-left">
                                                   Change role?
@@ -247,20 +250,43 @@ const ConfigurationPage = () => {
                                                   </Select>
                                                 </AlertDialogDescription>
                                               </AlertDialogHeader>
-                                              <AlertDialogFooter className="w-full mt-4 grid grid-cols-2">
-                                                <AlertDialogCancel className="w-full">
+                                              <AlertDialogFooter className="w-full grid grid-cols-2 my-0 gap-2">
+                                                <AlertDialogCancel className="w-full my-0">
                                                   Cancel
                                                 </AlertDialogCancel>
-                                                <AlertDialogAction className="w-full">
+                                                <AlertDialogAction className="w-full my-0">
                                                   Save Changes
                                                 </AlertDialogAction>
                                               </AlertDialogFooter>
                                             </AlertDialogContent>
                                           </AlertDialog>
 
-                                          <div className="whitespace-nowrap hover:bg-gray-100 hover:cursor-pointer px-4 py-3 text-sm text-destructive font-semibold">
-                                            Remove User
-                                          </div>
+                                          <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                              <div className="whitespace-nowrap hover:bg-red-100 text-destructive font-bold hover:cursor-pointer px-4 py-3 text-sm">
+                                                Remove User
+                                              </div>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent className="rounded w-[90%]">
+                                              <AlertDialogHeader>
+                                                <AlertDialogTitle className="text-center flex flex-col items-center">
+                                                  <Image className="mb-2" src={WarningIcon} width={48} height={48} alt="warning icon" />
+                                                  Remove user?
+                                                </AlertDialogTitle>
+                                                <AlertDialogDescription className="text-center gap-y-4 grid">
+                                                  Are you sure you want to remove keme access to locker keme
+                                                </AlertDialogDescription>
+                                              </AlertDialogHeader>
+                                              <AlertDialogFooter className="w-full grid grid-cols-2 my-0 gap-2">
+                                                <AlertDialogCancel className="w-full my-0">
+                                                  No
+                                                </AlertDialogCancel>
+                                                <AlertDialogAction className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white">
+                                                  Yes, Remove
+                                                </AlertDialogAction>
+                                              </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                          </AlertDialog>
                                         </div>
                                       </div>
                                     </div>

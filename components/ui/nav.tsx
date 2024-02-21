@@ -15,6 +15,7 @@ import ConfigurationIcon from "../../app/assets/configuration-icon";
 import { useState } from "react";
 import Image from "next/image";
 import MenuIcon from "../../app/assets/icons/menu.svg";
+import SignoutIcon from "../../app/assets/icons/signout.svg";
 
 const menuItems = [
   {
@@ -81,7 +82,7 @@ const Nav = () => {
             </div>
 
             {menuItems.map((cat, index) => (
-              <li key={index}>
+              <li key={index} className="h-full">
                 {cat.list.map((item, itemIndex) => (
                   <Link
                     key={itemIndex}
@@ -89,6 +90,12 @@ const Nav = () => {
                     className={`flex items-center p-2 mb-3 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group
                     ${pathname === item.path && "bg-gray-100"}`}
                   >
+                    <span
+                      className={`${
+                        pathname === item.path &&
+                        "border-2 rounded me-2 py-2 border-primary w-[.5px]"
+                      }`}
+                    ></span>
                     {item.icon}
                     <span className="ms-3">{item.title}</span>
                   </Link>
@@ -103,8 +110,15 @@ const Nav = () => {
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 onClick={() => router.push("/")}
               >
-                <PiSignOut />
-                <span className="ms-3 text-destructive">Signout</span>
+                <Image
+                  src={SignoutIcon}
+                  width={24}
+                  height={24}
+                  alt="signout icon"
+                />
+                <span className="ms-3 text-[#C5280C] font-semibold">
+                  Logout
+                </span>
               </a>
             </li>
           </ul>
