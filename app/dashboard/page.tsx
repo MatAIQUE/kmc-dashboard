@@ -10,10 +10,10 @@ const Dashboard = () => {
         <Nav/>
         <MainContainer/>
     </div> */}
-      {/* <Nav />
+      <Nav />
 
-      <MainContainer /> */}
-      <LoginPage />
+      <MainContainer />
+      {/* <LoginPage /> */}
     </>
   );
 };
