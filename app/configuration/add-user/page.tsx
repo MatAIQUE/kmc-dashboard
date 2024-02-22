@@ -8,6 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
+import Image from "next/image";
+import CheckIcon from "../../assets/icons/success-icon.svg"
 import {
   Form,
   FormControl,
@@ -234,7 +236,7 @@ const AddUserPage = () => {
                           type="submit"
                           className="text-xs bg-primary text-white p-2 rounded capitalize"
                         >
-                          {isLoading ? "Loading..." : "Continue"}
+                          {isLoading ? "Loading..." : "Invite"}
                         </button>
                       </div>
                     </div>
@@ -243,9 +245,12 @@ const AddUserPage = () => {
               </CardContent>
               {showSuccessDialog && (
                 <AlertDialog defaultOpen>
-                  <AlertDialogContent>
+                  <AlertDialogContent className="w-[80%] rounded">
                     <AlertDialogHeader className="flex items-center justify-center">
-                      <AlertDialogTitle>Invitation Sent!</AlertDialogTitle>
+                      <AlertDialogTitle className="flex items-center flex-col">
+                      <Image src={CheckIcon} width={48} height={48} alt="check" className="mb-2" />
+                      Invitation Sent!
+                      </AlertDialogTitle>
                       <AlertDialogDescription>
                         We&apos;ve sent an invitation to {email}
                       </AlertDialogDescription>
@@ -258,7 +263,7 @@ const AddUserPage = () => {
                               setShowSuccessDialog(false);
                               router.push("/configuration");
                             }}
-                            className="w-full"
+                            className="w-full mt-2"
                           >
                             Continue
                           </Button>

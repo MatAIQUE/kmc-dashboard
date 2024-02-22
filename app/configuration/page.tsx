@@ -349,6 +349,7 @@ const ConfigurationPage = () => {
                                                     <AlertDialogDescription className="text-left gap-y-4 grid">
                                                       Select a new role for{" "}
                                                       {user.email}
+                                                      <hr className="my-1 bg-gray-300"/>
                                                       <p className="text-black text-left">
                                                         Role{" "}
                                                         <span className="text-destructive">
@@ -454,8 +455,7 @@ const ConfigurationPage = () => {
                                                     </AlertDialogTitle>
                                                     <AlertDialogDescription className="text-center gap-y-4 grid">
                                                       Are you sure you want to
-                                                      remove keme access to
-                                                      locker keme
+                                                      remove {user.firstName + " " + user.lastName}?
                                                     </AlertDialogDescription>
                                                   </AlertDialogHeader>
                                                   <AlertDialogFooter className="w-full grid grid-cols-2 my-0 gap-2">
