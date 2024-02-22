@@ -24,7 +24,7 @@ import Image from "next/image";
 async function getData(status: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`
     );
 
     if (!response.ok) {
@@ -79,7 +79,7 @@ const OccupancyPage = () => {
 
   const changeStatus = (status: string) => {
     const url = `/occupancy?status=${status}`;
-    console.log(status)
+    console.log(status);
     router.push(url);
   };
 
@@ -103,7 +103,11 @@ const OccupancyPage = () => {
                     </button>
                   </div>
                 </div>
-                <div className={`block md:hidden w-full ${status === "vacant" ? "hidden":""}`}>
+                <div
+                  className={`block md:hidden w-full ${
+                    status === "vacant" ? "hidden" : ""
+                  }`}
+                >
                   <Input
                     placeholder="Name, ID, Locker"
                     className="min-w-full py-3 mb-2 md:text-xs text-md"
@@ -205,7 +209,11 @@ const OccupancyPage = () => {
           </div>
         </div>
 
-        <div className={`fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4 transition-transform ${status === "occupied" ? "translate-y-full":""}`}>
+        <div
+          className={`fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4 transition-transform ${
+            status === "occupied" ? "translate-y-full" : ""
+          }`}
+        >
           <Button
             onClick={() => router.push("/occupancy/create")}
             className="btn rounded items-center w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden justify-center"
