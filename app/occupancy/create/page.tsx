@@ -5,11 +5,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Nav from "../../../components/ui/nav";
-import SOIcon from "../../assets/icons/SO.svg"
-import CWIcon from "../../assets/icons/CW.svg"
-import SOActiveIcon from "../../assets/icons/SOActiveIcon.svg"
-import CWActiveIcon from "../../assets/icons/CWActiveIcon.svg"
-import DangerIcon from "../../assets/icons/DangerIcon.svg"
+import SOIcon from "../../assets/icons/SO.svg";
+import CWIcon from "../../assets/icons/CW.svg";
+import SOActiveIcon from "../../assets/icons/SOActiveIcon.svg";
+import CWActiveIcon from "../../assets/icons/CWActiveIcon.svg";
+import DangerIcon from "../../assets/icons/DangerIcon.svg";
 import axios from "axios";
 import Image from "next/image";
 import {
@@ -299,13 +299,20 @@ const CreateLockerPage: React.FC = () => {
                                 setDoorCount(1);
                               }}
                             >
-
-                              <Image src={selectedService === "serviced-office" ? SOActiveIcon : SOIcon} alt="SO Icon" width={24} height={25}
-                              className={`${
-                                selectedService === "serviced-office"
-                                  ? "text-primary"
-                                  : ""
-                              } `}
+                              <Image
+                                src={
+                                  selectedService === "serviced-office"
+                                    ? SOActiveIcon
+                                    : SOIcon
+                                }
+                                alt="SO Icon"
+                                width={24}
+                                height={25}
+                                className={`${
+                                  selectedService === "serviced-office"
+                                    ? "text-primary"
+                                    : ""
+                                } `}
                               />
                               <p className="font-semibold capitalize text-xs">
                                 Serviced Office
@@ -325,12 +332,20 @@ const CreateLockerPage: React.FC = () => {
                                 setDoorCount(1);
                               }}
                             >
-                              <Image src={selectedService === "coworking-virtual" ? CWActiveIcon : CWIcon} alt="CW Icon" width={24} height={25}
-                              className={`${
-                                selectedService === "coworking-virtual"
-                                  ? "text-primary"
-                                  : ""
-                              } `}
+                              <Image
+                                src={
+                                  selectedService === "coworking-virtual"
+                                    ? CWActiveIcon
+                                    : CWIcon
+                                }
+                                alt="CW Icon"
+                                width={24}
+                                height={25}
+                                className={`${
+                                  selectedService === "coworking-virtual"
+                                    ? "text-primary"
+                                    : ""
+                                } `}
                               />
                               <p className="font-semibold capitalize text-xs">
                                 Coworking/Virtual
