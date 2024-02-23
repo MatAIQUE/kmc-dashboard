@@ -5,7 +5,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Nav from "../../../components/ui/nav";
-
+import SOIcon from "../../assets/icons/SO.svg";
+import CWIcon from "../../assets/icons/CW.svg";
+import SOActiveIcon from "../../assets/icons/SOActiveIcon.svg";
+import CWActiveIcon from "../../assets/icons/CWActiveIcon.svg";
+import DangerIcon from "../../assets/icons/DangerIcon.svg";
 import axios from "axios";
 import Image from "next/image";
 import {
@@ -295,7 +299,15 @@ const CreateLockerPage: React.FC = () => {
                                 setDoorCount(1);
                               }}
                             >
-                              <FaBuilding
+                              <Image
+                                src={
+                                  selectedService === "serviced-office"
+                                    ? SOActiveIcon
+                                    : SOIcon
+                                }
+                                alt="SO Icon"
+                                width={24}
+                                height={25}
                                 className={`${
                                   selectedService === "serviced-office"
                                     ? "text-primary"
@@ -320,7 +332,15 @@ const CreateLockerPage: React.FC = () => {
                                 setDoorCount(1);
                               }}
                             >
-                              <FaChair
+                              <Image
+                                src={
+                                  selectedService === "coworking-virtual"
+                                    ? CWActiveIcon
+                                    : CWIcon
+                                }
+                                alt="CW Icon"
+                                width={24}
+                                height={25}
                                 className={`${
                                   selectedService === "coworking-virtual"
                                     ? "text-primary"
@@ -364,7 +384,7 @@ const CreateLockerPage: React.FC = () => {
                                     <FormLabel>
                                       <div className="flex font-bold text-xs">
                                         <h6 className="me-1">
-                                          POC Contact No#
+                                          POC Contact No.
                                         </h6>
                                         <span className="text-primary">*</span>
                                       </div>
@@ -414,7 +434,7 @@ const CreateLockerPage: React.FC = () => {
                                   <FormItem>
                                     <FormLabel>
                                       <div className="flex font-bold text-xs">
-                                        <h6 className="me-1">Contact No#</h6>
+                                        <h6 className="me-1">Contact No.</h6>
                                         <span className="text-primary">*</span>
                                       </div>
                                     </FormLabel>
@@ -578,14 +598,14 @@ const CreateLockerPage: React.FC = () => {
 
               {showErrDialog && (
                 <AlertDialog defaultOpen>
-                  <AlertDialogContent>
+                  <AlertDialogContent className="w-[80%] rounded">
                     <AlertDialogHeader className="mb-10">
                       <AlertDialogTitle className="grid gap-y-2">
                         <div className="flex items-center justify-center">
                           <Image
-                            src={WarningIcon}
-                            width={32}
-                            height={28}
+                            src={DangerIcon}
+                            width={48}
+                            height={48}
                             alt="warning icon"
                           />
                         </div>
@@ -594,7 +614,7 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        Im sorry we didnt find any match of the
+                        I&apos;m sorry we didnt find any match of the
                       </AlertDialogDescription>
                       <AlertDialogDescription className="flex items-center justify-center">
                         Booking ID/Client Name

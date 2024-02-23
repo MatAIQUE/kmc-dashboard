@@ -78,7 +78,7 @@ const LoginPage = () => {
   return (
     <>
       <Header />
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center pt-32 h-screen">
         <div className="rounded-lg dark:border-gray-700">
           <div className="grid flex justify-center gap-4 mb-4 mx-2">
             <Card className="w-[350px]">
