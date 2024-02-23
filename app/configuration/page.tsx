@@ -270,26 +270,53 @@ const ConfigurationPage = () => {
                               className="col-span-3 md:col-span-1 mb-6"
                             >
                               <div className="w-full flex flex-col justify-between sm:h-auto">
-                                <div className="grid grid-cols-4 bg-white md:drop-shadow-md rounded-xl p-4 relative  justify-center">
-                                  <div className="flex items-start mt-3 justify-center">
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div className="flex items-center bg-white md:drop-shadow-md rounded-xl p-4 overflow-hidden relative">
+                                  <div className="h-auto p-2 flex items-center justify-center">
                                     <FaUserCircle className="h-10 w-10" />
                                   </div>
-                                  <div className="grid ms-2 col-span-2">
-                                    <div>
-                                      <p className="font-bold w-full">
-                                        {user.firstName} {user.lastName}
-                                      </p>
-                                      <p className="opacity-80 w-full hidden md:block text-sm">
-                                        {user.email}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="w-full mt-2">{user.role}</p>
-                                    </div>
+                                  <div className="w-full grid ms-2">
+                                    <h1 className="font-bold truncate">{user.firstName} {user.lastName}</h1>
+                                    <p className="text-sm truncate">{user.email}</p>              
+                                    <p className="text-sm">{user.role}</p>                    
                                   </div>
-                                  <div className="absolute top-0 right-0 p-4">
-                                    {/* DROPDOWN TRIGGER */}
-
+                                  <span className="absolute top-0 right-0">
+                                    <div className="p-2">
                                     <DropdownMenu>
                                       <DropdownMenuTrigger asChild>
                                         <Button
@@ -477,9 +504,33 @@ const ConfigurationPage = () => {
                                         </div>
                                       </div>
                                     </div>
-                                    {/* END OF DROPDOWN CONTENT */}
-                                  </div>
+                                    </div>
+                                  </span>
                                 </div>
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                               </div>
                             </div>
                           ))}
