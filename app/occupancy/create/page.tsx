@@ -112,15 +112,13 @@ const CreateLockerPage: React.FC = () => {
         selectedService === "serviced-office"
           ? {
               ...values,
-              // lockerId: "4001",
+              // lockerId: "4000",
               bookingOrigin: 8,
-              serviceType: "so_clients",
             }
           : {
               ...values,
-              // lockerId: "4001",
+              // lockerId: "4000",
               bookingOrigin: 8,
-              serviceType: "hub_clients",
             };
 
       const response = await axios.post(
@@ -154,7 +152,7 @@ const CreateLockerPage: React.FC = () => {
       setIsLoading(true);
       const data = {
         ...values,
-        lockerId: "4001",
+        lockerId: "4000",
         bookingOrigin: "8",
         doorCount: doorCount,
       };
@@ -169,12 +167,15 @@ const CreateLockerPage: React.FC = () => {
           },
         }
       );
+
+      console.log(newLocker.status);
       if (newLocker.status === 201) {
         const datas = {
           ...values,
-          lockerId: "4001",
+          lockerId: "4000",
           doorCount: doorCount,
           paymentMethod: "add_to_invoice",
+          bookingOrigin: 8,
         };
 
         try {
