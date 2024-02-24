@@ -26,6 +26,7 @@ import {
 } from "../components/ui/form";
 import { Button } from "../components/ui/button";
 import PasswordInput from "../components/ui/password-input";
+import { FaSpinner } from "react-icons/fa";
 
 interface AcceptInviteProps {
   tokenExpired: boolean;
@@ -40,7 +41,6 @@ const formSchema = z
       .min(8, { message: "Password must be at least 8 characters long." })
       .refine(
         (password) => {
-          console.log({ password });
           return /[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(password);
         },
         { message: "Password must contain a number or symbol." }
@@ -50,7 +50,6 @@ const formSchema = z
       .min(8, { message: "Password must be at least 8 characters long." })
       .refine(
         (data) => {
-          console.log({ data });
           return /[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(data);
         },
         { message: "Confirm Password must contain a number or symbol." }
@@ -92,7 +91,6 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log("values", values.password);
     try {
       if (tokenExpired) {
         setError("URL has already expired");
@@ -136,17 +134,15 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
                 <Form reset={reset} {...form}>
                   <form onSubmit={form.handleSubmit(handleSubmit)}>
                     <div className="grid gap-2 gap-y-6">
+                      <div className="flex font-bold text-xs">
+                        <h6 className="me-1">New Password</h6>
+                        <span className="text-primary">*</span>
+                      </div>
                       <FormField
                         control={form.control}
                         name="password"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              <div className="flex font-bold text-xs">
-                                <h6 className="me-1">New Password</h6>
-                                <span className="text-primary">*</span>
-                              </div>
-                            </FormLabel>
                             <FormControl>
                               <PasswordInput
                                 showVisibilityToggle
@@ -158,17 +154,15 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
                           </FormItem>
                         )}
                       />
+                      <div className="flex font-bold text-xs">
+                        <h6 className="me-1">Confirm Password</h6>
+                        <span className="text-primary">*</span>
+                      </div>
                       <FormField
                         control={form.control}
                         name="confirmPassword"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>
-                              <div className="flex font-bold text-xs">
-                                <h6 className="me-1">Confirm Password</h6>
-                                <span className="text-primary">*</span>
-                              </div>
-                            </FormLabel>
                             <FormControl>
                               <PasswordInput
                                 showVisibilityToggle
@@ -188,7 +182,11 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
                             tokenExpired || isLinkAlreadyUsed || isLoading
                           }
                         >
-                          {isLoading ? "Logging In..." : "Log In"}
+                          {isLoading ? (
+                            <FaSpinner className="animate-spin text-center" />
+                          ) : (
+                            "Save & Log in"
+                          )}
                         </Button>
                         {error && (
                           <FormMessage>
@@ -228,7 +226,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const tokenExpirationTime = exp * 1000;
       const currentTime = Date.now();
       if (currentTime > tokenExpirationTime) {
-        console.log(tokenExpirationTime);
         return {
           props: { tokenExpired: true },
         };
@@ -242,7 +239,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
       }
     } catch (error) {
-      console.error("Error decoding token:", error);
       return {
         props: { tokenExpired: true },
       };

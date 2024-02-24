@@ -24,6 +24,7 @@ import {
 import Header from "../../components/ui/header";
 import axios from "axios";
 import PasswordInput from "../../components/ui/password-input";
+import { FaSpinner } from "react-icons/fa";
 
 const loginFormSchema = z.object({
   email: z.string().email({ message: "Invalid email format." }),
@@ -49,12 +50,12 @@ const LoginPage = () => {
 
   const handleSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     setIsLoading(true);
+    setError("");
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`,
         { ...values }
       );
-
       if (!response) {
         throw new Error("Invalid credentials");
       }
@@ -145,7 +146,11 @@ const LoginPage = () => {
                           className="text-md bg-primary text-white p-2 rounded capitalize"
                           disabled={isLoading}
                         >
-                          {isLoading ? "Logging In..." : "Log In"}
+                          {isLoading ? (
+                            <FaSpinner className="animate-spin text-center" />
+                          ) : (
+                            "Log In"
+                          )}
                         </Button>
                         {error && (
                           <FormMessage>

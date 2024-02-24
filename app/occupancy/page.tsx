@@ -79,7 +79,6 @@ const OccupancyPage = () => {
 
   const changeStatus = (status: string) => {
     const url = `/occupancy?status=${status}`;
-    console.log(status);
     router.push(url);
   };
 
