@@ -65,7 +65,6 @@ const LockerResetPinAction = ({ locker }: any) => {
         // FIXME: STANDARDIZE HTTP Request Library, AXIOS OR FETCH?? - We're currently using both, must choose 1.
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/${id}/reset-pin`
       );
-      console.log(response);
       if (response.status === 200) {
         setShowDialog(true);
       }
@@ -177,7 +176,6 @@ const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/${locker.lockerId}/door/${locker.id}/terminate`,
         { bookingNumber: locker.bookingId }
       );
-      console.log(response);
       if (response.status === 200) {
         setShowDialog(true);
       }
@@ -289,7 +287,6 @@ const LockerRenewDoorAction = ({ locker }: any) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/${locker.lockerId}/door/${locker.id}/renew`,
         { bookingNumber: locker.bookingId }
       );
-      console.log(response);
       if (response.status === 200) {
         setShowDialog(true);
       }

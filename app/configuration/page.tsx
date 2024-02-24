@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaArrowLeft, FaArrowRight, FaPlusCircle, FaTrash, FaUserCircle } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaArrowRight,
+  FaPlusCircle,
+  FaTrash,
+  FaUserCircle,
+} from "react-icons/fa";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { z } from "zod";
 
@@ -34,7 +40,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import EditIcon from "../../app/assets/icons/edit.svg"
+import EditIcon from "../../app/assets/icons/edit.svg";
 import {
   Select,
   SelectContent,
@@ -144,8 +150,6 @@ const ConfigurationPage = () => {
           },
         }
       );
-
-      console.log("User deleted successfully");
     } catch (error) {
       setIsLoading(false);
 
@@ -232,7 +236,7 @@ const ConfigurationPage = () => {
                   <div className="grid md:grid-cols-4 md:gap-2 grid-cols-2 p-2">
                     <div className="flex items-center md:justify-start justify-between">
                       <h1 className="md:text-xl font-bold capitalize text-sm">
-                        Occupancy
+                        Configuration
                       </h1>
                     </div>
                   </div>
@@ -270,284 +274,242 @@ const ConfigurationPage = () => {
                               className="col-span-3 md:col-span-1 mb-6"
                             >
                               <div className="w-full flex flex-col justify-between sm:h-auto">
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 <div className="flex items-center bg-white md:drop-shadow-md rounded-xl p-4 overflow-hidden relative">
                                   <div className="h-auto p-2 flex items-center justify-center">
                                     <FaUserCircle className="h-10 w-10" />
                                   </div>
                                   <div className="w-full grid ms-2">
-                                    <h1 className="font-bold truncate">{user.firstName} {user.lastName}</h1>
-                                    <p className="text-sm truncate">{user.email}</p>              
-                                    <p className="text-sm">{user.role}</p>                    
+                                    <h1 className="font-bold truncate">
+                                      {user.firstName} {user.lastName}
+                                    </h1>
+                                    <p className="text-sm truncate">
+                                      {user.email}
+                                    </p>
+                                    <p className="text-sm">{user.role}</p>
                                   </div>
                                   <span className="absolute top-0 right-0">
                                     <div className="p-2">
-                                    <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                        <Button
-                                          variant="ghost"
-                                          className="h-8 w-8 p-0"
-                                        >
-                                          <MoreHorizontal className="h-4 w-4" />
-                                        </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                        <DropdownMenuItem
-                                          onClick={() => {
-                                            ShowDropdown(user._id);
-                                            setAction("role");
-                                          }}
-                                        >
-                                          <FaArrowRotateRight className="text-sm me-2" />
-                                          Change Role
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                          onClick={() => {
-                                            ShowDropdown(user._id);
-                                            setAction("user");
-                                          }}
-                                        >
-                                          <FaTrash className="text-red-800 text-sm me-2" />
-                                          <span className="text-red-800">
-                                            Remove User
-                                          </span>
-                                        </DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                    </DropdownMenu>
-                                    {/*END OF DROPDOWN TRIGGER */}
-                                    {/* DROPDOWN CONTENT */}
-                                    <div
-                                      className={` w-full mt-1 z-50 ${
-                                        dropdownShown === user._id
-                                          ? "block"
-                                          : "hidden"
-                                      }`}
-                                    >
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                          <Button
+                                            variant="ghost"
+                                            className="h-8 w-8 p-0"
+                                          >
+                                            <MoreHorizontal className="h-4 w-4" />
+                                          </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                          <DropdownMenuItem
+                                            onClick={() => {
+                                              ShowDropdown(user._id);
+                                              setAction("role");
+                                            }}
+                                          >
+                                            <FaArrowRotateRight className="text-sm me-2" />
+                                            Change Role
+                                          </DropdownMenuItem>
+                                          <DropdownMenuSeparator />
+                                          <DropdownMenuItem
+                                            onClick={() => {
+                                              ShowDropdown(user._id);
+                                              setAction("user");
+                                            }}
+                                          >
+                                            <FaTrash className="text-red-800 text-sm me-2" />
+                                            <span className="text-red-800">
+                                              Remove User
+                                            </span>
+                                          </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                      {/*END OF DROPDOWN TRIGGER */}
+                                      {/* DROPDOWN CONTENT */}
                                       <div
-                                        className={`w-auto rounded right-0 absolute bg-white ${
-                                          dropdownShown ? "drop-shadow" : ""
+                                        className={` w-full mt-1 z-50 ${
+                                          dropdownShown === user._id
+                                            ? "block"
+                                            : "hidden"
                                         }`}
                                       >
-                                        <div className="mw-auto">
-                                          {dropdownShown === user._id &&
-                                            action === "role" && (
-                                              <AlertDialog defaultOpen>
-                                                <AlertDialogContent className="rounded w-[90%]">
-                                                  <AlertDialogHeader>
-                                                    <AlertDialogTitle className="text-left">
-                                                      Change role?
-                                                    </AlertDialogTitle>
-                                                    <AlertDialogDescription className="text-left gap-y-4 grid">
-                                                      Select a new role for{" "}
-                                                      {user.email}
-                                                      <hr className="my-1 bg-gray-300"/>
-                                                      <p className="text-black text-left">
-                                                        Role{" "}
-                                                        <span className="text-destructive">
-                                                          *
-                                                        </span>
-                                                      </p>
-                                                      <Form {...form}>
-                                                        <form
-                                                          onSubmit={form.handleSubmit(
-                                                            onSubmit
-                                                          )}
-                                                          className="space-y-8"
-                                                        >
-                                                          <div className="grid gap-2 gap-y-6">
-                                                            <>
-                                                              <FormField
-                                                                control={
-                                                                  form.control
-                                                                }
-                                                                name="role"
-                                                                render={({
-                                                                  field,
-                                                                }) => (
-                                                                  <FormItem>
-                                                                    <Select
-                                                                      onValueChange={
-                                                                        field.onChange
-                                                                      }
-                                                                      defaultValue={
-                                                                        field.value
-                                                                      }
-                                                                    >
-                                                                      <FormControl>
-                                                                        <SelectTrigger>
-                                                                          <SelectValue placeholder="Select a role" />
-                                                                        </SelectTrigger>
-                                                                      </FormControl>
-                                                                      <SelectContent>
-                                                                        {roles.map(
-                                                                          (
-                                                                            role
-                                                                          ) => (
-                                                                            <SelectItem
-                                                                              key={
-                                                                                role.value
-                                                                              }
-                                                                              value={
-                                                                                role.value
-                                                                              }
-                                                                            >
-                                                                              {
-                                                                                role.label
-                                                                              }
-                                                                            </SelectItem>
-                                                                          )
-                                                                        )}
-                                                                      </SelectContent>
-                                                                    </Select>
+                                        <div
+                                          className={`w-auto rounded right-0 absolute bg-white ${
+                                            dropdownShown ? "drop-shadow" : ""
+                                          }`}
+                                        >
+                                          <div className="mw-auto">
+                                            {dropdownShown === user._id &&
+                                              action === "role" && (
+                                                <AlertDialog defaultOpen>
+                                                  <AlertDialogContent className="rounded w-[90%]">
+                                                    <AlertDialogHeader>
+                                                      <AlertDialogTitle className="text-left">
+                                                        Change role?
+                                                      </AlertDialogTitle>
+                                                      <AlertDialogDescription className="text-left gap-y-4 grid">
+                                                        Select a new role for{" "}
+                                                        {user.email}
+                                                        <hr className="my-1 bg-gray-300" />
+                                                        <p className="text-black text-left">
+                                                          Role{" "}
+                                                          <span className="text-destructive">
+                                                            *
+                                                          </span>
+                                                        </p>
+                                                        <Form {...form}>
+                                                          <form
+                                                            onSubmit={form.handleSubmit(
+                                                              onSubmit
+                                                            )}
+                                                            className="space-y-8"
+                                                          >
+                                                            <div className="grid gap-2 gap-y-6">
+                                                              <>
+                                                                <FormField
+                                                                  control={
+                                                                    form.control
+                                                                  }
+                                                                  name="role"
+                                                                  render={({
+                                                                    field,
+                                                                  }) => (
+                                                                    <FormItem>
+                                                                      <Select
+                                                                        onValueChange={
+                                                                          field.onChange
+                                                                        }
+                                                                        defaultValue={
+                                                                          field.value
+                                                                        }
+                                                                      >
+                                                                        <FormControl>
+                                                                          <SelectTrigger>
+                                                                            <SelectValue placeholder="Select a role" />
+                                                                          </SelectTrigger>
+                                                                        </FormControl>
+                                                                        <SelectContent>
+                                                                          {roles.map(
+                                                                            (
+                                                                              role
+                                                                            ) => (
+                                                                              <SelectItem
+                                                                                key={
+                                                                                  role.value
+                                                                                }
+                                                                                value={
+                                                                                  role.value
+                                                                                }
+                                                                              >
+                                                                                {
+                                                                                  role.label
+                                                                                }
+                                                                              </SelectItem>
+                                                                            )
+                                                                          )}
+                                                                        </SelectContent>
+                                                                      </Select>
 
-                                                                    <FormMessage />
-                                                                  </FormItem>
-                                                                )}
-                                                              />
-                                                            </>
-                                                          </div>
+                                                                      <FormMessage />
+                                                                    </FormItem>
+                                                                  )}
+                                                                />
+                                                              </>
+                                                            </div>
 
-                                                          <div className="w-full grid grid-cols-2 gap-3">
-                                                            <AlertDialogCancel className="w-full my-0">
-                                                              Cancel
-                                                            </AlertDialogCancel>
+                                                            <div className="w-full grid grid-cols-2 gap-3">
+                                                              <AlertDialogCancel className="w-full my-0">
+                                                                Cancel
+                                                              </AlertDialogCancel>
 
-                                                            <button
-                                                              type="submit"
-                                                              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full my-0"
-                                                            >
-                                                              {isLoading
-                                                                ? "Loading..."
-                                                                : "Save Changes"}
-                                                            </button>
-                                                          </div>
-                                                        </form>
-                                                      </Form>
-                                                    </AlertDialogDescription>
-                                                  </AlertDialogHeader>
-                                                </AlertDialogContent>
-                                              </AlertDialog>
-                                            )}
+                                                              <button
+                                                                type="submit"
+                                                                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full my-0"
+                                                              >
+                                                                {isLoading
+                                                                  ? "Loading..."
+                                                                  : "Save Changes"}
+                                                              </button>
+                                                            </div>
+                                                          </form>
+                                                        </Form>
+                                                      </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                  </AlertDialogContent>
+                                                </AlertDialog>
+                                              )}
 
-                                          {dropdownShown === user._id &&
-                                            action === "user" && (
-                                              <AlertDialog defaultOpen>
-                                                <AlertDialogContent className="rounded w-[90%]">
-                                                  <AlertDialogHeader>
-                                                    <AlertDialogTitle className="text-center flex flex-col items-center">
-                                                      <Image
-                                                        className="mb-2"
-                                                        src={WarningIcon}
-                                                        width={48}
-                                                        height={48}
-                                                        alt="warning icon"
-                                                      />
-                                                      Remove user?
-                                                    </AlertDialogTitle>
-                                                    <AlertDialogDescription className="text-center gap-y-4 grid">
-                                                      Are you sure you want to
-                                                      remove {user.firstName + " " + user.lastName}?
-                                                    </AlertDialogDescription>
-                                                  </AlertDialogHeader>
-                                                  <AlertDialogFooter className="w-full grid grid-cols-2 my-0 gap-2">
-                                                    <AlertDialogCancel className="w-full my-0">
-                                                      No
-                                                    </AlertDialogCancel>
-                                                    <AlertDialogAction
-                                                      onClick={() =>
-                                                        deleteUser(user._id)
-                                                      }
-                                                      className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white"
-                                                    >
-                                                      Yes, Remove
-                                                    </AlertDialogAction>
-                                                  </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                              </AlertDialog>
-                                            )}
+                                            {dropdownShown === user._id &&
+                                              action === "user" && (
+                                                <AlertDialog defaultOpen>
+                                                  <AlertDialogContent className="rounded w-[90%]">
+                                                    <AlertDialogHeader>
+                                                      <AlertDialogTitle className="text-center flex flex-col items-center">
+                                                        <Image
+                                                          className="mb-2"
+                                                          src={WarningIcon}
+                                                          width={48}
+                                                          height={48}
+                                                          alt="warning icon"
+                                                        />
+                                                        Remove user?
+                                                      </AlertDialogTitle>
+                                                      <AlertDialogDescription className="text-center gap-y-4 grid">
+                                                        Are you sure you want to
+                                                        remove{" "}
+                                                        {user.firstName +
+                                                          " " +
+                                                          user.lastName}
+                                                        ?
+                                                      </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter className="w-full grid grid-cols-2 my-0 gap-2">
+                                                      <AlertDialogCancel className="w-full my-0">
+                                                        No
+                                                      </AlertDialogCancel>
+                                                      <AlertDialogAction
+                                                        onClick={() =>
+                                                          deleteUser(user._id)
+                                                        }
+                                                        className="w-full my-0 bg-[#C5280C] hover:bg-[#C5280C] hover:opacity-80 text-white"
+                                                      >
+                                                        Yes, Remove
+                                                      </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                  </AlertDialogContent>
+                                                </AlertDialog>
+                                              )}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                    </div>
                                   </span>
                                 </div>
-                                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                               </div>
                             </div>
                           ))}
                         </div>
                       </div>
                     </TabsContent>
-                    <TabsContent value="pricing" className="flex justify-center w-full">
+                    <TabsContent
+                      value="pricing"
+                      className="flex justify-center w-full"
+                    >
                       <div className="w-full md:w-1/2">
                         <div className="bg-[#000000] rounded p-4 w-full flex justify-between text-white">
                           <div className="w-full grid">
                             <span className="bg-[#16A679] border-[#16A679] border-2 w-[25px] h-[5px]"></span>
-                            <div className="font-semibold text-lg py-2">&#x20B1;700/Mo.</div>
+                            <div className="font-semibold text-lg py-2">
+                              &#x20B1;700/Mo.
+                            </div>
                             <div className="text-sm">Current Price</div>
                           </div>
                           <div className="w-full flex items-start justify-end">
                             <div className="p-2">
-                              <Image src={EditIcon} alt="edit icon" width={24} height={24} />
+                              <Image
+                                src={EditIcon}
+                                alt="edit icon"
+                                width={24}
+                                height={24}
+                              />
                             </div>
                           </div>
                         </div>
@@ -557,13 +519,17 @@ const ConfigurationPage = () => {
                           <div className="grid gap-y-1">
                             <div className="font-bold flex items-center">
                               <div className="">&#x20B1; First amount</div>
-                              <div className="mx-4"><FaArrowRight/></div>
+                              <div className="mx-4">
+                                <FaArrowRight />
+                              </div>
                               <div className="me-2">&#x20B1; Second amount</div>
                             </div>
                             <div className="text-sm">Effective date</div>
                             <div className="grid grid-cols-2">
                               <div className="text-sm">Editor</div>
-                              <div className="text-sm text-end">Date edited</div>
+                              <div className="text-sm text-end">
+                                Date edited
+                              </div>
                             </div>
                           </div>
                           {/* Map here */}
