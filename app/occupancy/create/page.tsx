@@ -535,7 +535,10 @@ const CreateLockerPage: React.FC = () => {
 
                       <div className="grid grid-cols-2 gap-2">
                         <Link href="/occupancy?status=vacant">
-                          <button className="w-full text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize">
+                          <button
+                            type="button"
+                            className="w-full text-xs btn-secondary outline outline-gray-300 outline-1 p-2 rounded capitalize"
+                          >
                             Cancel
                           </button>
                         </Link>
