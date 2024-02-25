@@ -250,6 +250,7 @@ const ConfigurationPage = () => {
                         Users
                       </TabsTrigger>
                       <TabsTrigger
+                        disabled
                         value="pricing"
                         onClick={() => changeTab("pricing")}
                         className="w-full md:w-auto"
@@ -285,7 +286,9 @@ const ConfigurationPage = () => {
                                     <p className="text-sm truncate">
                                       {user.email}
                                     </p>
-                                    <p className="text-sm">{user.role}</p>
+                                    <p className="text-sm capitalize">
+                                      {user.role}
+                                    </p>
                                   </div>
                                   <span className="absolute top-0 right-0">
                                     <div className="p-2">

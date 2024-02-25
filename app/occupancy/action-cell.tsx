@@ -302,6 +302,7 @@ const LockerRenewDoorAction = ({ locker }: any) => {
       <AlertDialog>
         <AlertDialogTrigger className="w-full">
           <Button
+            disabled
             onClick={() => setShowDialog(true)}
             className="w-full bg-primary"
           >
