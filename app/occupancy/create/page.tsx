@@ -650,10 +650,7 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        I&apos;m sorry we didn&apos;t find any match of the
-                      </AlertDialogDescription>
-                      <AlertDialogDescription className="flex items-center justify-center">
-                        Booking ID/Client Name
+                        I&apos;m sorry we didn&apos;t find any match of the Booking ID/Client Name
                       </AlertDialogDescription>
                     </AlertDialogHeader>
 
