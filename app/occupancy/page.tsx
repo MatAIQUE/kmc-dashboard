@@ -13,7 +13,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-import { Locker, columns } from "./columns";
+import { Locker, tableColumns } from "./columns";
 import { DataTable } from "./data-table";
 import VacantLockers from "./data-vacant";
 import { ActionCell } from "./action-cell";
@@ -25,7 +25,7 @@ import Link from "next/link";
 async function getData(status: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4001&status=${status}`
     );
 
     if (!response.ok) {
@@ -134,7 +134,7 @@ const OccupancyPage = () => {
                     <div className="w-full">
                       <DataTable
                         columns={[
-                          ...columns,
+                          ...tableColumns,
                           {
                             id: "actions",
                             cell: ({ row }) => (

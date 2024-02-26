@@ -23,10 +23,11 @@ import {
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog";
 import axios from "axios";
-import { Locker, columns } from "./columns";
-
-import WarningIcon from "../../app/assets/icons/warning-icon.svg";
-import SuccessIcon from "../../app/assets/icons/success-icon.svg";
+import { Locker, sheetColumns } from "./columns";
+import DangerIcon from "../assets/icons/DangerIcon.svg";
+import WarningIcon from "../assets/icons/warning-icon.svg";
+import SuccessIcon from "../assets/icons/success-icon.svg";
+import { FaSpinner } from "react-icons/fa";
 
 interface CellProps {
   locker: Locker;
@@ -119,7 +120,11 @@ const LockerResetPinAction = ({ locker }: any) => {
                     onClick={() => handleResetPin(locker.id)}
                     className=" w-full bg-destructive hover:bg-destructive hover:opacity-80"
                   >
-                    {isLoading ? "Loading..." : "Yes, Reset PIN"}
+                    {isLoading ? (
+                      <FaSpinner className="absolute inset-0 m-auto animate-spin" />
+                    ) : (
+                      "Yes, Reset PIN"
+                    )}
                   </AlertDialogAction>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-3/4">
@@ -167,6 +172,8 @@ const LockerResetPinAction = ({ locker }: any) => {
 const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [showErrDialog, setShowErrDialog] = useState(false);
 
   const handeTerminateDoor = async () => {
     try {
@@ -177,10 +184,11 @@ const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
         { bookingNumber: locker.bookingId }
       );
       if (response.status === 200) {
-        setShowDialog(true);
+        setShowSuccessDialog(true);
       }
     } catch (error) {
       console.error("Error terminating door:", error);
+      setShowErrDialog(true);
     } finally {
       setIsLoading(false);
     }
@@ -198,7 +206,7 @@ const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
             Terminate
           </Button>
         </AlertDialogTrigger>
-        {(showDialog && (
+        {showDialog && (
           <AlertDialogContent className="w-3/4">
             <AlertDialogHeader>
               <AlertDialogTitle className="grid gap-y-2">
@@ -232,44 +240,85 @@ const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
                     Yes, Remove
                   </AlertDialogAction>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="w-3/4">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="grid gap-y-2">
-                      <div className="flex items-center justify-center">
-                        <Image
-                          src={SuccessIcon}
-                          width={32}
-                          height={28}
-                          alt="warning icon"
-                        />
+                {showSuccessDialog && (
+                  <AlertDialogContent className="w-3/4">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="grid gap-y-2">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={SuccessIcon}
+                            width={32}
+                            height={28}
+                            alt="warning icon"
+                          />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          Client Removed
+                        </div>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <p className="text-center">
+                          {`We've now removed the client from Locker ${locker.doorNumber}`}
+                        </p>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter className="w-full">
+                      <AlertDialogAction
+                        onClick={() => {
+                          onTerminate();
+                          setShowDialog(false);
+                        }}
+                        className=" w-full bg-primary hover:opacity-80"
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                )}
+                {showErrDialog && (
+                  <AlertDialogContent className="w-[80%] rounded">
+                    <AlertDialogHeader className="mb-10">
+                      <AlertDialogTitle className="grid gap-y-2">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={DangerIcon}
+                            width={48}
+                            height={48}
+                            alt="warning icon"
+                          />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          Locker Terminated
+                        </div>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="flex items-center justify-center">
+                        Please check your mail for the next steps for locker
+                        termination
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+
+                    <AlertDialogFooter>
+                      <div className="w-full">
+                        <div>
+                          <Button
+                            onClick={() => {
+                              setShowErrDialog(false); // Hide the dialog
+                              setShowDialog(false);
+                            }}
+                            className="w-full"
+                          >
+                            Continue
+                          </Button>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-center">
-                        Client Removed
-                      </div>
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      <p className="text-center">
-                        {`We've now removed the client from Locker ${locker.doorNumber}`}
-                      </p>
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className="w-full">
-                    <AlertDialogAction
-                      onClick={() => {
-                        onTerminate();
-                        setShowDialog(false);
-                      }}
-                      className=" w-full bg-primary hover:opacity-80"
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                )}
+                {/* )} */}
               </AlertDialog>
             </AlertDialogFooter>
           </AlertDialogContent>
-        )) ||
-          null}
+        )}
       </AlertDialog>
     </Sheet>
   );
@@ -420,7 +469,7 @@ export const ActionCell: React.FC<CellProps> = ({ locker, onTerminate }) => {
             <hr />
             <SheetDescription className="">
               <div className="flex flex-col justify-between h-full p-5">
-                {columns.map((column: any) => (
+                {sheetColumns.map((column: any) => (
                   <div
                     key={column.accessorKey}
                     className="grid grid-cols-2 gap-y-2"
