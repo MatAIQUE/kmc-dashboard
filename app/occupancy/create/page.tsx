@@ -114,10 +114,12 @@ const CreateLockerPage: React.FC = () => {
         selectedService === "serviced-office"
           ? {
               ...values,
+              // lockerId: "4001",
               bookingOrigin: 8,
             }
           : {
               ...values,
+              // lockerId: "4001",
               bookingOrigin: 8,
             };
 
@@ -184,7 +186,7 @@ const CreateLockerPage: React.FC = () => {
       setIsLoading(true);
       const data = {
         ...values,
-        lockerId: "4000",
+        lockerId: "4001",
         bookingOrigin: "8",
         doorCount: doorCount,
       };
@@ -203,7 +205,7 @@ const CreateLockerPage: React.FC = () => {
       if (newLocker.status === 201) {
         const datas = {
           ...values,
-          lockerId: "4000",
+          lockerId: "4001",
           doorCount: doorCount,
           paymentMethod: "add_to_invoice",
           bookingOrigin: 8,

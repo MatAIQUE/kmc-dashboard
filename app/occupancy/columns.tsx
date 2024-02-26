@@ -14,7 +14,7 @@ export type Locker = {
   to: string;
 };
 
-export const columns: ColumnDef<Locker>[] = [
+const commonColumns: ColumnDef<Locker>[] = [
   {
     accessorKey: "status",
     header: "Status",
@@ -51,6 +51,10 @@ export const columns: ColumnDef<Locker>[] = [
     accessorKey: "name",
     header: "Name",
   },
+];
+
+export const tableColumns: ColumnDef<Locker>[] = [
+  ...commonColumns,
   {
     accessorKey: "from",
     header: "From",
@@ -68,6 +72,41 @@ export const columns: ColumnDef<Locker>[] = [
   {
     accessorKey: "to",
     header: "To",
+    cell: ({ row }) => {
+      const date = new Date(row.original.to);
+
+      const formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      return <div className="">{formattedDate}</div>;
+    },
+  },
+];
+
+export const sheetColumns: ColumnDef<Locker>[] = [
+  ...commonColumns,
+  {
+    accessorKey: "mobileNumber",
+    header: "Contact #",
+  },
+  {
+    accessorKey: "from",
+    header: "Contract",
+    cell: ({ row }) => {
+      const date = new Date(row.original.from);
+
+      const formattedDate = date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      return <div className="">{formattedDate}</div>;
+    },
+  },
+  {
+    accessorKey: "to",
     cell: ({ row }) => {
       const date = new Date(row.original.to);
 
