@@ -545,7 +545,7 @@ const ConfigurationPage = () => {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
+        <div className="fixed bottom-0 left-0 h-[60px] bg-white w-full flex items-center justify-center p-4">
           <Button
             onClick={() => router.push("/configuration/add-user")}
             className="btn rounded  w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden  items-center justify-center"

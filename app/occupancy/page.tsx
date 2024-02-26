@@ -209,7 +209,7 @@ const OccupancyPage = () => {
         </div>
 
         <div
-          className={`fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4 transition-transform ${
+          className={`fixed bottom-0 left-0 h-[60px] w-full bg-white flex items-center justify-center p-4 transition-transform ${
             status === "occupied" ? "translate-y-full" : ""
           }`}
         >
