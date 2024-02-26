@@ -87,9 +87,7 @@ const AddUserPage = () => {
       if (response.status === 201) {
         setEmail(email);
         setShowSuccessDialog(true);
-        setError("");
       }
-      // setIsLoading(false);
     } catch (error) {
       setIsLoading(true);
       if (axios.isAxiosError(error) && error.response) {

@@ -61,7 +61,7 @@ const CreateLockerPage: React.FC = () => {
   const [showBtn, setShowBtn] = useState(false);
   const [hide, setHide] = useState(false);
   const [showErrDoorsDialog, setShowErrDoorsDialog] = useState(false);
-  const [booking, setBooking] = useState("");
+  const [booking, setBooking] = useState<string[]>([]);
   const [customer, setCustomer] = useState("");
 
   const router = useRouter();
@@ -278,6 +278,14 @@ const CreateLockerPage: React.FC = () => {
       setDoorCount((prev) => prev - 1);
     }
   };
+
+  // const bookingDoors = booking.join
+  // : `${data.slice(0, -1).join(", ")} and ${data.slice(-1)}
+  const arrayLength = booking.length;
+  const bookingDoors =
+    arrayLength === 1
+      ? booking[0]
+      : `${booking.slice(0, -1).join(", ")} and ${booking.slice(-1)}`;
 
   return (
     <>
@@ -610,7 +618,7 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        Locker {booking} has been successfully booked to
+                        Locker {bookingDoors} has been successfully booked to{" "}
                         {customer}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
