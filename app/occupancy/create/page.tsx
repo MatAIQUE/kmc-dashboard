@@ -72,10 +72,10 @@ const CreateLockerPage: React.FC = () => {
     mobileNumber: z
       .string()
       .length(11, {
-        message: "POC Contact No# must be exactly 11 numbers.",
+        message: "POC Contact # must be exactly 11 numbers.",
       })
       .regex(/^\d+$/, {
-        message: " POC Contact No# must contain only numbers.",
+        message: " POC Contact # must contain only numbers.",
       }),
   });
 
@@ -86,10 +86,10 @@ const CreateLockerPage: React.FC = () => {
     mobileNumber: z
       .string()
       .length(11, {
-        message: "Contact No# must be exactly 11 numbers.",
+        message: "Contact # must be exactly 11 numbers.",
       })
       .regex(/^\d+$/, {
-        message: "Contact No# must contain only numbers.",
+        message: "Contact # must contain only numbers.",
       }),
   });
 
@@ -393,7 +393,7 @@ const CreateLockerPage: React.FC = () => {
                                     <FormControl>
                                       <Input
                                         className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
-                                        placeholder="POC Contact No#"
+                                        placeholder="POC Contact #"
                                         {...field}
                                       />
                                     </FormControl>
@@ -435,14 +435,14 @@ const CreateLockerPage: React.FC = () => {
                                   <FormItem>
                                     <FormLabel>
                                       <div className="flex font-bold text-xs">
-                                        <h6 className="me-1">Contact No.</h6>
+                                        <h6 className="me-1">Contact #</h6>
                                         <span className="text-primary">*</span>
                                       </div>
                                     </FormLabel>
                                     <FormControl>
                                       <Input
                                         className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
-                                        placeholder="Contact No#"
+                                        placeholder="Contact #"
                                         {...field}
                                       />
                                     </FormControl>
@@ -618,7 +618,7 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        I&apos;m sorry we didnt find any match of the
+                        I&apos;m sorry we didn&apos;t find any match of the
                       </AlertDialogDescription>
                       <AlertDialogDescription className="flex items-center justify-center">
                         Booking ID/Client Name

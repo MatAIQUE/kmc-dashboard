@@ -241,7 +241,7 @@ const ConfigurationPage = () => {
                     </div>
                   </div>
                   <Tabs defaultValue={tab}>
-                    <TabsList className="w-full md:w-auto">
+                    <TabsList className="w-full !justify-start border-b-2 border-gray-300 p-0 !items-end">
                       <TabsTrigger
                         value="users"
                         onClick={() => changeTab("users")}
