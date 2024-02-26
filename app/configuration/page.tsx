@@ -286,7 +286,7 @@ const ConfigurationPage = () => {
                                     <p className="text-sm truncate">
                                       {user.email}
                                     </p>
-                                    <p className="text-sm capitalize">
+                                    <p className="text-sm capitalize truncate">
                                       {user.role}
                                     </p>
                                   </div>
@@ -296,7 +296,7 @@ const ConfigurationPage = () => {
                                         <DropdownMenuTrigger asChild>
                                           <Button
                                             variant="ghost"
-                                            className="h-8 w-8 p-0"
+                                            className="h-8 w-8 p-0 bg-white"
                                           >
                                             <MoreHorizontal className="h-4 w-4" />
                                           </Button>
