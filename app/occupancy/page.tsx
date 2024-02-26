@@ -160,7 +160,26 @@ const OccupancyPage = () => {
                       </Button>
                     </div>
                     {isLoading ? (
-                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="grid gap-y-2">
+                          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                        </div>
+                        <div className="grid gap-y-2">
+                          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                        </div>
+                        <div className="grid gap-y-2">
+                          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                        </div>
+                      </div>
                     ) : (
                       <VacantLockers dataVacant={dataVacant} />
                     )}

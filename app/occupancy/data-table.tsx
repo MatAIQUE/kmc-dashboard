@@ -25,6 +25,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import React from "react";
 import { IoDownloadOutline } from "react-icons/io5";
+import { Skeleton } from "../../components/ui/skeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -116,7 +117,38 @@ export function DataTable<TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No Data found
+                    <div className="grid gap-y-4">
+                      <div className="grid grid-cols-8 gap-2">
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                      </div>
+                      <div className="grid grid-cols-8 gap-2">
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                      </div>
+                      <div className="grid grid-cols-8 gap-2">
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]"/>
+                      </div>
+                    </div>
                   </TableCell>
                 </TableRow>
               )}
