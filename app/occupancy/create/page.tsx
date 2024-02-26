@@ -1,17 +1,10 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import Nav from "../../../components/ui/nav";
-import SOIcon from "../../assets/icons/SO.svg";
-import CWIcon from "../../assets/icons/CW.svg";
-import SOActiveIcon from "../../assets/icons/SOActiveIcon.svg";
-import CWActiveIcon from "../../assets/icons/CWActiveIcon.svg";
-import DangerIcon from "../../assets/icons/DangerIcon.svg";
-import axios from "axios";
-import Image from "next/image";
 import {
   FaBuilding,
   FaChair,
@@ -19,6 +12,7 @@ import {
   FaPlus,
   FaSpinner,
 } from "react-icons/fa";
+import { z } from "zod";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -27,7 +21,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../../../components/ui/alert-dialog";
-import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
 import {
   Card,
@@ -45,23 +38,31 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import { Input } from "../../../components/ui/input";
+import Nav from "../../../components/ui/nav";
+import CWIcon from "../../assets/icons/CW.svg";
+import CWActiveIcon from "../../assets/icons/CWActiveIcon.svg";
+import DangerIcon from "../../assets/icons/DangerIcon.svg";
+import SOIcon from "../../assets/icons/SO.svg";
+import SOActiveIcon from "../../assets/icons/SOActiveIcon.svg";
 
-import SuccessIcon from "../../../app/assets/icons/success-icon.svg";
-import WarningIcon from "../../../app/assets/icons/warning-icon.svg";
 import Link from "next/link";
+import SuccessIcon from "../../../app/assets/icons/success-icon.svg";
 
 const CreateLockerPage: React.FC = () => {
   const [selectedService, setSelectedService] = useState("serviced-office");
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrDialog, setShowErrDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [availableDoors, setAvailableDoors] = useState<number>(10);
+  const [availableDoors, setAvailableDoors] = useState<number>(0);
   const [isLoadingDoor, setIsLoadingDoor] = useState(false);
-  const [errorDoor, setErrorDoor] = useState("");
+  const [errorDoor, setErrorDoor] = useState(false);
   const [doorCount, setDoorCount] = useState(1);
   const [lockerQty, setLockerQty] = useState(false);
   const [showBtn, setShowBtn] = useState(false);
   const [hide, setHide] = useState(false);
+  const [showErrDoorsDialog, setShowErrDoorsDialog] = useState(false);
+  const [booking, setBooking] = useState("");
+  const [customer, setCustomer] = useState("");
 
   const router = useRouter();
 
@@ -72,10 +73,10 @@ const CreateLockerPage: React.FC = () => {
     mobileNumber: z
       .string()
       .length(11, {
-        message: "POC Contact No# must be exactly 11 numbers.",
+        message: "POC Contact # must be exactly 11 numbers.",
       })
       .regex(/^\d+$/, {
-        message: " POC Contact No# must contain only numbers.",
+        message: " POC Contact # must contain only numbers.",
       }),
   });
 
@@ -86,10 +87,10 @@ const CreateLockerPage: React.FC = () => {
     mobileNumber: z
       .string()
       .length(11, {
-        message: "Contact No# must be exactly 11 numbers.",
+        message: "Contact # must be exactly 11 numbers.",
       })
       .regex(/^\d+$/, {
-        message: "Contact No# must contain only numbers.",
+        message: "Contact # must contain only numbers.",
       }),
   });
 
@@ -106,18 +107,17 @@ const CreateLockerPage: React.FC = () => {
   });
 
   async function onSubmit(values: z.infer<typeof selectedServiceFormat>) {
+    // Fetch Booking Validation API
     try {
       setIsLoading(true);
       const data =
         selectedService === "serviced-office"
           ? {
               ...values,
-              // lockerId: "4000",
               bookingOrigin: 8,
             }
           : {
               ...values,
-              // lockerId: "4000",
               bookingOrigin: 8,
             };
 
@@ -137,6 +137,37 @@ const CreateLockerPage: React.FC = () => {
         setHide(true);
         setLockerQty(true);
         setShowBtn(true);
+
+        const requestBody: Record<any, string> = {
+          location: "one ayala",
+          lockerId: "4000",
+        };
+
+        // POSTING DOOR AVALAIBLE
+        try {
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/transactions/door/0003/kmc`,
+            requestBody,
+            {
+              headers: {
+                "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
+                "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            setAvailableDoors(response.data.data.locker.available);
+          }
+        } catch (error) {
+          setIsLoadingDoor(true);
+          if (axios.isAxiosError(error) && error.response) {
+            if (error.response.status === 416) {
+              setErrorDoor(true);
+            }
+          }
+        }
       }
       setIsLoading(false);
     } catch (error) {
@@ -148,6 +179,7 @@ const CreateLockerPage: React.FC = () => {
   }
 
   async function createLocker(values: z.infer<typeof selectedServiceFormat>) {
+    // POSTING DOOR RESERVATION
     try {
       setIsLoading(true);
       const data = {
@@ -168,7 +200,6 @@ const CreateLockerPage: React.FC = () => {
         }
       );
 
-      console.log(newLocker.status);
       if (newLocker.status === 201) {
         const datas = {
           ...values,
@@ -178,8 +209,9 @@ const CreateLockerPage: React.FC = () => {
           bookingOrigin: 8,
         };
 
+        // POSTING PAYMENT IF THE RESERVATION IS SUCCESS
         try {
-          await axios.post(
+          const payment = await axios.post(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/payments/kmc`,
             datas,
             {
@@ -190,6 +222,11 @@ const CreateLockerPage: React.FC = () => {
               },
             }
           );
+
+          if (payment.status === 200) {
+            setBooking(payment.data.data.bookingDoors);
+            setCustomer(payment.data.data.customerName);
+          }
         } catch (error) {
           console.error("Error payment:", error);
         }
@@ -199,8 +236,22 @@ const CreateLockerPage: React.FC = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(true);
-      setShowErrDialog(true);
-      console.error("Error while making POST request:", error);
+      if (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          if (error.response.status === 409) {
+            setShowErrDoorsDialog(true);
+            setAvailableDoors(error.response.data.errors[0]);
+            setDoorCount(error.response.data.errors[0]);
+          }
+
+          if (error.response.status === 416) {
+            setShowErrDoorsDialog(true);
+            setAvailableDoors(error.response.data.errors[0]);
+            setDoorCount(error.response.data.errors[0]);
+          }
+        }
+      }
+
       setIsLoading(false);
     }
   }
@@ -215,34 +266,6 @@ const CreateLockerPage: React.FC = () => {
       });
     }
   }
-
-  const availableDoorsCount = async () => {
-    try {
-      const response = await axios.get(
-        process.env.NEXT_PUBLIC_GET_AVAILABLE_DOORS as string,
-        {
-          headers: {
-            "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
-            "x-api-secret": "sk-fcb71bfd-7712-4969-a46b-6b78f8a47bd2",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        setAvailableDoors(response.data.data.locker.available);
-      }
-      setIsLoadingDoor(false);
-    } catch (error) {
-      setIsLoadingDoor(true);
-      if (axios.isAxiosError(error) && error.response) {
-        if (error.response.status === 416) {
-          setErrorDoor("No available doors");
-        }
-      }
-      setIsLoadingDoor(false);
-    }
-  };
 
   const addCart = () => {
     if (doorCount < availableDoors) setDoorCount((prev) => prev + 1);
@@ -393,7 +416,7 @@ const CreateLockerPage: React.FC = () => {
                                     <FormControl>
                                       <Input
                                         className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
-                                        placeholder="POC Contact No#"
+                                        placeholder="POC Contact #"
                                         {...field}
                                       />
                                     </FormControl>
@@ -435,14 +458,14 @@ const CreateLockerPage: React.FC = () => {
                                   <FormItem>
                                     <FormLabel>
                                       <div className="flex font-bold text-xs">
-                                        <h6 className="me-1">Contact No.</h6>
+                                        <h6 className="me-1">Contact #</h6>
                                         <span className="text-primary">*</span>
                                       </div>
                                     </FormLabel>
                                     <FormControl>
                                       <Input
                                         className="md:text-xs text-md outline outline-gray-300 outline-1 rounded p-2"
-                                        placeholder="Contact No#"
+                                        placeholder="Contact #"
                                         {...field}
                                       />
                                     </FormControl>
@@ -499,36 +522,43 @@ const CreateLockerPage: React.FC = () => {
 
                           <div className="grid grid-cols-2 items-start justify-between w-full">
                             <div className="text-sm font-bold">Locker</div>
-
-                            <div className="flex justify-end">
-                              <div className="flex items-center justify-evenly">
-                                <div
-                                  onClick={subtractCart}
-                                  className={
-                                    doorCount > 1
-                                      ? `bg-primary p-1 text-xs text-white rounded-full text-center`
-                                      : `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
-                                  }
-                                >
-                                  <FaMinus />
-                                </div>
-                                <div className="font-bold text-sm mx-2 w-[30px] text-center truncate pe-none">
-                                  {doorCount}
-                                </div>
-                                <div
-                                  onClick={addCart}
-                                  className={
-                                    doorCount >= availableDoors
-                                      ? `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
-                                      : `bg-primary p-1 text-xs text-white rounded-full text-center`
-                                  }
-
-                                  // disabled={quantity >= availableDoorsCount}
-                                >
-                                  <FaPlus />
-                                </div>
+                            {errorDoor ? (
+                              <div className="flex justify-end">
+                                No door available
                               </div>
-                            </div>
+                            ) : (
+                              <>
+                                <div className="flex justify-end">
+                                  <div className="flex items-center justify-evenly">
+                                    <div
+                                      onClick={subtractCart}
+                                      className={
+                                        doorCount > 1
+                                          ? `bg-primary p-1 text-xs text-white rounded-full text-center`
+                                          : `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
+                                      }
+                                    >
+                                      <FaMinus />
+                                    </div>
+                                    <div className="font-bold text-sm mx-2 w-[30px] text-center truncate pe-none">
+                                      {doorCount}
+                                    </div>
+                                    <div
+                                      onClick={addCart}
+                                      className={
+                                        doorCount >= availableDoors
+                                          ? `bg-gray-300 p-1 text-xs text-white rounded-full text-center`
+                                          : `bg-primary p-1 text-xs text-white rounded-full text-center`
+                                      }
+
+                                      // disabled={quantity >= availableDoorsCount}
+                                    >
+                                      <FaPlus />
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            )}
                           </div>
                         </>
                       )}
@@ -546,6 +576,7 @@ const CreateLockerPage: React.FC = () => {
                         <button
                           type="submit"
                           className="text-xs bg-primary text-white p-2 rounded capitalize flex justify-center items-center"
+                          disabled={errorDoor}
                         >
                           {isLoading ? (
                             <FaSpinner className="animate-spin text-center" />
@@ -577,7 +608,8 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        Locker 4 has been successfully booked to (Client Name)
+                        Locker {booking} has been successfully booked to (
+                        {customer})
                       </AlertDialogDescription>
                     </AlertDialogHeader>
 
@@ -618,7 +650,7 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        I&apos;m sorry we didnt find any match of the
+                        I&apos;m sorry we didn&apos;t find any match of the
                       </AlertDialogDescription>
                       <AlertDialogDescription className="flex items-center justify-center">
                         Booking ID/Client Name
@@ -631,6 +663,46 @@ const CreateLockerPage: React.FC = () => {
                           <Button
                             onClick={() => {
                               setShowErrDialog(false); // Hide the dialog
+                            }}
+                            className="w-full"
+                          >
+                            Continue
+                          </Button>
+                        </div>
+                      </div>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
+
+              {showErrDoorsDialog && (
+                <AlertDialog defaultOpen>
+                  <AlertDialogContent className="w-[80%] rounded">
+                    <AlertDialogHeader className="mb-10">
+                      <AlertDialogTitle className="grid gap-y-2">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={DangerIcon}
+                            width={48}
+                            height={48}
+                            alt="warning icon"
+                          />
+                        </div>
+                        <div className="flex items-center justify-center">
+                          Insufficient Doors
+                        </div>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="flex items-center justify-center">
+                        {availableDoors} Available Door Only
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+
+                    <AlertDialogFooter>
+                      <div className="w-full">
+                        <div>
+                          <Button
+                            onClick={() => {
+                              setShowErrDoorsDialog(false); // Hide the dialog
                             }}
                             className="w-full"
                           >

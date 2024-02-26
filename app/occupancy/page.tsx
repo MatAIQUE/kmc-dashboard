@@ -20,6 +20,7 @@ import { ActionCell } from "./action-cell";
 
 import DownloadIcon from "../../app/assets/icons/download.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 async function getData(status: string) {
   try {
@@ -113,7 +114,7 @@ const OccupancyPage = () => {
                   />
                 </div>
                 <Tabs defaultValue={status}>
-                  <TabsList className="w-full md:w-auto">
+                  <TabsList className="w-full !justify-start border-b-2 border-gray-300 p-0 !items-end">
                     <TabsTrigger
                       value="occupied"
                       onClick={() => changeStatus("occupied")}
@@ -151,16 +152,34 @@ const OccupancyPage = () => {
                   </TabsContent>
                   <TabsContent value="vacant">
                     <div className="md:me-4 md:col-start-4 flex justify-end">
-                      <Button
-                        onClick={() => router.push("/occupancy/create")}
-                        className="btn rounded items-center p-2 md:p-4 text-white bg-primary  hover:bg-primary/90 text-xs md:text-md hidden md:flex"
-                      >
-                        <FaPlusCircle className="text-sm" />
-                        <p className="md:ml-3 text-xs ml-1">Book Locker</p>
-                      </Button>
+                      <Link href="/occupancy/create">
+                        <Button className="btn rounded items-center p-2 md:p-4 text-white bg-primary  hover:bg-primary/90 text-xs md:text-md hidden md:flex">
+                          <FaPlusCircle className="text-sm" />
+                          <p className="md:ml-3 text-xs ml-1">Book Locker</p>
+                        </Button>
+                      </Link>
                     </div>
                     {isLoading ? (
-                      <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="grid gap-y-2">
+                          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                        </div>
+                        <div className="grid gap-y-2">
+                          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                        </div>
+                        <div className="grid gap-y-2">
+                          <Skeleton className="w-[100px] h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                          <Skeleton className="w-full h-[20px] rounded-full" />
+                        </div>
+                      </div>
                     ) : (
                       <VacantLockers dataVacant={dataVacant} />
                     )}
@@ -209,7 +228,7 @@ const OccupancyPage = () => {
         </div>
 
         <div
-          className={`fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4 transition-transform ${
+          className={`fixed bottom-0 left-0 h-[60px] w-full bg-white flex items-center justify-center p-4 transition-transform ${
             status === "occupied" ? "translate-y-full" : ""
           }`}
         >
