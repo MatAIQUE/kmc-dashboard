@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import {
   FaArrowLeft,
   FaArrowRight,
+  FaEllipsisH,
+  FaEllipsisV,
   FaPlusCircle,
   FaSpinner,
   FaTrash,
@@ -299,7 +301,8 @@ const ConfigurationPage = () => {
                                             variant="ghost"
                                             className="h-8 w-8 p-0 bg-white"
                                           >
-                                            <MoreHorizontal className="h-4 w-4" />
+                                            <FaEllipsisH className="h-4 w-4 block md:hidden" />
+                                            <FaEllipsisV className="h-4 w-4 md:block hidden" />
                                           </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
