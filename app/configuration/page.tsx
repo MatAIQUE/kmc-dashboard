@@ -7,7 +7,10 @@ import { useForm } from "react-hook-form";
 import {
   FaArrowLeft,
   FaArrowRight,
+  FaEllipsisH,
+  FaEllipsisV,
   FaPlusCircle,
+  FaSpinner,
   FaTrash,
   FaUserCircle,
 } from "react-icons/fa";
@@ -286,7 +289,7 @@ const ConfigurationPage = () => {
                                     <p className="text-sm truncate">
                                       {user.email}
                                     </p>
-                                    <p className="text-sm capitalize">
+                                    <p className="text-sm capitalize truncate">
                                       {user.role}
                                     </p>
                                   </div>
@@ -296,9 +299,10 @@ const ConfigurationPage = () => {
                                         <DropdownMenuTrigger asChild>
                                           <Button
                                             variant="ghost"
-                                            className="h-8 w-8 p-0"
+                                            className="h-8 w-8 p-0 bg-white"
                                           >
-                                            <MoreHorizontal className="h-4 w-4" />
+                                            <FaEllipsisH className="h-4 w-4 block md:hidden" />
+                                            <FaEllipsisV className="h-4 w-4 md:block hidden" />
                                           </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
@@ -428,7 +432,7 @@ const ConfigurationPage = () => {
                                                                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full my-0"
                                                               >
                                                                 {isLoading
-                                                                  ? "Loading..."
+                                                                  ? <FaSpinner className="animate-spin"/>
                                                                   : "Save Changes"}
                                                               </button>
                                                             </div>
@@ -545,7 +549,7 @@ const ConfigurationPage = () => {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 h-[60px] w-full flex items-center justify-center p-4">
+        <div className="fixed bottom-0 left-0 h-[60px] bg-white w-full flex items-center justify-center p-4">
           <Button
             onClick={() => router.push("/configuration/add-user")}
             className="btn rounded  w-full text-white bg-primary flex hover:bg-primary/90 text-xs md:text-md md:hidden  items-center justify-center"
