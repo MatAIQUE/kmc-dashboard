@@ -56,7 +56,7 @@ const getStatusBadge = (status: number): JSX.Element | null => {
   TODO: Move to separate .tsx files
 */
 // INFO: RESET PIN
-const LockerResetPinAction = ({ locker }: any) => {
+export const LockerResetPinAction = ({ locker }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const handleResetPin = async (id: string) => {

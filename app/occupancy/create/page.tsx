@@ -610,8 +610,8 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        Locker {booking} has been successfully booked to (
-                        {customer})
+                        Locker {booking} has been successfully booked to
+                        {customer}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
 
@@ -652,7 +652,8 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        I&apos;m sorry we didn&apos;t find any match of the Booking ID/Client Name
+                        I&apos;m sorry we didn&apos;t find any match of the
+                        Booking ID/Client Name
                       </AlertDialogDescription>
                     </AlertDialogHeader>
 

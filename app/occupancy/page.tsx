@@ -21,6 +21,7 @@ import { ActionCell } from "./action-cell";
 import DownloadIcon from "../../app/assets/icons/download.svg";
 import Image from "next/image";
 import Link from "next/link";
+import MobileDataTable from "./mobile-data-table";
 
 async function getData(status: string) {
   try {
@@ -39,14 +40,6 @@ async function getData(status: string) {
   }
 }
 
-async function getFilteredData(status: string, doorNumberToFilter: string) {
-  const data = await getData(status);
-  const filteredData = data.filter(
-    (locker: any) => locker.doorNumber === doorNumberToFilter
-  );
-  return filteredData;
-}
-
 const OccupancyPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -54,15 +47,6 @@ const OccupancyPage = () => {
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
 
   const status = searchParams?.get("status") || "occupied";
-  const doorNumberToFilter = searchParams?.get("doorNumber");
-
-  const fetchData = doorNumberToFilter
-    ? () => getFilteredData(status, doorNumberToFilter)
-    : () => getData(status);
-
-  useEffect(() => {
-    fetchData();
-  }, [doorNumberToFilter]);
 
   const { isLoading, isError, isFetching, refetch } = useQuery(
     [status],
@@ -186,42 +170,7 @@ const OccupancyPage = () => {
                   </TabsContent>
                 </Tabs>
 
-                {status === "occupied" && (
-                  <div className="block md:hidden w-full">
-                    {dataOccupied.map((data) => (
-                      <div
-                        key={data.id}
-                        className="grid border-b-2 py-4 gap-y-2"
-                      >
-                        <div>
-                          <p className="text-[12px] uppercase opacity-30">
-                            L{data.doorNumber}
-                          </p>
-                        </div>
-                        <div className="flex items-center py-2">
-                          <span
-                            className={`${
-                              data.status === 8 ? "bg-blue-500 " : "bg-primary"
-                            } rounded-full h-2 w-2 me-2`}
-                          />
-                          <h1 className="font-bold">{data.name}</h1>
-                        </div>
-                        <div className="grid grid-cols-2">
-                          <div className="capitalize">
-                            <p className="text-[12px] opacity-60">
-                              {data.service}
-                            </p>
-                          </div>
-                          <div className="uppercase text-right">
-                            <p className="text-[12px] opacity-60">
-                              {data.bookingId}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <MobileDataTable status={status} dataOccupied={dataOccupied} />
               </div>
             </div>
           </div>
