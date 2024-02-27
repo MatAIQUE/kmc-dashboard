@@ -12,6 +12,7 @@ export type Locker = {
   name: string;
   from: string;
   to: string;
+  mobileNumber: string;
 };
 
 const commonColumns: ColumnDef<Locker>[] = [
