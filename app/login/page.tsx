@@ -64,9 +64,7 @@ const LoginPage = () => {
     } catch (error) {
       setIsLoading(true);
       if (axios.isAxiosError(error) && error.response) {
-        if (error.response.status === 401) {
-          setError("Invalid credentials");
-        }
+        setError("Invalid credentials");
       }
       setIsLoading(false);
     }
