@@ -73,7 +73,7 @@ const MobileDataTable: React.FC<MobileDataTableProps> = ({
       {status === "occupied" && (
         <div className="block md:hidden w-full">
           {dataOccupied.map((data) => (
-            <Sheet>
+            <Sheet key={data.id}>
               <SheetTrigger className="w-full text-left">
                 <div
                   key={data.id}
