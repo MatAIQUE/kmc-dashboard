@@ -169,7 +169,10 @@ export const LockerResetPinAction = ({ locker }: any) => {
 };
 
 // INFO: TERMINATE DOOR
-const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
+export const LockerTerminateDoorAction = ({
+  locker,
+  onTerminate,
+}: CellProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
@@ -325,7 +328,7 @@ const LockerTerminateDoorAction = ({ locker, onTerminate }: CellProps) => {
 };
 
 // INFO: RENEW DOOR
-const LockerRenewDoorAction = ({ locker }: any) => {
+export const LockerRenewDoorAction = ({ locker }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const handeTerminateDoor = async () => {

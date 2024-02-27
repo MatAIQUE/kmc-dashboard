@@ -170,7 +170,11 @@ const OccupancyPage = () => {
                   </TabsContent>
                 </Tabs>
 
-                <MobileDataTable status={status} dataOccupied={dataOccupied} />
+                <MobileDataTable
+                  status={status}
+                  dataOccupied={dataOccupied}
+                  onTerminate={refetch}
+                />
               </div>
             </div>
           </div>
