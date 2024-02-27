@@ -471,7 +471,7 @@ export const ActionCell: React.FC<CellProps> = ({ locker, onTerminate }) => {
             </SheetTitle>
             <hr />
             <SheetDescription className="">
-              <div className="flex flex-col justify-between h-full p-5">
+              <div className="grid gap-y-2 h-full p-5">
                 {sheetColumns.map((column: any) => (
                   <div
                     key={column.accessorKey}
