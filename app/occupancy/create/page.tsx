@@ -114,12 +114,12 @@ const CreateLockerPage: React.FC = () => {
         selectedService === "serviced-office"
           ? {
               ...values,
-              // lockerId: "4001",
+              // lockerId: "4000",
               bookingOrigin: 8,
             }
           : {
               ...values,
-              // lockerId: "4001",
+              // lockerId: "4000",
               bookingOrigin: 8,
             };
 
@@ -186,7 +186,7 @@ const CreateLockerPage: React.FC = () => {
       setIsLoading(true);
       const data = {
         ...values,
-        lockerId: "4001",
+        lockerId: "4000",
         bookingOrigin: "8",
         doorCount: doorCount,
       };
@@ -205,7 +205,7 @@ const CreateLockerPage: React.FC = () => {
       if (newLocker.status === 201) {
         const datas = {
           ...values,
-          lockerId: "4001",
+          lockerId: "4000",
           doorCount: doorCount,
           paymentMethod: "add_to_invoice",
           bookingOrigin: 8,
@@ -612,7 +612,7 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        Locker {bookingDoors} has been successfully booked to (
+                        Locker {bookingDoors} has been successfully booked to{" "}
                         {customer}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
@@ -654,7 +654,8 @@ const CreateLockerPage: React.FC = () => {
                         </div>
                       </AlertDialogTitle>
                       <AlertDialogDescription className="flex items-center justify-center">
-                        I&apos;m sorry we didn&apos;t find any match of the Booking ID/Client Name
+                        I&apos;m sorry we didn&apos;t find any match of the
+                        Booking ID/Client Name
                       </AlertDialogDescription>
                     </AlertDialogHeader>
 

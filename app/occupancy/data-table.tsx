@@ -119,34 +119,34 @@ export function DataTable<TData, TValue>({
                   >
                     <div className="grid gap-y-4">
                       <div className="grid grid-cols-8 gap-2">
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
                       </div>
                       <div className="grid grid-cols-8 gap-2">
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
                       </div>
                       <div className="grid grid-cols-8 gap-2">
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
-                        <Skeleton className="w-[50px] h-[20px]"/>
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
+                        <Skeleton className="w-[50px] h-[20px]" />
                       </div>
                     </div>
                   </TableCell>
