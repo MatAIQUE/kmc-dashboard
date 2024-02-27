@@ -385,8 +385,8 @@ const ConfigurationPage = () => {
                                                                           field.onChange
                                                                         }
                                                                         defaultValue={
-                                                                          field.value
-                                                                        }
+                                                                          user.role
+                                                                        } // Assuming user.role holds the current role of the user
                                                                       >
                                                                         <FormControl>
                                                                           <SelectTrigger>
