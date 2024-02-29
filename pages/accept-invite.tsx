@@ -32,6 +32,7 @@ interface AcceptInviteProps {
   tokenExpired: boolean;
   email: string;
   isLinkAlreadyUsed: boolean;
+  userRemoved: boolean;
 }
 
 const formSchema = z
@@ -64,6 +65,7 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
   tokenExpired,
   email,
   isLinkAlreadyUsed,
+  userRemoved,
 }) => {
   const [error, setError] = useState("");
   const [userEmail, setEmail] = useState("");
@@ -81,6 +83,11 @@ const AcceptInvitePage: React.FC<AcceptInviteProps> = ({
   useEffect(() => {
     if (tokenExpired) {
       setError("Link has already expired.");
+    }
+    if (userRemoved) {
+      setError(
+        "There's an error encountered with your account. Please contact admin/cs immediately."
+      );
     }
     if (isLinkAlreadyUsed) {
       setError("Link already used.");
@@ -230,12 +237,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           props: { tokenExpired: true },
         };
       } else {
-        const userResponse = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${userEmail}`
-        );
-        const userData = userResponse.data.data;
-        if (userData.isVerified) {
-          return { props: { isLinkAlreadyUsed: true } };
+        try {
+          const userResponse = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${userEmail}`
+          );
+          const userData = userResponse.data.data;
+          if (userData.isVerified) {
+            return { props: { isLinkAlreadyUsed: true } };
+          }
+        } catch (error) {
+          return { props: { userRemoved: true } };
         }
       }
     } catch (error) {
@@ -245,7 +256,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
   return {
-    props: { tokenExpired: false, email, isLinkAlreadyUsed: false },
+    props: {
+      tokenExpired: false,
+      email,
+      isLinkAlreadyUsed: false,
+      userRemoved: false,
+    },
   };
 };
 
