@@ -69,18 +69,18 @@ const showSidebar = () => {
         </div>
       <aside
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-50 md:w-64 w-full h-screen transition-transform sm:translate-x-0 ${!sidebarShown ? "-translate-x-full ":""}`}
+        className={`fixed top-0 left-0 z-50 sm:w-64 w-full h-screen transition-transform sm:translate-x-0 ${!sidebarShown ? "-translate-x-full ":""}`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 flex flex-col justify-between bg-white drop-shadow dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            <div className="w-full border-b-[1.5px] pb-4 flex items-center justify-between">
+            <div className="w-full border-b-[1.5px] sm:border-0 pb-4 flex items-center justify-between">
               <Logo />
-              <button className="p-4"  onClick={showSidebar}>
+              <button className="p-4 sm:hidden"  onClick={showSidebar}>
                 <FaXmark className="text-gray-500"/>
               </button>
             </div>
-            <div className="flex items-center md:hidden border-b-[1.5px] border-gray-300">
+            <div className="flex items-center sm:hidden border-b-[1.5px] border-gray-300">
               <div className="p-4">
                 <Image src={Avatar} alt="" width={42} height={42} />
               </div>
@@ -102,7 +102,7 @@ const showSidebar = () => {
                   <Link
                     key={itemIndex}
                     href={item.path}
-                    className={`flex items-center border-b-[1.5px] border-gray-300 px-2 py-4 md:border-0 mb-3 text-gray-900 md:rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group
+                    className={`flex items-center border-b-[1.5px] border-gray-300 px-2 py-4 sm:border-0 mb-3 text-gray-900 md:rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group
                     ${pathname === item.path && "md:bg-gray-100" || 
                       item.navStatus === "disabled" && "pointer-events-none opacity-30"
                   }`}
@@ -130,6 +130,15 @@ const showSidebar = () => {
         </div>
       </aside>
       <div className="pb-[50px]"></div>
+
+
+
+
+
+
+
+
+
     </>
   );
 };
