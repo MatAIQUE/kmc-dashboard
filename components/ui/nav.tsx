@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CiImageOn } from "react-icons/ci";
-import { FaBasketballBall, FaCog } from "react-icons/fa";
+import { FaBasketballBall, FaCog, FaUser, FaUserCircle } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
 import { PiSignOut } from "react-icons/pi";
 import { RiArchiveDrawerLine } from "react-icons/ri";
@@ -153,6 +153,15 @@ const Nav = () => {
         </div>
       </aside>
       <div className="pb-[50px]"></div>
+
+
+
+
+
+
+
+
+
     </>
   );
 };
