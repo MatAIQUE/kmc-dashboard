@@ -60,120 +60,227 @@ export function DataTable<TData, TValue>({
     <>
       {/* MEDIUM SCREEN */}
       <div className="hidden md:block">
-        <div className="flex w-full justify-end gap-2 my-2">
-          <div className="w-full md:w-auto">
-            <Input
-              placeholder="Name, ID, Locker"
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("name")?.setFilterValue(event.target.value)
-              }
-              className="min-w-full py-3 md:text-xs text-md"
-            />
+        <>
+          <div className="flex w-full justify-end gap-2 my-2">
+            <div className="w-full md:w-auto">
+              <Input
+                placeholder="Name, ID, Locker"
+                value={
+                  (table.getColumn("name")?.getFilterValue() as string) ?? ""
+                }
+                onChange={(event) =>
+                  table.getColumn("name")?.setFilterValue(event.target.value)
+                }
+                className="min-w-full py-3 md:text-xs text-md"
+              />
+            </div>
           </div>
-        </div>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    <div className="grid gap-y-4">
-                      <div className="grid grid-cols-8 gap-2">
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
+                ))}
+              </TableHeader>
+              <TableBody>
+                {(isFetching && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      <div className="grid gap-y-4">
+                        <div className="grid grid-cols-8 gap-2">
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                        </div>
+                        <div className="grid grid-cols-8 gap-2">
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                        </div>
+                        <div className="grid grid-cols-8 gap-2">
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                        </div>
                       </div>
-                      <div className="grid grid-cols-8 gap-2">
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
+                    </TableCell>
+                  </TableRow>
+                )) || (
+                  <>
+                    {table.getRowModel().rows?.length ? (
+                      table.getRowModel().rows.map((row) => (
+                        <TableRow
+                          key={row.id}
+                          data-state={row.getIsSelected() && "selected"}
+                        >
+                          {row.getVisibleCells().map((cell) => (
+                            <TableCell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    ) : (
+                      // <div className="flex justify-center mb-4 mx-2">
+                      <div className="flex justify-center mb-4 mx-2">
+                        <div className="w-full justify-center">
+                          <TableCell>No data found</TableCell>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-8 gap-2">
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
-                        <Skeleton className="w-[50px] h-[20px]" />
+                      // </div>
+                    )}
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {(isFetching && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      <div className="grid gap-y-4">
+                        <div className="grid grid-cols-8 gap-2">
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                        </div>
+                        <div className="grid grid-cols-8 gap-2">
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                        </div>
+                        <div className="grid grid-cols-8 gap-2">
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                          <Skeleton className="w-[50px] h-[20px]" />
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+                    </TableCell>
+                  </TableRow>
+                )) || (
+                  <>
+                    {table.getRowModel().rows?.length ? (
+                      table.getRowModel().rows.map((row) => (
+                        <TableRow
+                          key={row.id}
+                          data-state={row.getIsSelected() && "selected"}
+                        >
+                          {row.getVisibleCells().map((cell) => (
+                            <TableCell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    ) : (
+                      <div className="flex justify-center mb-4 mx-2">
+                        <TableRow className="items-center justify-center">
+                          <TableCell>No data found</TableCell>
+                        </TableRow>
+                      </div>
+                    )}
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </div> */}
+          <div className="flex items-center justify-end space-x-2 py-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
+        </>
       </div>
+
       {/* MEDIUM SCREEN */}
     </>
   );
