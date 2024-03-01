@@ -279,7 +279,13 @@ const CreateLockerPage: React.FC = () => {
     }
   };
 
-  const bookingDoors = booking.join(", ");
+  // const bookingDoors = booking.join
+  // : `${data.slice(0, -1).join(", ")} and ${data.slice(-1)}
+  const arrayLength = booking.length;
+  const bookingDoors =
+    arrayLength === 1
+      ? booking[0]
+      : `${booking.slice(0, -1).join(", ")} and ${booking.slice(-1)}`;
 
   return (
     <>
