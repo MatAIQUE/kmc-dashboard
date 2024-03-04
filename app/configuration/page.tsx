@@ -155,7 +155,7 @@ const ConfigurationPage = () => {
 
       await axios.patch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${dropdownShown}/remove`,
-
+        {}, // Empty data object since it's a DELETE request
         {
           headers: {
             "x-api-key": "pk-79ccd394-0be5-40ea-a527-8f27098db549",
@@ -163,14 +163,19 @@ const ConfigurationPage = () => {
           },
         }
       );
+
+      // Remove the deleted user from the local state
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user._id !== dropdownShown)
+      );
     } catch (error) {
       setIsLoading(false);
-
       console.error("Error while making DELETE request:", error);
     }
 
-    // Assuming you also need to reset dropdownShown after deleting
+    // Reset dropdownShown after deleting
     setDropdownShown(null);
+    setIsLoading(false);
   }
 
   const changeTab = (status: string) => {
