@@ -42,7 +42,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/src/components/ui/dropdown-menu";
 import EditIcon from "../../app/assets/icons/edit.svg";
 import {
   Select,
@@ -50,7 +50,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/src/components/ui/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";

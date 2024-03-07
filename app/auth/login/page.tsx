@@ -1,10 +1,16 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
+import "../../../app/globals.css";
+
+import { useSession, signIn, getSession } from "next-auth/react";
+// import { signIn, getSession } from "next-auth/react";
+// import { useRouter } from "next/router";
 import { useRouter } from "next/navigation";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,18 +18,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
-import { Input } from "../../components/ui/input";
+} from "../../../components/ui/form";
+import { Input } from "../../../components/ui/input";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
   CardDescription,
-} from "../../components/ui/card";
-import Header from "../../components/ui/header";
-import axios from "axios";
-import PasswordInput from "../../components/ui/password-input";
+} from "../../../components/ui/card";
+import Header from "../../../components/ui/header";
+import PasswordInput from "../../../components/ui/password-input";
 import { FaSpinner } from "react-icons/fa";
 
 const loginFormSchema = z.object({
@@ -35,11 +40,9 @@ const loginFormSchema = z.object({
 
 const LoginPage = () => {
   const router = useRouter();
+  // const session2 = useSession();
   const [error, setError] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
   const { reset, ...form } = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -50,28 +53,30 @@ const LoginPage = () => {
 
   const handleSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     setIsLoading(true);
-    setError("");
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`,
-        { ...values }
-      );
-      if (!response) {
-        throw new Error("Invalid credentials");
-      }
-      setIsLoading(false);
-      router.push("/occupancy");
-    } catch (error) {
-      setIsLoading(true);
-      if (axios.isAxiosError(error) && error.response) {
+      const login = await signIn("credentials", {
+        redirect: false,
+        email: values.email,
+        password: values.password,
+      });
+      console.log(login);
+      const session = await getSession();
+
+      console.log({ session });
+      // console.log({ session2 });
+      if (login?.ok) {
+        router.push("/occupancy");
+        setIsLoading(false);
+      } else {
         setError("Invalid credentials");
+        throw new Error("Authentication failed");
       }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(true);
+    } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
@@ -79,7 +84,7 @@ const LoginPage = () => {
       <Header />
       <div className="flex justify-center pt-32 h-screen">
         <div className="rounded-lg dark:border-gray-700">
-          <div className="grid flex justify-center gap-4 mb-4 mx-2">
+          <div className="flex justify-center gap-4 mb-4 mx-2">
             <Card className="w-[350px]">
               <CardHeader>
                 <CardTitle className="text-[32px]">LOG IN</CardTitle>

@@ -1,0 +1,81 @@
+// import { getToken } from "next-auth/jwt";
+// import { NextResponse } from "next/server";
+// import type { NextRequest } from "next/server";
+
+// const secret = process.env.NEXTAUTH_SECRET;
+
+// export async function middleware(req: NextRequest) {
+//   const session = await getToken({ req, secret });
+//   const url = req.nextUrl.clone();
+//   console.log("middleware", { session });
+//   if (!session && !url.pathname.startsWith("/auth/login")) {
+//     url.pathname = "/auth/login";
+//     return NextResponse.redirect(url);
+//   }
+//   // const
+//   url.pathname = "/occupancy";
+
+//   return NextResponse.next();
+// }
+
+import NextAuth from "next-auth";
+import { withAuth } from "next-auth/middleware";
+
+import { authOptions } from "./auth.config";
+import {
+  DEFAULT_LOGIN_REDIRECT,
+  apiAuthPrefix,
+  authRoutes,
+  publicRoutes,
+} from "./routes";
+
+// const { auth } = NextAuth(authOptions);
+
+export default withAuth((req: Record<string, any>) => {
+  try {
+    const { nextUrl } = req;
+    const isLoggedIn = !!req.auth;
+
+    const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+    const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+    console.log({ nextUrl });
+    console.log({ isApiAuthRoute });
+    console.log({ isPublicRoute });
+    console.log({ isAuthRoute });
+    console.log({ isLoggedIn });
+    console.log({ isPublicRoute });
+    if (isApiAuthRoute) {
+      return null;
+    }
+
+    if (isAuthRoute) {
+      if (isLoggedIn) {
+        return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      }
+      return null;
+    }
+
+    if (!isLoggedIn && !isPublicRoute) {
+      let callbackUrl = nextUrl.pathname;
+      if (nextUrl.search) {
+        callbackUrl += nextUrl.search;
+      }
+
+      const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+      return Response.redirect(
+        new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+      );
+    }
+
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Optionally, don't invoke Middleware on some paths
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};

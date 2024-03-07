@@ -153,15 +153,6 @@ const Nav = () => {
         </div>
       </aside>
       <div className="pb-[50px]"></div>
-
-
-
-
-
-
-
-
-
     </>
   );
 };

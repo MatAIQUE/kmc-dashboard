@@ -17,46 +17,60 @@ import { Locker, tableColumns } from "./columns";
 import { DataTable } from "./data-table";
 import VacantLockers from "./data-vacant";
 import { ActionCell } from "./action-cell";
-
 import DownloadIcon from "../../app/assets/icons/download.svg";
 import Image from "next/image";
 import Link from "next/link";
 import MobileDataTable from "./mobile-data-table";
-
-async function getData(status: string) {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const responseData = await response.json();
-    return responseData.data.doors;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
+// import { getSession, useSession } from "next-auth/react";
+import { fetchAuthenticatedData } from "@/lib/api";
+// import { useSession } from "next-auth/react";
 
 const OccupancyPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [dataOccupied, setDataOccupied] = useState<Locker[]>([]);
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
-
   const status = searchParams?.get("status") || "occupied";
+
+  async function getData(status: string) {
+    // const { data } = useSession();
+    // console.log({ data });
+    try {
+      // const sesh = useSession();/
+      // const { data: session } = useSession();
+      // console.log({ sesh });
+
+      const response = await fetchAuthenticatedData(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`,
+        "GET"
+      );
+      // const response = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`
+      // );
+
+      console.log({ response });
+
+      // if (!response.ok) {
+      //   throw new Error("Failed to fetch data");
+      // }
+
+      const responseData = await response.json();
+      return responseData.data.doors || [];
+    } catch (error) {
+      console.error("Error fetching datas:", error);
+    }
+  }
 
   const { isLoading, isError, isFetching, refetch } = useQuery(
     [status],
     () => getData(status),
     {
+      refetchInterval: false,
       onSuccess: (data) => {
         if (status === "occupied") {
-          setDataOccupied(data);
+          setDataOccupied(data || []);
         } else {
-          setDataVacant(data);
+          setDataVacant(data || []);
         }
       },
     }
