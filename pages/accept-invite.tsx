@@ -42,16 +42,20 @@ const formSchema = z
       .min(8, { message: "Password must be at least 8 characters long." })
       .refine(
         (password) => {
-          return /[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(password);
+          return /(?=.*[A-z])(?=.*[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?])/.test(
+            password
+          );
         },
-        { message: "Password must contain a number or symbol." }
+        { message: "Password must contain a letter and number or symbol." }
       ),
     confirmPassword: z
       .string()
       .min(8, { message: "Password must be at least 8 characters long." })
       .refine(
-        (data) => {
-          return /[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/.test(data);
+        (confirmPassword) => {
+          return /(?=.*[A-z])(?=.*[0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?])/.test(
+            confirmPassword
+          );
         },
         { message: "Confirm Password must contain a number or symbol." }
       ),
