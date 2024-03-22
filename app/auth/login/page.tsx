@@ -1,7 +1,7 @@
 "use client";
 import "../../../app/globals.css";
 
-import { useSession, signIn, getSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 // import { signIn, getSession } from "next-auth/react";
 // import { useRouter } from "next/router";
 import { useRouter } from "next/navigation";
@@ -50,10 +50,14 @@ const LoginPage = () => {
       password: "",
     },
   });
+  const { data: session, status } = useSession();
 
   const handleSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     setIsLoading(true);
     try {
+      if (status === "authenticated") {
+        signOut({ redirect: false });
+      }
       const login = await signIn("credentials", {
         redirect: false,
         email: values.email,
