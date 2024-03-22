@@ -10,6 +10,7 @@ type CustomUser = {
   image?: string | null;
   access_token?: string | null;
 };
+
 export const authOptions = {
   session: {
     strategy: "jwt",
@@ -34,11 +35,8 @@ export const authOptions = {
             { withCredentials: true }
           );
 
-          console.log({ res });
-
           if (res.status === 200) {
             const cookie = res.headers["set-cookie"] || [];
-            console.log(cookie);
             const access_token = parseCookies(cookie);
 
             return {
@@ -56,6 +54,11 @@ export const authOptions = {
       },
     }),
   ],
+  events: {
+    async signOut({ token }) {
+      console.log({ token });
+    },
+  },
   callbacks: {
     async jwt(params) {
       const token = params.token;
@@ -65,28 +68,14 @@ export const authOptions = {
       if (user) {
         token.email = user.email;
         token.token = user.access_token;
-        // params.session.token = user.access_token;
       }
-      console.log({ token }, params.session);
       return token;
     },
-    // async signIn(params) {
-    //   console.log("signIn callback", params.user);
-
-    //   if (params.user) {
-    //     console.log(params.user);
-    //     return true;
-    //     // params.account?.access_token = params.user.access_token
-    //   }
-    //   return "";
-    // },
     async session({ session, token, user }) {
-      console.log("session callback", { session, token, user });
-      console.log(token.token);
       if (token && token.email) {
-        session.user = { email: token.email };
+        session.user = { ...session, email: token.email };
       }
-      return session;
+      return { ...token, expires: session.expires };
     },
   },
   pages: {

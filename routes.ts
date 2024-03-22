@@ -12,6 +12,8 @@ export const publicRoutes = ["/", "/accept-invite"];
  */
 export const authRoutes = [
   "/auth/login",
+  "/login",
+  "/",
   //   "/auth/error",
   //   "/auth/reset",
   //   "/auth/new-password",

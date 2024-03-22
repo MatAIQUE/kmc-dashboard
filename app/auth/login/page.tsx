@@ -60,9 +60,9 @@ const LoginPage = () => {
         password: values.password,
       });
       console.log(login);
-      const session = await getSession();
+      // const session = await getSession();
 
-      console.log({ session });
+      // console.log({ session });
       // console.log({ session2 });
       if (login?.ok) {
         router.push("/occupancy");

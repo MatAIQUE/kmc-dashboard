@@ -1,0 +1,55 @@
+import { withAuth } from "next-auth/middleware";
+import {
+  DEFAULT_LOGIN_REDIRECT,
+  apiAuthPrefix,
+  authRoutes,
+  publicRoutes,
+} from "./routes";
+
+export default withAuth(
+  (req: Record<string, any>) => {
+    try {
+      const { nextUrl } = req;
+      const isLoggedIn = !!Object.keys(req.cookies);
+      const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+      const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+      const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+      const redirectPage =
+        nextUrl.pathname === "/" ? DEFAULT_LOGIN_REDIRECT : nextUrl.pathname;
+      if (isApiAuthRoute) {
+        return null;
+      }
+      if (isAuthRoute) {
+        if (isLoggedIn) {
+          return Response.redirect(new URL(redirectPage, nextUrl));
+        }
+        return null;
+      }
+      if (!isLoggedIn && !isPublicRoute) {
+        let callbackUrl = nextUrl.pathname;
+        if (nextUrl.search) {
+          callbackUrl += nextUrl.search;
+        }
+        const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+        return Response.redirect(
+          new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+        );
+      }
+      return null;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  {
+    callbacks: {
+      authorized(params) {
+        return true;
+      },
+    },
+  }
+);
+
+// Optionally, don't invoke Middleware on some paths
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
