@@ -12,7 +12,8 @@ import {
 import Header from "../components/ui/header";
 import axios from "axios";
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

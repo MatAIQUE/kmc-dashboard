@@ -42,7 +42,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/src/components/ui/dropdown-menu";
 import EditIcon from "../../app/assets/icons/edit.svg";
 import {
   Select,
@@ -50,7 +50,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/src/components/ui/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -63,6 +63,7 @@ import {
   FormMessage,
 } from "../../components/ui/form";
 import WarningIcon from "./../assets/icons/warning-icon.svg";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   role: z.enum(["", "admin", "ads_manager", "member"]).refine(
@@ -99,6 +100,9 @@ const ConfigurationPage = () => {
   const searchParams = useSearchParams();
   const tab = searchParams?.get("pricing") || "users";
   const observer = useRef<IntersectionObserver>();
+  const { data: session, status: authStatus } = useSession();
+
+  const isAuthLoading = authStatus === "unauthenticated";
 
   const { ...form } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -241,6 +245,10 @@ const ConfigurationPage = () => {
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
+
+  if (isAuthLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

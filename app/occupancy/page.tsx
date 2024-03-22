@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -17,27 +17,20 @@ import { Locker, tableColumns } from "./columns";
 import { DataTable } from "./data-table";
 import VacantLockers from "./data-vacant";
 import { ActionCell } from "./action-cell";
-
 import DownloadIcon from "../../app/assets/icons/download.svg";
 import Image from "next/image";
 import Link from "next/link";
 import MobileDataTable from "./mobile-data-table";
+import { fetchAuthenticatedData } from "@/lib/api";
+import { useSession } from "next-auth/react";
+import { DefaultSession, Session } from "next-auth";
 
-async function getData(status: string) {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const responseData = await response.json();
-    return responseData.data.doors;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+interface CustomSession extends DefaultSession {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  token?: string;
 }
 
 const OccupancyPage = () => {
@@ -45,18 +38,36 @@ const OccupancyPage = () => {
   const searchParams = useSearchParams();
   const [dataOccupied, setDataOccupied] = useState<Locker[]>([]);
   const [dataVacant, setDataVacant] = useState<Locker[]>([]);
-
   const status = searchParams?.get("status") || "occupied";
+  const { data: session, status: authStatus } = useSession();
+  const isAuthLoading = authStatus === "unauthenticated";
+  const customSession = session as CustomSession;
+
+  async function getData(status: string) {
+    try {
+      const response = await fetchAuthenticatedData(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/lockers/door/0003/kmc/query?location=one ayala&lockerId=4000&status=${status}`,
+        "GET",
+        customSession.token
+      );
+
+      const responseData = await response.data;
+      return responseData.doors || [];
+    } catch (error) {
+      console.error("Error fetching datas:", error);
+    }
+  }
 
   const { isLoading, isError, isFetching, refetch } = useQuery(
     [status],
     () => getData(status),
     {
+      refetchInterval: false,
       onSuccess: (data) => {
         if (status === "occupied") {
-          setDataOccupied(data);
+          setDataOccupied(data || []);
         } else {
-          setDataVacant(data);
+          setDataVacant(data || []);
         }
       },
     }
@@ -67,6 +78,9 @@ const OccupancyPage = () => {
     router.push(url);
   };
 
+  if (isAuthLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Nav />

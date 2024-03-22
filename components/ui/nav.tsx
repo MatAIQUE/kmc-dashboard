@@ -2,16 +2,10 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CiImageOn } from "react-icons/ci";
-import { FaBasketballBall, FaCog, FaUser, FaUserCircle } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
-import { PiSignOut } from "react-icons/pi";
 import { RiArchiveDrawerLine } from "react-icons/ri";
-import Toggle from "../toggle";
 import Logo from "./logo";
-import AdsIcon from "../../app/assets/ads-icon";
-import OccupancyIcon from "../../app/assets/occupancy-icon";
-import DashboardIcon from "../../app/assets/dashboard-icon";
-import ConfigurationIcon from "../../app/assets/configuration-icon";
 import { useState } from "react";
 import Image from "next/image";
 import MenuIcon from "../../app/assets/icons/menu.svg";
@@ -136,7 +130,9 @@ const Nav = () => {
               <a
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => router.push("/")}
+                onClick={() => {
+                  router.push("/auth/logout");
+                }}
               >
                 <Image
                   src={SignoutIcon}
@@ -153,15 +149,6 @@ const Nav = () => {
         </div>
       </aside>
       <div className="pb-[50px]"></div>
-
-
-
-
-
-
-
-
-
     </>
   );
 };
